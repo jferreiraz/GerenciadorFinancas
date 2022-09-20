@@ -20,7 +20,7 @@ export default function Register() {
                 <Text style={styles.title}> Senha </Text>
                 <TextInput placeholder="Digite uma senha..." style={styles.input} />
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                     <Text style={styles.buttonText}>Acessar</Text>
                 </TouchableOpacity>
 
