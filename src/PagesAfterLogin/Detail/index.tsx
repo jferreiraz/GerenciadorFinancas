@@ -12,7 +12,7 @@ export default function Detail({ route }){
             <Text style={styles.subTitle}>Apenas pagina de texto com exibição de detalhes, lorem ipsum </Text>
         </View>
         </SafeAreaView>
-    );
+    ); 
 }
 
 
