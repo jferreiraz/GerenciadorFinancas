@@ -4,10 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator} from '@react-navigation/native-stack'
 
-import Welcome from '../Pages/Welcome'
-import SignIn from '../Pages/SignIn'
-import Register from '../Pages/Register'
-import ForgetPassword from '../Pages/ForgetPassword'
+import Welcome from '../PagesLogin/Welcome'
+import SignIn from '../PagesLogin/SignIn'
+import Register from '../PagesLogin/Register'
+import ForgetPassword from '../PagesLogin/ForgetPassword'
 
 import HomeScreen from "../PagesAfterLogin/Home";
 import DetailScreen from "../PagesAfterLogin/Detail";
@@ -44,7 +44,7 @@ return(
         <Stack.Screen 
             name="Home" 
             component={Tabs} 
-            options={{title: 'Gerenciador completo de Finanças', headerStyle: {backgroundColor: '#3333'}, headerTintColor:'#101010',}}
+            options={{title: 'Gerenciador completo de Finanças', headerBackVisible:false ,headerStyle: {backgroundColor: '#6bcaa1'}, headerTintColor:'#101010',}}
         />
         <Stack.Screen 
             name="Finanças" 
