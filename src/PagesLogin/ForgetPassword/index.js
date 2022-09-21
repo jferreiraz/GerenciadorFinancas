@@ -18,8 +18,8 @@ export default function ForgetPassword() {
                 <Text style={styles.title}> Email: </Text>
                 <TextInput placeholder="Digite seu email..." style={styles.input} />
 
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Acessar</Text>
+                <TouchableOpacity onPress={() => alert('Um email solicitando alteração de senha foi enviado, verifique seu gmail!')} style={styles.button}>
+                    <Text style={styles.buttonText}>Enviar</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignIn')}>

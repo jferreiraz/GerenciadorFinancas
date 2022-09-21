@@ -1,38 +1,34 @@
-import { View, Text, StyleSheet, SafeAreaView, Platform, Button } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet, SafeAreaView, Platform, Button, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import SelectBox from 'react-native-multi-selectbox'
 import { NavigationContainer } from "@react-navigation/native";
+import { Ionicons } from '@expo/vector-icons'
+
 
 export default function Home({navigation}){
+
+
     return (
+        
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
-                <Text style={styles.title}> Gerenciador Finanças</Text>
-                <Text></Text>
-                <Text style={styles.subTitle}>Texo principal para o gerencimanto de finanças, informações principais e necessárias</Text>
-                <Text></Text>
-                <Text>Opções principais abaixo</Text>
-                <Text> </Text>
-                <View style={styles.butt}>
-                    <View style={styles.butt2}>
-                        <View>
-                            <Button title="Finanças" onPress={()=> navigation.navigate('Finanças',{nome: 'João'})}/>
-                            <Text> </Text>
-                            <Button title="Informações" onPress={()=> navigation.navigate('Information',{nome: 'João'})}/>
-                        </View>
-                        <View style={styles.butt4}>
-                            <Text style={styles.title}> Finanças</Text>
-                            <Text> </Text>
-                            <Text style={styles.title}> Informações</Text>
-                        </View>
-                    </View>
-                    <View style={styles.butt3}>
-
-                    </View>
+                <View style={styles.inputArea}>
+                    <Text style={styles.title}> Bem-vindo de volta fulano!</Text>
+                    <TouchableOpacity onPress={ () => navigation.navigate('Profile') }>
+                        <Ionicons name="person-circle-outline" color="a1a1a1" size={30} style={styles.icon}/>
+                    </TouchableOpacity>
                 </View>
+                <Text style={styles.subTitle}>O que você deseja fazer?</Text>
+                <TouchableOpacity onPress={()=> navigation.navigate('Finanças',{nome: 'João'})} style={styles.button}><Text>Gerenciar custos</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Faturamento',{nome: 'João'})} style={styles.button}><Text>Gerenciar faturamento</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('DRE',{nome: 'João'})} style={styles.button}><Text>Gerar DRE</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Informação',{nome: 'João'})} style={styles.button}><Text>Tutorial</Text></TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -44,41 +40,32 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS == 'android' ? 50 : 0
     },
     title: {
-        fontSize: 24,
-        fontWeight: "400",
+        fontSize: 22,
+        fontWeight: "500",
         color: "344422",
     },
     subTitle: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: "400",
         color: "300022",
+        paddingTop: 12,
+        paddingBottom: 20,
+        paddingHorizontal: 6
     },
-    butt: {
-        padding: 5,
+    button: {
         alignSelf: "center",
         borderRadius: 5,
         backgroundColor: "#0022",
-        width: 370,
-        height: 470,
+        margin: 10,
+        padding: 10,
+        width: 300,
+        alignItems: 'center'
     },
-    butt2: {
-        flexDirection: "row",
-        alignSelf: "flex-start",
-        padding: 20,
+    inputArea:{
+        flexDirection: 'row',
+        width: '100%',
     },
-    butt3: {
-        padding: 20,
-        backgroundColor: "#1212",
-        alignSelf: "center",
-        width: 350,
-        height: 245,
-        borderRadius: 5,
-    },
-    butt4: {
+    icon:{
         paddingLeft: 20,
-        paddingVertical: 5,
-        fontSize: 34,
-        fontWeight: "400",
-        color: "300022",
-    },
+    }
 });

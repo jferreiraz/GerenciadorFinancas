@@ -1,24 +1,29 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator} from '@react-navigation/native-stack'
+import { Feather } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import Welcome from '../PagesLogin/Welcome'
 import SignIn from '../PagesLogin/SignIn'
 import Register from '../PagesLogin/Register'
 import ForgetPassword from '../PagesLogin/ForgetPassword'
 
-import HomeScreen from "../PagesAfterLogin/Home";
-import DetailScreen from "../PagesAfterLogin/Detail";
-import FinancasScreen from "../PagesAfterLogin/Financas";
-import InformationScreen from "../PagesAfterLogin/Information";
-import InformationScreen2 from "../PagesAfterLogin/Information";
+import Home from "../PagesAfterLogin/Home";
+import Detail from "../PagesAfterLogin/Detail";
+import Financas from "../PagesAfterLogin/Financas";
+import Information from "../PagesAfterLogin/Information";
+import Profile from "../PagesAfterLogin/Profile";
+import Settings from "../PagesAfterLogin/Settings";
+import DRE from "../PagesAfterLogin/DRE";
+import Invoicing from "../PagesAfterLogin/Invoicing";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function Routes(){
+export default function Routes({navigation}){
 return(
     <Stack.Navigator>
         <Stack.Screen
@@ -44,15 +49,29 @@ return(
         <Stack.Screen 
             name="Home" 
             component={Tabs} 
-            options={{title: 'Gerenciador completo de Finanças', headerBackVisible:false ,headerStyle: {backgroundColor: '#6bcaa1'}, headerTintColor:'#101010',}}
+            options={{title: 'Gerenciador de Finanças', headerBackVisible:false ,headerStyle: {backgroundColor: '#5CC6BA'}, headerTintColor:'#101010', headerRight: () => (
+              <TouchableOpacity onPress={()=> alert('Settings') }><Feather name="settings" size={24} color="black" /></TouchableOpacity>
+            )}}
         />
         <Stack.Screen 
             name="Finanças" 
-            component={FinancasScreen} 
+            component={Financas} 
         />
         <Stack.Screen 
-            name="Informações2" 
-            component={InformationScreen2} 
+            name="Profile" 
+            component={Profile} 
+        />
+        <Stack.Screen 
+            name="Settings" 
+            component={Settings} 
+        />
+        <Stack.Screen 
+            name="DRE" 
+            component={DRE} 
+        />
+        <Stack.Screen 
+            name="Faturamento" 
+            component={Invoicing} 
         />
     </Stack.Navigator>
     )
@@ -60,18 +79,32 @@ return(
 
 function Tabs(){
   return(
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName="Principal">
+      <Tab.Screen 
+        name="Informação" 
+        component={Information}
+        options={{
+          headerShown: false,
+          tabBarIcon:({ color, size }) => (
+            <MaterialCommunityIcons name="help-box" color={color} size={size} />), 
+        }}
+      />
       <Tab.Screen 
         name="Principal" 
-        component={HomeScreen}
+        component={Home}
+        options={{ 
+          headerShown:false, 
+          tabBarIcon:({ color, size }) => (
+            <MaterialCommunityIcons name="menu" color={color} size={size} />), 
+        }}
       />
       <Tab.Screen 
-        name="Detail" 
-        component={DetailScreen}
-      />
-      <Tab.Screen 
-        name="Information" 
-        component={InformationScreen}
+        name="Encerrar sessão" 
+        component={Detail}
+        options={{
+        tabBarIcon:({ color, size }) => (
+          <MaterialCommunityIcons name="exit-to-app" color={color} size={size} />), 
+      }}
       />
     </Tab.Navigator>
   )

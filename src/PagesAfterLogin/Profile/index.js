@@ -14,18 +14,17 @@ export default function Register() {
         <ScrollView>
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container} keyboardVerticalOffset={50}>
             <Animatable.View animation="fadeInUp" delay={500} style={styles.containerHeader}>
-                <Text style={styles.message}> Realize seu cadastro!</Text>
-                <Text style={styles.description}> Complete os campos abaixo </Text>
+                <Text style={styles.message}> Perfil do usuário</Text>
             </Animatable.View>
 
             <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-                <Text style={styles.title}> Nome: </Text>
+                <Text style={styles.title}> Alterar nome: </Text>
                 <TextInput placeholder="Digite seu nome..." style={styles.input} />
 
-                <Text style={styles.title}> Email: </Text>
-                <TextInput placeholder="Digite seu email..." style={styles.input} />
+                <Text style={styles.title}> Alterar email: </Text>
+                <TextInput placeholder="Digite um email..." style={styles.input} />
 
-                <Text style={styles.title}> Senha: </Text>
+                <Text style={styles.title}> Alterar senha: </Text>
                 <View style={styles.inputArea}>
                     <TextInput placeholder="Digite uma senha..." style={styles.inputPassword} secureTextEntry={hidePass} />
                     <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
@@ -33,26 +32,9 @@ export default function Register() {
                     </TouchableOpacity>
                 </View>
 
-                <Text style={styles.title}> Confirmar senha: </Text>
-                <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={50} style={styles.inputArea}>
-                    <TextInput placeholder="Confirme sua senha..." style={styles.inputPassword} secureTextEntry={hidePass} />
-                    <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
-                            <Ionicons name="eye" color="a1a1a1" size={25} />
-                    </TouchableOpacity>
-                </KeyboardAvoidingView>
-
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignIn')}>
-                    <Text style={styles.registerText}>Realize seu login aqui </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('ForgetPassword')}>
-                    <Text style={styles.registerText}>Esqueceu sua senha? </Text>
-                </TouchableOpacity>
-
 
             </Animatable.View>
 
