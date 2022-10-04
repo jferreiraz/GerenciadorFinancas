@@ -31,5 +31,11 @@ For example, if you wanna add a solution for problem 0001, you should do like th
   * mkdir `0001`.
   * cd `0001`.
   * and the write some code & test it.
+  
+  Open terminal
+  *
+  *npm expo install
+  *npm yarn install
+  *npm run start
 
  </h4>
