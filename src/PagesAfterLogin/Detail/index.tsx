@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, Alert, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform } from 'react-native'
 import SelectBox from 'react-native-multi-selectbox'
 
 export default function Detail({ route }){
@@ -25,9 +25,27 @@ const styles = StyleSheet.create({
         width: 250,
         justifyContent: 'center'        
     },
+    container: {
+        flex: 1,
+        backgroundColor: "fff",
+    },
     text:{
         color: "#FFF",
         fontSize: 15,
 
+    },
+    headerContainer: {
+        padding: 20,
+        paddingTop: Platform.OS == 'android' ? 50 : 0
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "400",
+        color: "344422",
+    },
+    subTitle: {
+        fontSize: 14,
+        fontWeight: "400",
+        color: "300022",
     }
 });
