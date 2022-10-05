@@ -14,7 +14,6 @@ export default function Detail({ route }){
     ); 
 }
 
-
 const styles = StyleSheet.create({
     button1: {
         padding: 10,
