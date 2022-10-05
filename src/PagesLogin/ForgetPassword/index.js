@@ -4,34 +4,31 @@ import { useNavigation } from '@react-navigation/native'
 
 import * as Animatable from 'react-native-animatable'
 
-export default function Register() {
+export default function ForgetPassword() {
     const navigation= useNavigation();
 
     return(
         <View style={styles.container}>
             <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-                <Text style={styles.message}> Bem-vindo (a)</Text>
+                <Text style={styles.message}> Esqueceu sua senha?</Text>
+                <Text style={styles.description}> Preencha com seu email o campo abaixo </Text>
             </Animatable.View>
 
-            <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-                <Text style={styles.title}> Email </Text>
-                <TextInput placeholder="Digite um email..." style={styles.input} />
+            <Animatable.View animation="fadeInUp" duration={1300} style={styles.containerForm}>
+                <Text style={styles.title}> Email: </Text>
+                <TextInput placeholder="Digite seu email..." style={styles.input} />
 
-                <Text style={styles.title}> Senha </Text>
-                <TextInput placeholder="Digite uma senha..." style={styles.input} />
+                <TouchableOpacity onPress={() => alert('Um email solicitando alteração de senha foi enviado, verifique seu gmail!')} style={styles.button}>
+                    <Text style={styles.buttonText}>Enviar</Text>
+                </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.buttonText}>Acessar</Text>
+                <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignIn')}>
+                    <Text style={styles.registerText}>Realize seu login aqui </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('Register')}>
                     <Text style={styles.registerText}>Crie uma conta gratuitamente, clique aqui!</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('ForgetPassword')}>
-                    <Text style={styles.registerText}>Esqueceu sua senha? </Text>
-                </TouchableOpacity>
-
 
             </Animatable.View>
         </View>
@@ -94,5 +91,11 @@ const styles = StyleSheet.create({
     registerText:{
         color:'#1212a1',
         fontSize: 16
+    },
+    description:{
+        color: '#dcdcdc',
+        fontSize: 17,
+        fontWeight: 'bold',
+        padding: 4
     }
 })
