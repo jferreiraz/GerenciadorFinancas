@@ -33,9 +33,9 @@ For example, if you wanna add a solution for problem 0001, you should do like th
   * and the write some code & test it.
   
 Open terminal
-  * npm yarn install
-  * npm expo install
+  * npx yarn install
+  * npx expo install
   * npm run start
-  > (remember to install dependencies)
+  > (remember to install dependencies before npm run start or after if you didnt get the allert yet)
 
  </h4>
