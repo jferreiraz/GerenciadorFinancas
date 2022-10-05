@@ -37,5 +37,6 @@ Open terminal
   * npx expo install
   * npm run start
   > (remember to install dependencies before npm run start or after if you didnt get the allert yet)
+   exx: npx expo install react-native-svg@12.3.0
 
  </h4>
