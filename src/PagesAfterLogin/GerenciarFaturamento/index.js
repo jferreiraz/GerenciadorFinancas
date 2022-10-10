@@ -13,15 +13,13 @@ export default function Home({navigation}){
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <View style={styles.inputArea}>
-                    <Text style={styles.title}> Bem-vindo de volta fulano!</Text>
-                    <TouchableOpacity onPress={ () => navigation.navigate('Profile') }>
-                        <Ionicons name="person-circle-outline" color="a1a1a1" size={30} style={styles.icon}/>
-                    </TouchableOpacity>
+                    <Text style={styles.title}> Gerencie seu faturamento aqui!</Text>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Custos',{nome: 'João'})} style={styles.button}><Text>Gerenciar custos</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Faturamento',{nome: 'João'})} style={styles.button}><Text>Gerenciar faturamento</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('DRE',{nome: 'João'})} style={styles.button}><Text>Gerar DRE</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de produtos',{nome: 'João'})} style={styles.button}><Text>Vendas de produtos</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de serviços',{nome: 'João'})} style={styles.button}><Text>Vendas de serviços</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Vendas a prazo',{nome: 'João'})} style={styles.button}><Text>Vendas a prazo</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Estoque',{nome: 'João'})} style={styles.button}><Text>Estoque</Text></TouchableOpacity>
             </View>
         </SafeAreaView>
     );

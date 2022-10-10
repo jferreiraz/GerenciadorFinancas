@@ -13,15 +13,16 @@ export default function Home({navigation}){
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <View style={styles.inputArea}>
-                    <Text style={styles.title}> Bem-vindo de volta fulano!</Text>
+                    <Text style={styles.title}>Gerencie seus custos aqui, escolha abaixo qual custo deseja adicionar ou modificar!</Text>
                     <TouchableOpacity onPress={ () => navigation.navigate('Profile') }>
                         <Ionicons name="person-circle-outline" color="a1a1a1" size={30} style={styles.icon}/>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Custos',{nome: 'João'})} style={styles.button}><Text>Gerenciar custos</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Faturamento',{nome: 'João'})} style={styles.button}><Text>Gerenciar faturamento</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('DRE',{nome: 'João'})} style={styles.button}><Text>Gerar DRE</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Investimento fixo',{nome: 'João'})} style={styles.button}><Text>Investimento fixo</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Custo fixo',{nome: 'João'})} style={styles.button}><Text>Custo fixo</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Custos com mão de obra',{nome: 'João'})} style={styles.button}><Text>Custos com mão de obra</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Custos variáveis',{nome: 'João'})} style={styles.button}><Text>Custos variáveis</Text></TouchableOpacity>
             </View>
         </SafeAreaView>
     );
@@ -39,9 +40,10 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS == 'android' ? 50 : 0
     },
     title: {
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: "500",
         color: "344422",
+        textAlign: 'justify',
     },
     subTitle: {
         fontSize: 16,
