@@ -1,136 +1,25 @@
-import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
-import React, { useEffect,useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform, Button } from 'react-native'
-import axios from 'axios'
-
-import { db } from '../../../config'
-
-const App = () => {
-  const [list,setList] = useState([]);
-  useEffect(()=>{
-    getList()
-  },[])
-  const getList= () => {
-    axios({
-      url:"",
-      method: "GET"
-    }).then((res)=>{
-      var response = res.data;
-      setList(response.data)
-    })
-  }
-  return (
-      <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-          <Text style={styles.title}>Course</Text>
-      </View>
-      </SafeAreaView>
-  ); 
-}
+import { View, StyleSheet, Text, Platform } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function MaoDeObra({ navigation }){
-    //Iniciar o bd
-    const [userDoc,setUserDoc] = useState(null)
-
-    //Texto de atualização do bd
-    const [text,setText] = useState("")
-
-    //CRUD do banco de dados
-    const Create = () =>{
-        //Criação do documento
-        const myDoc = doc(db, "MyCollection", "MyDocument2")
-
-        const docData = {
-            "name": "iJustyyine",
-            "bio": "youtuber"
-        }
-
-        setDoc(myDoc, docData)
-        .then(() => {
-         alert("Documento criado")
-        })
-        .catch((error) => {
-        //Falha na execução
-         alert(error.message)
-        })
-    }
-
-    const Read = () => {
-        //Leitura do documento
-        const myDoc = doc(db, "MyCollection", "MyDocument")
-
-        getDoc(myDoc)
-        .then((snapshot) => {
-            if (snapshot.exists) {
-                setUserDoc(snapshot.data())
-            }
-            else {
-                alert("Nenhum documento foi encontrado")
-            }
-           })
-           .catch((error) => {
-            //Falha na execução
-            alert(error.message)
-            })
-    }
-
-    const Update = (value,merge) => {
-        const myDoc = doc(db,"MyCollection","MyDocument")
-
-        setDoc(myDoc, value, { merge: merge })
-        .then(() => {
-            alert("Documento atualizado")
-            setText("")
-           })
-           .catch((error) => {
-           //Falha na execução
-            alert(error.message)
-           })
-    }
-
-    const Delete = () => {
-        const myDoc = doc(db,"MyCollection","MyDocument")
-
-        deleteDoc(myDoc)
-        .then(() => {
-            alert("Documento deletado")
-           })
-        .catch((error) => {
-            //Falha na execução
-             alert(error.message)
-            })
-        
-    }
-
+export default function Information({ route }){
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
-            <Text style={styles.title}>Course</Text>
-            <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar mão de obra',{nome: 'João'})} style={styles.button1}><Text>Cadastrar mão de obra</Text></TouchableOpacity>
+            <Text style={styles.title}>Pagina tutorial/ ajuda</Text>
+            <Text></Text>
+            <Text style={styles.subTitle}>Apenas pagina de texto com exibição de informações, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
         </View>
         </SafeAreaView>
-    ); 
+    );
 }
 
+
 const styles = StyleSheet.create({
-    button1: {
-        padding: 10,
-        margin: 50,
-        alignItems: 'center',
-        backgroundColor: "blue",
-        borderRadius: 10,
-        width: 250,
-        justifyContent: 'center'        
-    },
     container: {
         flex: 1,
         backgroundColor: "fff",
-    },
-    texts:{
-        color: "black",
-        fontSize: 15,
-
     },
     headerContainer: {
         padding: 20,

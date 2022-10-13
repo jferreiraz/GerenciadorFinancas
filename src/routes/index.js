@@ -18,6 +18,11 @@ import DRE from         "../PagesAfterLogin/DRE";
 import Invoicing from   "../PagesAfterLogin/Invoicing";
 import Financas from    "../PagesAfterLogin/Financas";
 
+import Courses from '../PagesAfterLogin/GerenciarCustos/MaoDeObra/CadastrarMaoDeObra';
+import CreateUserScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/CreateUserScreen";
+import UserDetailScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/UserDetailScreen";
+import UsersList from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/UsersList";
+
 import GerenciarCustos from  "../PagesAfterLogin/GerenciarCustos";
 import InvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo";
 import CustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo";
@@ -156,6 +161,25 @@ return(
         <Stack.Screen //--------------------------------------------------- PÁGINAS NÃO FUNCIONAIS ------------------------------------------------------
             name="Finanças" 
             component={Financas} 
+        />
+        <Stack.Screen 
+            name="Curso" 
+            component={Courses} 
+        />
+        <Stack.Screen
+            name="UsersList"
+            component={UsersList}
+            options={{ title: "Users List" }}
+        />
+        <Stack.Screen
+            name="CreateUserScreen"
+            component={CreateUserScreen}
+            options={{ title: "Users creation" }}
+        />
+        <Stack.Screen
+            name="UserDetailScreen"
+            component={UserDetailScreen}
+            options={{ title: "Users details" }}
         />
     </Stack.Navigator>
     )

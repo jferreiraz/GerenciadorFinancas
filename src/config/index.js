@@ -1,23 +1,31 @@
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore } from 'firebase/firestore' 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDJw0tfGU9F9gJ3pwqbTRDrG5EsgnoZaW4",
-  authDomain: "gerenciadorfinanceiro-eca68.firebaseapp.com",
-  projectId: "gerenciadorfinanceiro-eca68",
-  storageBucket: "gerenciadorfinanceiro-eca68.appspot.com",
-  messagingSenderId: "531942635254",
-  appId: "1:531942635254:web:01701f2e1dee3f0a725ed7",
-  measurementId: "G-KJ572M929C"
+  apiKey: "AIzaSyD4J2LjJX2BNxz8k56ZzfjVVgm0eN0zQPU",
+  authDomain: "financemanager-ef65d.firebaseapp.com",
+  projectId: "financemanager-ef65d",
+  storageBucket: "financemanager-ef65d.appspot.com",
+  messagingSenderId: "261616634632",
+  appId: "1:261616634632:web:67a335b5d5e2ed1881babd"
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(app);
-export const db = getFirestore(app);
+//const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+
+export default {
+  firebase,
+  db
+};

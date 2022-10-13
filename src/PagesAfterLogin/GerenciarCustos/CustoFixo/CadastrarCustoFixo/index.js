@@ -17,8 +17,8 @@ export default function CadastrarCustoFixo(){
         const myDoc = doc(db, "M2222n", "M222222")
 
         const docData = {
-            "name": "i22222222ine",
-            "bio": "yout2222222sber"
+            "name": name1,
+            "bio": bio1
         }
 
         setDoc(myDoc, docData)

@@ -1,6 +1,6 @@
 import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, StyleSheet, SafeAreaView, Platform, Button } from 'react-native'
+import { Text, TextInput, View, TouchableOpacity, StyleSheet, SafeAreaView, Platform, Button } from 'react-native' 
 
 import { db } from '../../../config'
 

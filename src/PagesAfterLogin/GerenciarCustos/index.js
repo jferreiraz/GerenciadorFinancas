@@ -14,7 +14,7 @@ export default function GerenciarCustos({navigation}){
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Investimento fixo',{nome: 'João'})} style={styles.button}><Text>Investimento fixo</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('UsersList',{nome: 'João'})} style={styles.button}><Text>Investimento fixo</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('Custo fixo',{nome: 'João'})} style={styles.button}><Text>Custo fixo</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('Custos com mão de obra',{nome: 'João'})} style={styles.button}><Text>Custos com mão de obra</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('Custos variáveis',{nome: 'João'})} style={styles.button}><Text>Custos variáveis</Text></TouchableOpacity>
