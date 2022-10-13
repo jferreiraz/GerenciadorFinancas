@@ -1,35 +1,12 @@
 import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
-import React, { useEffect,useState } from 'react'
+import React, { useState } from 'react'
+import { StatusBar } from 'expo-status-bar'
 import { Text, TextInput, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform, Button } from 'react-native'
-import axios from 'axios'
+import SelectBox from 'react-native-multi-selectbox'
 
-import { db } from '../../../config'
+import { db } from '../../../../config'
 
-const App = () => {
-  const [list,setList] = useState([]);
-  useEffect(()=>{
-    getList()
-  },[])
-  const getList= () => {
-    axios({
-      url:"",
-      method: "GET"
-    }).then((res)=>{
-      var response = res.data;
-      setList(response.data)
-    })
-  }
-  return (
-      <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-          <Text style={styles.title}>Course</Text>
-      </View>
-      </SafeAreaView>
-  ); 
-}
-
-
-export default function MaoDeObra({ navigation }){
+export default function CadastrarMaoDeObra(){
     //Iniciar o bd
     const [userDoc,setUserDoc] = useState(null)
 
@@ -102,12 +79,23 @@ export default function MaoDeObra({ navigation }){
             })
         
     }
-
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
-            <Text style={styles.title}>Course</Text>
-            <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar mão de obra',{nome: 'João'})} style={styles.button1}><Text>Cadastrar mão de obra</Text></TouchableOpacity>
+            <Text style={styles.title}>Detalhes investimento fixo</Text>
+            <Text> </Text>
+            <Text style={styles.subTitle}>Apenas pagina de texto com exibição de detalhes, lorem ipsum </Text>
+            <Button title='Create New Doc' onPress={Create}></Button>
+            <Button title='Read the Doc' onPress={Read}></Button>
+            {
+                userDoc != null &&
+                <Text>Bio: {userDoc.bio}</Text>
+            }
+            <TextInput placeholder='Digite aqui' onChangeText={(text) => { setText(text) }} value={text}></TextInput>
+            <Button title='Update the Doc' onPress={() => {
+                Update({"bio": text}, true)}} disabled={text == ""}>
+                </Button>
+            <Button title='Delete the Doc' onPress={Delete}></Button>
         </View>
         </SafeAreaView>
     ); 
@@ -127,8 +115,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "fff",
     },
-    texts:{
-        color: "black",
+    text:{
+        color: "#FFF",
         fontSize: 15,
 
     },

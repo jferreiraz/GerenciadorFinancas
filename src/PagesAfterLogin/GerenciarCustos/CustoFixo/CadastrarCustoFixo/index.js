@@ -1,49 +1,24 @@
 import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
-import React, { useEffect,useState } from 'react'
+import React, { useState } from 'react'
 import { Text, TextInput, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform, Button } from 'react-native'
-import axios from 'axios'
 
-import { db } from '../../../config'
+import { db } from '../../../../config'
 
-const App = () => {
-  const [list,setList] = useState([]);
-  useEffect(()=>{
-    getList()
-  },[])
-  const getList= () => {
-    axios({
-      url:"",
-      method: "GET"
-    }).then((res)=>{
-      var response = res.data;
-      setList(response.data)
-    })
-  }
-  return (
-      <SafeAreaView style={styles.container}>
-      <View style={styles.headerContainer}>
-          <Text style={styles.title}>Course</Text>
-      </View>
-      </SafeAreaView>
-  ); 
-}
-
-
-export default function MaoDeObra({ navigation }){
+export default function CadastrarCustoFixo(){
     //Iniciar o bd
     const [userDoc,setUserDoc] = useState(null)
 
     //Texto de atualização do bd
-    const [text,setText] = useState("")
+    const [text, setText, textName] = useState("")
 
     //CRUD do banco de dados
     const Create = () =>{
         //Criação do documento
-        const myDoc = doc(db, "MyCollection", "MyDocument2")
+        const myDoc = doc(db, "M2222n", "M222222")
 
         const docData = {
-            "name": "iJustyyine",
-            "bio": "youtuber"
+            "name": "i22222222ine",
+            "bio": "yout2222222sber"
         }
 
         setDoc(myDoc, docData)
@@ -100,14 +75,24 @@ export default function MaoDeObra({ navigation }){
             //Falha na execução
              alert(error.message)
             })
-        
     }
-
+  
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
-            <Text style={styles.title}>Course</Text>
-            <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar mão de obra',{nome: 'João'})} style={styles.button1}><Text>Cadastrar mão de obra</Text></TouchableOpacity>
+            <TextInput placeholder='Categoria do produto...' style={styles.input} onChangeText={(text) => { setText(text) }} value={text}></TextInput>
+            <TextInput placeholder='Descrição do produto...' style={styles.input} onChangeText={(textName) => { setText(textName) }} value={textName}></TextInput>
+            <TextInput placeholder='Valor do produto...'     style={styles.input} onChangeText={(text) => { setText(text) }} value={text}></TextInput>
+
+            <Button title='Create New Doc' onPress={Create}></Button>
+            {
+                userDoc != null &&
+                <Text>Bio: {userDoc.bio}</Text> &&
+                <Text>Name: {userDoc.name}</Text>
+            }
+            <Button title='Update the Doc' onPress={() => {
+                Update({"bio": text}, true)}} disabled={text == ""}>
+            </Button>
         </View>
         </SafeAreaView>
     ); 
@@ -123,12 +108,21 @@ const styles = StyleSheet.create({
         width: 250,
         justifyContent: 'center'        
     },
+    button: {
+        padding: 10,
+        margin: 50,
+        alignItems: 'center',
+        backgroundColor: "blue",
+        borderRadius: 10,
+        width: 250,
+        justifyContent: 'center'        
+    },
     container: {
         flex: 1,
         backgroundColor: "fff",
     },
     texts:{
-        color: "black",
+        color: "#FFF",
         fontSize: 15,
 
     },
@@ -145,5 +139,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "400",
         color: "300022",
-    }
+    },
+    input:{
+        borderBottomWidth: 1,
+        height: 40,
+        marginBottom: 12,
+        fontSize: 16
+    },
 });

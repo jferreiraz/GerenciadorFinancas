@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
 
-export default function Detail({ route }){
+export default function VendasPrazo({ navigation }){
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
-            <Text style={styles.title}>Detalhes investimento</Text>
+            <Text style={styles.title}>Detalhes vendas a prazo</Text>
             <Text> </Text>
             <Text style={styles.subTitle}>Apenas pagina de texto com exibição de detalhes, lorem ipsum </Text>
+            <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar vendas a prazo',{nome: 'João'})} style={styles.button1}><Text>Cadastrar vendas a prazo</Text></TouchableOpacity>
         </View>
         </SafeAreaView>
     ); 

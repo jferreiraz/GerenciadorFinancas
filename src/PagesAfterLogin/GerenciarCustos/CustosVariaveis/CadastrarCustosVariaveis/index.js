@@ -19,12 +19,12 @@ const K_OPTIONS = [
   }
 ]
 
-export default function Detail() {
+export default function CadastrarCustosVariaveis() {
   const [selectedTeam, setSelectedTeam] = useState({})
   return (
     <View style={{ margin: 30 }}>
       <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Gerenciador</Text>
+        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Gerenciar custos variáveis, comissões e outros</Text>
       </View>
       <Text style={{ fontSize: 20, paddingBottom: 10 }}>Navegar</Text>
       <SelectBox
@@ -34,7 +34,7 @@ export default function Detail() {
         inputPlaceholder='Gerenciar'
         value={selectedTeam}
       />
-        <TouchableOpacity style={styles.button1} onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja encerrar sessão?',[{text:'Sim', onPress: () => {console.log('Yes Pressed');}},{text:'Não', onPress: () => {console.log('Yes Pressed');}}])  }><Text style={styles.text}>Encerrar sessão</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.button1} onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja adicionar esse item?',[{text:'Sim', onPress: () => {console.log('Yes Pressed');}},{text:'Não', onPress: () => {console.log('Yes Pressed');}}])  }><Text style={styles.text}>Adicionar</Text></TouchableOpacity>
 
     </View>
   )

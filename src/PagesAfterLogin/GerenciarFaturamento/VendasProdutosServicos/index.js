@@ -19,14 +19,12 @@ const K_OPTIONS = [
   }
 ]
 
-export default function CustosVariaveis({navigation}) {
-
+export default function VendasProdutosServicos({navigation}) {
   const [selectedTeam, setSelectedTeam] = useState({})
-
   return (
     <View style={{ margin: 30 }}>
       <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Gerenciar custos variáveis, comissões e outros</Text>
+        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Gerenciar vendas de produtos</Text>
       </View>
       <Text style={{ fontSize: 20, paddingBottom: 10 }}>Navegar</Text>
       <SelectBox
@@ -37,8 +35,7 @@ export default function CustosVariaveis({navigation}) {
         value={selectedTeam}
       />
         <TouchableOpacity style={styles.button1} onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja adicionar esse item?',[{text:'Sim', onPress: () => {console.log('Yes Pressed');}},{text:'Não', onPress: () => {console.log('Yes Pressed');}}])  }><Text style={styles.text}>Adicionar</Text></TouchableOpacity>
-
-        <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar custos variáveis',{nome: 'João'})} style={styles.button1}><Text>Cadastrar custos variáveis</Text></TouchableOpacity>
+        <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar vendas de produtos e serviços',{nome: 'João'})} style={styles.button1}><Text>Cadastrar vendas de produtos e serviços</Text></TouchableOpacity>
     </View>
   )
 }

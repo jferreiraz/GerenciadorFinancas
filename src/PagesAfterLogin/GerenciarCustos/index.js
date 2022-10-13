@@ -1,13 +1,8 @@
 import { View, Text, StyleSheet, SafeAreaView, Platform, Button, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import SelectBox from 'react-native-multi-selectbox'
-import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons'
 
-
-export default function Home({navigation}){
-
-
+export default function GerenciarCustos({navigation}){
     return (
         
         <SafeAreaView style={styles.container}>

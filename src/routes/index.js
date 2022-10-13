@@ -1,36 +1,42 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator} from '@react-navigation/native-stack'
 import { Feather } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import Welcome from '../PagesLogin/Welcome'
-import SignIn from '../PagesLogin/SignIn'
-import Register from '../PagesLogin/Register'
+import Welcome from        '../PagesLogin/Welcome'
+import SignIn from         '../PagesLogin/SignIn'
+import Register from       '../PagesLogin/Register'
 import ForgetPassword from '../PagesLogin/ForgetPassword'
 
-import Home from "../PagesAfterLogin/Home";
-import Detail from "../PagesAfterLogin/Detail";
+import Home from        "../PagesAfterLogin/Home";
+import Detail from      "../PagesAfterLogin/Detail";
 import Information from "../PagesAfterLogin/Information";
-import Profile from "../PagesAfterLogin/Profile";
-import Settings from "../PagesAfterLogin/Settings";
-import DRE from "../PagesAfterLogin/DRE";
-import Invoicing from "../PagesAfterLogin/Invoicing";
-import Financas from "../PagesAfterLogin/Financas";
+import Profile from     "../PagesAfterLogin/Profile";
+import Settings from    "../PagesAfterLogin/Settings";
+import DRE from         "../PagesAfterLogin/DRE";
+import Invoicing from   "../PagesAfterLogin/Invoicing";
+import Financas from    "../PagesAfterLogin/Financas";
 
-import GerenciarCustos from "../PagesAfterLogin/GerenciarCustos";
+import GerenciarCustos from  "../PagesAfterLogin/GerenciarCustos";
 import InvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo";
-import CustoFixo from "../PagesAfterLogin/GerenciarCustos/CustoFixo";
-import MaoDeObra from "../PagesAfterLogin/GerenciarCustos/MaoDeObra";
-import CustosVariaveis from "../PagesAfterLogin/GerenciarCustos/CustosVariaveis";
+import CustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo";
+import MaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeObra";
+import CustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis";
 
-import GerenciarFaturamento from "../PagesAfterLogin/GerenciarFaturamento";
-import Estoque from "../PagesAfterLogin/GerenciarFaturamento/Estoque";
-import VendasPrazo from "../PagesAfterLogin/GerenciarFaturamento/VendasPrazo";
-import VendasProdutos from "../PagesAfterLogin/GerenciarFaturamento/VendasProdutos";
-import VendasServicos from "../PagesAfterLogin/GerenciarFaturamento/VendasServicos";
+import CadastrarInvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/CadastrarInvestimentoFixo";
+import CadastrarCustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo/CadastrarCustoFixo";
+import CadastrarMaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeObra/CadastrarMaoDeObra";
+import CadastrarCustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis/CadastrarCustosVariaveis";
+
+import GerenciarFaturamento from   "../PagesAfterLogin/GerenciarFaturamento";
+import Estoque from                "../PagesAfterLogin/GerenciarFaturamento/Estoque";
+import VendasPrazo from            "../PagesAfterLogin/GerenciarFaturamento/VendasPrazo";
+import VendasProdutosServicos from "../PagesAfterLogin/GerenciarFaturamento/VendasProdutosServicos";
+
+import CadastrarEstoque from                "../PagesAfterLogin/GerenciarFaturamento/Estoque/CadastrarEstoque";
+import CadastrarVendasPrazo from            "../PagesAfterLogin/GerenciarFaturamento/VendasPrazo/CadastrarVendasPrazo";
+import CadastrarVendasProdutosServicos from "../PagesAfterLogin/GerenciarFaturamento/VendasProdutosServicos/CadastrarVendasProdutosServicos";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -74,16 +80,32 @@ return(
             component={InvestimentoFixo} 
         />
         <Stack.Screen 
+            name="Cadastrar investimento fixo" 
+            component={CadastrarInvestimentoFixo} 
+        />
+        <Stack.Screen  
             name="Custo fixo" 
             component={CustoFixo} 
+        />
+        <Stack.Screen 
+            name="Cadastrar custo fixo" 
+            component={CadastrarCustoFixo} 
         />
         <Stack.Screen 
             name="Custos com mão de obra" 
             component={MaoDeObra} 
         />
         <Stack.Screen 
+            name="Cadastrar mão de obra" 
+            component={CadastrarMaoDeObra} 
+        />
+        <Stack.Screen 
             name="Custos variáveis" 
             component={CustosVariaveis} 
+        />
+        <Stack.Screen 
+            name="Cadastrar custos variáveis" 
+            component={CadastrarCustosVariaveis} 
         />
         <Stack.Screen //--------------------------------------------------- PÁGINAS GERENCIAR FATURAMENTO ------------------------------------------------------
             name="Gerenciar Faturamento" 
@@ -94,16 +116,24 @@ return(
             component={Estoque} 
         />
         <Stack.Screen 
+            name="Cadastrar estoque" 
+            component={CadastrarEstoque} 
+        />
+        <Stack.Screen 
             name="Vendas a prazo" 
             component={VendasPrazo} 
         />
         <Stack.Screen 
-            name="Vendas de produtos" 
-            component={VendasProdutos} 
+            name="Cadastrar vendas a prazo" 
+            component={CadastrarVendasPrazo} 
         />
         <Stack.Screen 
-            name="Vendas de serviços" 
-            component={VendasServicos} 
+            name="Vendas de produtos e serviços" 
+            component={VendasProdutosServicos} 
+        />
+        <Stack.Screen 
+            name="Cadastrar vendas de produtos e serviços" 
+            component={CadastrarVendasProdutosServicos} 
         />
         <Stack.Screen //--------------------------------------------------- OUTRAS PÁGINAS ------------------------------------------------------
             name="Profile" 
@@ -129,7 +159,7 @@ return(
         />
     </Stack.Navigator>
     )
-}
+} //------------------------------------------------------- PÁGINAS DE NAVEGAÇÃO CANTO INFERIOR----------------------------------------------------------------------------------------
 
 function Tabs(){
   return(

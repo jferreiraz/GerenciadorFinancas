@@ -1,14 +1,101 @@
+import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
+import { Text, TextInput, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform, Button } from 'react-native'
 
-export default function InvestimentoFixo({ route }){
+import { db } from '../../../config'
+
+export default function InvestimentoFixo({ route,navigation }){
+    //Iniciar o bd
+    const [userDoc,setUserDoc] = useState(null)
+
+    //Texto de atualização do bd
+    const [text,setText] = useState("")
+
+    //CRUD do banco de dados
+    const Create = () =>{
+        //Criação do documento
+        const myDoc = doc(db, "MyCollection", "MyDocument2")
+
+        const docData = {
+            "name": "iJustyyine",
+            "bio": "youtuber"
+        }
+
+        setDoc(myDoc, docData)
+        .then(() => {
+         alert("Documento criado")
+        })
+        .catch((error) => {
+        //Falha na execução
+         alert(error.message)
+        })
+    }
+
+    const Read = () => {
+        //Leitura do documento
+        const myDoc = doc(db, "MyCollection", "MyDocument")
+
+        getDoc(myDoc)
+        .then((snapshot) => {
+            if (snapshot.exists) {
+                setUserDoc(snapshot.data())
+            }
+            else {
+                alert("Nenhum documento foi encontrado")
+            }
+           })
+           .catch((error) => {
+            //Falha na execução
+            alert(error.message)
+            })
+    }
+
+    const Update = (value,merge) => {
+        const myDoc = doc(db,"MyCollection","MyDocument")
+
+        setDoc(myDoc, value, { merge: merge })
+        .then(() => {
+            alert("Documento atualizado")
+            setText("")
+           })
+           .catch((error) => {
+           //Falha na execução
+            alert(error.message)
+           })
+    }
+
+    const Delete = () => {
+        const myDoc = doc(db,"MyCollection","MyDocument")
+
+        deleteDoc(myDoc)
+        .then(() => {
+            alert("Documento deletado")
+           })
+        .catch((error) => {
+            //Falha na execução
+             alert(error.message)
+            })
+        
+    }
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
-            <Text style={styles.title}>Detalhes investimento</Text>
+            <Text style={styles.title}>Detalhes investimento fixo</Text>
             <Text> </Text>
             <Text style={styles.subTitle}>Apenas pagina de texto com exibição de detalhes, lorem ipsum </Text>
+            <Button title='Create New Doc' onPress={Create}></Button>
+            <Button title='Read the Doc' onPress={Read}></Button>
+            {
+                userDoc != null &&
+                <Text>Bio: {userDoc.bio}</Text>
+            }
+            <TextInput placeholder='Digite aqui' onChangeText={(text) => { setText(text) }} value={text}></TextInput>
+            <Button title='Update the Doc' onPress={() => {
+                Update({"bio": text}, true)}} disabled={text == ""}>
+                </Button>
+            <Button title='Delete the Doc' onPress={Delete}></Button>
+
+            <TouchableOpacity onPress={()=> navigation.navigate('Cadastrar investimento fixo',{nome: 'João'})} style={styles.button1}><Text>Cadastrar investimento fixo</Text></TouchableOpacity>
         </View>
         </SafeAreaView>
     ); 

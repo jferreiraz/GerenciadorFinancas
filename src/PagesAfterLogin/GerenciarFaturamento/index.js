@@ -1,12 +1,7 @@
 import { View, Text, StyleSheet, SafeAreaView, Platform, Button, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import SelectBox from 'react-native-multi-selectbox'
-import { NavigationContainer } from "@react-navigation/native";
-import { Ionicons } from '@expo/vector-icons'
 
-
-export default function Home({navigation}){
-
+export default function GerenciarFaturamento({navigation}){
 
     return (
         
@@ -16,8 +11,7 @@ export default function Home({navigation}){
                     <Text style={styles.title}> Gerencie seu faturamento aqui!</Text>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de produtos',{nome: 'João'})} style={styles.button}><Text>Vendas de produtos</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de serviços',{nome: 'João'})} style={styles.button}><Text>Vendas de serviços</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de produtos e serviços',{nome: 'João'})} style={styles.button}><Text>Vendas de produtos e serviços</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('Vendas a prazo',{nome: 'João'})} style={styles.button}><Text>Vendas a prazo</Text></TouchableOpacity>
                 <TouchableOpacity onPress={()=> navigation.navigate('Estoque',{nome: 'João'})} style={styles.button}><Text>Estoque</Text></TouchableOpacity>
             </View>
