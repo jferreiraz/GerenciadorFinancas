@@ -22,7 +22,7 @@ const UserScreen = (props) => {
       });
       setUsers(users);
     });
-  }, []);
+  }, []); 
 
 
   return (
