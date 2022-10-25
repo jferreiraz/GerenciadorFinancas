@@ -54,7 +54,7 @@ const CadastrarInvestimentoFixo = (props) => {
 
       {/* descricao Input */}
       <View style={styles.inputGroup}>
-        <TextInput
+        <TextInput 
           placeholder="Descrição"
           multiline={true}
           numberOfLines={1}
