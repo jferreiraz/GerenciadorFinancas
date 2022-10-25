@@ -19,9 +19,9 @@ import Invoicing from   "../PagesAfterLogin/Invoicing";
 import Financas from    "../PagesAfterLogin/Financas";
 
 import Courses from '../PagesAfterLogin/GerenciarCustos/MaoDeObra/CadastrarMaoDeObra';
-import CreateUserScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/CreateUserScreen";
-import UserDetailScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/UserDetailScreen";
-import UsersList from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/UsersList";
+import CreateUserScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/CadastrarInvestimentoFixo";
+import UserDetailScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/AlterarInvestimentoFixo";
+import UsersList from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo";
 
 import GerenciarCustos from  "../PagesAfterLogin/GerenciarCustos";
 import InvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo";
@@ -33,6 +33,11 @@ import CadastrarInvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/Invest
 import CadastrarCustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo/CadastrarCustoFixo";
 import CadastrarMaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeObra/CadastrarMaoDeObra";
 import CadastrarCustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis/CadastrarCustosVariaveis";
+
+import AlterarInvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/AlterarInvestimentoFixo";
+//import AlterarCustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo/AlterarCustoFixo";
+//import AlterarMaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeObra/AlterarMaoDeObra";
+//import AlterarCustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis/AlterarCustosVariaveis";
 
 import GerenciarFaturamento from   "../PagesAfterLogin/GerenciarFaturamento";
 import Estoque from                "../PagesAfterLogin/GerenciarFaturamento/Estoque";
@@ -87,6 +92,10 @@ return(
         <Stack.Screen 
             name="Cadastrar investimento fixo" 
             component={CadastrarInvestimentoFixo} 
+        />
+        <Stack.Screen 
+            name="Alterar investimento fixo" 
+            component={AlterarInvestimentoFixo} 
         />
         <Stack.Screen  
             name="Custo fixo" 

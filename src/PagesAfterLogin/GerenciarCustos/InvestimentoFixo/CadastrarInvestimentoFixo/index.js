@@ -9,32 +9,32 @@ import {
 
 import firebase from "../../../../config";
 
-const AddUserScreen = (props) => {
+const CadastrarInvestimentoFixo = (props) => {
   const initalState = {
-    name: "",
-    email: "",
-    phone: "",
+    categoria: "",
+    descricao: "",
+    valor: "",
   };
 
   const [state, setState] = useState(initalState);
 
-  const handleChangeText = (value, name) => {
-    setState({ ...state, [name]: value });
+  const handleChangeText = (value, categoria) => {
+    setState({ ...state, [categoria]: value });
   };
 
-  const saveNewUser = async () => {
-    if (state.name === "") {
-      alert("please provide a name");
+  const salvarNovo = async () => {
+    if (state.categoria === "") {
+      alert("Porfavor preencha todos os campos");
     } else {
 
       try {
-        await firebase.db.collection("users").add({
-          name: state.name,
-          email: state.email,
-          phone: state.phone,
+        await firebase.db.collection("investimento fixo").add({
+          categoria: state.categoria,
+          descricao: state.descricao,
+          valor: state.valor,
         });
 
-        props.navigation.navigate("UsersList");
+        props.navigation.navigate("Investimento fixo");
       } catch (error) {
         console.log(error)
       }
@@ -43,37 +43,37 @@ const AddUserScreen = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Name Input */}
+      {/* categoria Input */}
       <View style={styles.inputGroup}>
         <TextInput
-          placeholder="Name"
-          onChangeText={(value) => handleChangeText(value, "name")}
-          value={state.name}
+          placeholder="Categoria"
+          onChangeText={(value) => handleChangeText(value, "categoria")}
+          value={state.categoria}
         />
       </View>
 
-      {/* Email Input */}
+      {/* descricao Input */}
       <View style={styles.inputGroup}>
         <TextInput
-          placeholder="Email"
+          placeholder="Descrição"
           multiline={true}
-          numberOfLines={4}
-          onChangeText={(value) => handleChangeText(value, "email")}
-          value={state.email}
+          numberOfLines={1}
+          onChangeText={(value) => handleChangeText(value, "descricao")}
+          value={state.descricao}
         />
       </View>
 
       {/* Input */}
       <View style={styles.inputGroup}>
         <TextInput
-          placeholder="phone"
-          onChangeText={(value) => handleChangeText(value, "phone")}
-          value={state.phone}
+          placeholder="Valor"
+          onChangeText={(value) => handleChangeText(value, "valor")}
+          value={state.valor}
         />
       </View>
 
       <View style={styles.button}>
-        <Button title="Save User" onPress={() => saveNewUser()} />
+        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
   );
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddUserScreen;
+export default CadastrarInvestimentoFixo;

@@ -5,22 +5,22 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "../../../config";
 
-const UserScreen = (props) => {
-  const [users, setUsers] = useState([]);
+const InvestimentoFixo = (props) => {
+  const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("users").onSnapshot((querySnapshot) => {
-      const users = [];
+    firebase.db.collection("investimento fixo").onSnapshot((querySnapshot) => {
+      const campos = [];
       querySnapshot.docs.forEach((doc) => {
-        const { name, email, phone } = doc.data();
-        users.push({
+        const { categoria, descricao, valor } = doc.data();
+        campos.push({
           id: doc.id,
-          name,
-          email,
-          phone,
+          categoria,
+          descricao,
+          valor,
         });
       });
-      setUsers(users);
+      setCampos(campos);
     });
   }, []); 
 
@@ -28,24 +28,24 @@ const UserScreen = (props) => {
   return (
     <ScrollView>
       <Button
-        onPress={() => props.navigation.navigate("CreateUserScreen")}
-        title="Create User"
+        onPress={() => props.navigation.navigate("Cadastrar investimento fixo")}
+        title="Cadastrar dados"
       />
-      {users.map((user) => {
+      {campos.map((campos) => {
         return (
           <ListItem
-            key={user.id}
+            key={campos.id}
             bottomDivider
             onPress={() => {
-              props.navigation.navigate("UserDetailScreen", {
-                userId: user.id,
+              props.navigation.navigate("Alterar investimento fixo", {
+                camposId: campos.id,
               });
             }}
           >
             <ListItem.Content>
-              <ListItem.Title>{user.name}</ListItem.Title>
-              <ListItem.Subtitle>{user.email}</ListItem.Subtitle>
-              <ListItem.Subtitle>{user.phone}</ListItem.Subtitle>
+              <ListItem.Title>{campos.categoria}</ListItem.Title>
+              <ListItem.Subtitle>{campos.descricao}</ListItem.Subtitle>
+              <ListItem.Subtitle>{"R$ "+campos.valor}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         );
@@ -54,4 +54,4 @@ const UserScreen = (props) => {
   );
 };
 
-export default UserScreen;
+export default InvestimentoFixo;

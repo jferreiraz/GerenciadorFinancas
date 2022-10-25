@@ -11,46 +11,46 @@ import { TextInput } from "react-native-gesture-handler";
 
 import firebase from "../../../../config";
 
-const UserDetailScreen = (props) => {
+const AlterarInvestimentoFixo = (props) => {
   const initialState = {
     id: "",
-    name: "",
-    email: "",
-    phone: "",
+    categoria: "",
+    descricao: "",
+    valor: "",
   };
 
-  const [user, setUser] = useState(initialState);
-  const [loading, setLoading] = useState(true);
+  const [campos, setCampos] = useState(initialState);
+  const [carregar, setCarregar] = useState(true);
 
   const handleTextChange = (value, prop) => {
-    setUser({ ...user, [prop]: value });
+    setCampos({ ...campos, [prop]: value });
   };
 
-  const getUserById = async (id) => {
-    const dbRef = firebase.db.collection("users").doc(id);
+  const pegarDadosID = async (id) => {
+    const dbRef = firebase.db.collection("investimento fixo").doc(id);
     const doc = await dbRef.get();
-    const user = doc.data();
-    setUser({ ...user, id: doc.id });
-    setLoading(false);
+    const campos = doc.data();
+    setCampos({ ...campos, id: doc.id });
+    setCarregar(false);
   };
 
-  const deleteUser = async () => {
-    setLoading(true)
+  const deletarDados = async () => {
+    setCarregar(true)
     const dbRef = firebase.db
-      .collection("users")
-      .doc(props.route.params.userId);
+      .collection("investimento fixo")
+      .doc(props.route.params.camposId);
     await dbRef.delete();
-    setLoading(false)
-    props.navigation.navigate("UsersList");
+    setCarregar(false)
+    props.navigation.navigate("Investimento fixo");
   };
 
   const openConfirmationAlert = () => {
     Alert.alert(
-      "Removing the User",
-      "Are you sure?",
+      "Deletar dados",
+      "Você tem certeza que deseja remover os dados digitados?",
       [
-        { text: "Yes", onPress: () => deleteUser() },
-        { text: "No", onPress: () => console.log("canceled") },
+        { text: "Sim", onPress: () => deletarDados() },
+        { text: "Não", onPress: () => console.log("Cancelado") },
       ],
       {
         cancelable: true,
@@ -58,22 +58,22 @@ const UserDetailScreen = (props) => {
     );
   };
 
-  const updateUser = async () => {
-    const userRef = firebase.db.collection("users").doc(user.id);
-    await userRef.set({
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
+  const atualizarDados = async () => {
+    const camposRef = firebase.db.collection("investimento fixo").doc(campos.id);
+    await camposRef.set({
+      categoria: campos.categoria,
+      descricao: campos.descricao,
+      valor: campos.valor,
     });
-    setUser(initialState);
-    props.navigation.navigate("UsersList");
+    setCampos(initialState);
+    props.navigation.navigate("Investimento fixo");
   };
 
   useEffect(() => {
-    getUserById(props.route.params.userId);
+    pegarDadosID(props.route.params.camposId);
   }, []);
 
-  if (loading) {
+  if (carregar) {
     return (
       <View style={styles.loader}>
         <ActivityIndicator size="large" color="#9E9E9E" />
@@ -85,40 +85,40 @@ const UserDetailScreen = (props) => {
     <ScrollView style={styles.container}>
       <View>
         <TextInput
-          placeholder="Name"
-          autoCompleteType="username"
+          placeholder="Categoria"
+          autoCompleteType="categoria"
           style={styles.inputGroup}
-          value={user.name}
-          onChangeText={(value) => handleTextChange(value, "name")}
+          value={campos.categoria}
+          onChangeText={(value) => handleTextChange(value, "categoria")}
         />
       </View>
       <View>
         <TextInput
-          autoCompleteType="email"
-          placeholder="Email"
+          autoCompleteType="Descricao"
+          placeholder="descricao"
           style={styles.inputGroup}
-          value={user.email}
-          onChangeText={(value) => handleTextChange(value, "email")}
+          value={campos.descricao}
+          onChangeText={(value) => handleTextChange(value, "descricao")}
         />
       </View>
       <View>
         <TextInput
-          placeholder="Phone"
-          autoCompleteType="tel"
+          placeholder="Valor"
+          autoCompleteType="valor"
           style={styles.inputGroup}
-          value={user.phone}
-          onChangeText={(value) => handleTextChange(value, "phone")}
+          value={campos.valor}
+          onChangeText={(value) => handleTextChange(value, "valor")}
         />
       </View>
       <View style={styles.btn}>
         <Button
-          title="Delete"
+          title="Deletar"
           onPress={() => openConfirmationAlert()}
           color="#E37399"
         />
       </View>
       <View>
-        <Button title="Update" onPress={() => updateUser()} color="#19AC52" />
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#19AC52" />
       </View>
     </ScrollView>
   );
@@ -150,4 +150,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UserDetailScreen;
+export default AlterarInvestimentoFixo;
