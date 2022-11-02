@@ -40,10 +40,11 @@ Open terminal
    exx: npx expo install react-native-svg@12.3.0
    
 Protótipo:<br><br>
-![image](https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png)
+<!-- ![image](https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png) -->
+
+[<img align="left" alt="jferreiraz | Figma" width="130px" src="https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png" />][figma]
 
 
-
-
+[figma]: https://www.figma.com/file/wykbMX8h6bLKc4b8am5yn0/Desgine-APP?node-id=0%3A1
 
  </h4>
