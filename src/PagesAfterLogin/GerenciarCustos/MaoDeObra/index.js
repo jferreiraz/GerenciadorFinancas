@@ -5,11 +5,11 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "../../../config";
 
-const CustoFixo = (props) => {
+const MaoDeObra = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("custo fixo").onSnapshot((querySnapshot) => {
+    firebase.db.collection("mão de obra").onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, valor } = doc.data();
@@ -28,7 +28,7 @@ const CustoFixo = (props) => {
   return (
     <ScrollView>
       <Button
-        onPress={() => props.navigation.navigate("Cadastrar custo fixo")}
+        onPress={() => props.navigation.navigate("Cadastrar custos com mão de obra")}
         title="Cadastrar dados"
       />
       {campos.map((campos) => {
@@ -37,7 +37,7 @@ const CustoFixo = (props) => {
             key={campos.id}
             bottomDivider
             onPress={() => {
-              props.navigation.navigate("Alterar custo fixo", {
+              props.navigation.navigate("Alterar custos com mão de obra", {
                 camposId: campos.id,
               });
             }}
@@ -54,4 +54,4 @@ const CustoFixo = (props) => {
   );
 };
 
-export default CustoFixo;
+export default MaoDeObra;

@@ -1,6 +1,5 @@
 import { View, TouchableOpacity, Text, Modal, FlatList, StyleSheet } from 'react-native';
 import React from 'react';
-import CadastrarInvestimentoFixo from '../CadastrarInvestimentoFixo';
 import {useState} from 'react';
 import { categorias } from './categorias';
 
