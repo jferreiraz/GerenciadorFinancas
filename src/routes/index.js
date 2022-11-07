@@ -35,9 +35,9 @@ import CadastrarMaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeO
 import CadastrarCustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis/CadastrarCustosVariaveis";
 
 import AlterarInvestimentoFixo from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/AlterarInvestimentoFixo";
-//import AlterarCustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo/AlterarCustoFixo";
-//import AlterarMaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeObra/AlterarMaoDeObra";
-//import AlterarCustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis/AlterarCustosVariaveis";
+import AlterarCustoFixo from        "../PagesAfterLogin/GerenciarCustos/CustoFixo/AlterarCustoFixo";
+import AlterarMaoDeObra from        "../PagesAfterLogin/GerenciarCustos/MaoDeObra/AlterarMaoDeObra";
+import AlterarCustosVariaveis from  "../PagesAfterLogin/GerenciarCustos/CustosVariaveis/AlterarCustosVariaveis";
 
 import GerenciarFaturamento from   "../PagesAfterLogin/GerenciarFaturamento";
 import Estoque from                "../PagesAfterLogin/GerenciarFaturamento/Estoque";
@@ -106,6 +106,10 @@ return(
             component={CadastrarCustoFixo} 
         />
         <Stack.Screen 
+            name="Alterar custo fixo" 
+            component={AlterarCustoFixo} 
+        />
+        <Stack.Screen 
             name="Custos com mão de obra" 
             component={MaoDeObra} 
         />
@@ -114,12 +118,20 @@ return(
             component={CadastrarMaoDeObra} 
         />
         <Stack.Screen 
+            name="Alterar mão de obra" 
+            component={AlterarMaoDeObra} 
+        />
+        <Stack.Screen 
             name="Custos variáveis" 
             component={CustosVariaveis} 
         />
         <Stack.Screen 
             name="Cadastrar custos variáveis" 
             component={CadastrarCustosVariaveis} 
+        />
+        <Stack.Screen 
+            name="Alterar custos variáveis" 
+            component={AlterarCustosVariaveis} 
         />
         <Stack.Screen //--------------------------------------------------- PÁGINAS GERENCIAR FATURAMENTO ------------------------------------------------------
             name="Gerenciar Faturamento" 
