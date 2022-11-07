@@ -1,23 +1,47 @@
 export const categorias = [
     {
-        id: "Computadores",
-        name: 'Computadores',
+        id: "Água",
+        name: 'Água',
     },
     {
-        id: "Móveis",
-        name: 'Móveis',
+        id: "Luz",
+        name: 'Luz',
     },
     {
-        id: "Gasolina",
-        name: 'Gasolina',
+        id: "Telefone",
+        name: 'Telefone',
     },
     {
-        id: "Aparelhos",
-        name: 'Aparelhos',
+        id: "Aluguel",
+        name: 'Aluguel',
     },
     {
-        id: "Marketing",
-        name: 'Marketing',
+        id: "Internet",
+        name: 'Internet',
+    },
+    {
+        id: "Despesas com veículos",
+        name: 'Despesas com veículos',
+    },
+    {
+        id: "Propaganda e publicidade",
+        name: 'Propaganda e publicidade',
+    },
+    {
+        id: "Contador",
+        name: 'Contador',
+    },
+    {
+        id: "Depecriação Mensal",
+        name: 'Depecriação Mensal',
+    },
+    {
+        id: "Condomínio",
+        name: 'Condomínio',
+    },
+    {
+        id: "Outros",
+        name: 'Outros',
     }
     
 ]

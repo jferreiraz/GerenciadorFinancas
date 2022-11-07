@@ -12,12 +12,14 @@ const VendasProdutosServicos = (props) => {
     firebase.db.collection("produtos e serviços").onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
-        const { categoria, descricao, valor } = doc.data();
+        const { categoria, descricao, quantidadeUnitaria, custoUnitario, vendaUnitaria } = doc.data();
         campos.push({
           id: doc.id,
           categoria,
           descricao,
-          valor,
+          quantidadeUnitaria,
+          custoUnitario,
+          vendaUnitaria
         });
       });
       setCampos(campos);
@@ -45,7 +47,9 @@ const VendasProdutosServicos = (props) => {
             <ListItem.Content>
               <ListItem.Title>{campos.categoria}</ListItem.Title>
               <ListItem.Subtitle>{campos.descricao}</ListItem.Subtitle>
-              <ListItem.Subtitle>{"R$ "+campos.valor}</ListItem.Subtitle>
+              <ListItem.Subtitle>{campos.quantidadeUnitaria}</ListItem.Subtitle>
+              <ListItem.Subtitle>{"R$ "+campos.custoUnitario}</ListItem.Subtitle>
+              <ListItem.Subtitle>{"R$ "+campos.vendaUnitaria}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         );

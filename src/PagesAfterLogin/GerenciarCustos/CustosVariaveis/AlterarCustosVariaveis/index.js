@@ -28,7 +28,7 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("custos variáveis").doc(id);
+    const dbRef = firebase.db.collection("custos variaveis").doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -108,6 +108,7 @@ const AlterarCustosVariaveis = (props) => {
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
+          keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
         />
       </View>

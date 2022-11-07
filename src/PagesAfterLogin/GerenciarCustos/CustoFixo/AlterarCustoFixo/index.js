@@ -107,6 +107,7 @@ const AlterarCustoFixo = (props) => {
           placeholder="Valor"
           autoCompleteType="valor"
           style={styles.inputGroup}
+          keyboardType="decimal-pad"
           value={campos.valor}
           onChangeText={(value) => handleChangeText(value, "valor")}
         />

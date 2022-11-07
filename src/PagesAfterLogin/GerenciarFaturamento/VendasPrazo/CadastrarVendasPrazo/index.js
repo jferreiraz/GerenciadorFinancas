@@ -77,6 +77,7 @@ const CadastrarVendasPrazo = (props) => {
       <View style={styles.inputGroup}>
         <TextInput
           placeholder="Valor"
+          keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}
         />

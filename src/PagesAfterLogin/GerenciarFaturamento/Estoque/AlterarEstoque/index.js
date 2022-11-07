@@ -108,6 +108,7 @@ const AlterarEstoque = (props) => {
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
+          keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
         />
       </View>

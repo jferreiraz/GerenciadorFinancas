@@ -17,7 +17,9 @@ const AlterarVendasProdutosServicos = (props) => {
     id: "",
     categoria: "",
     descricao: "",
-    valor: "",
+    quantidadeUnitaria: "",
+    custoUnitario: "",
+    vendaUnitaria: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -64,7 +66,9 @@ const AlterarVendasProdutosServicos = (props) => {
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
-      valor: campos.valor,
+      quantidadeUnitaria: campos.quantidadeUnitaria,
+      custoUnitario: campos.custoUnitario,
+      vendaUnitaria: campos.vendaUnitaria,
     });
     setCampos(initialState);
     props.navigation.navigate("Vendas de produtos e serviços");
@@ -104,11 +108,29 @@ const AlterarVendasProdutosServicos = (props) => {
       </View>
       <View>
         <TextInput
-          placeholder="Valor"
-          autoCompleteType="valor"
+          placeholder="Quantidade unitária do produto"
           style={styles.inputGroup}
-          value={campos.valor}
-          onChangeText={(value) => handleChangeText(value, "valor")}
+          value={campos.quantidadeUnitaria}
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "quantidadeUnitaria")}
+        />
+      </View>
+      <View>
+        <TextInput
+          style={styles.inputGroup}
+          placeholder="Custo de produção unitário"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "custoUnitario")}
+          value={campos.custoUnitario}
+        />
+      </View>
+      <View>
+        <TextInput
+          style={styles.inputGroup}
+          placeholder="Custo de venda unitário"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "vendaUnitaria")}
+          value={campos.vendaUnitaria}
         />
       </View>
       <View style={styles.btn}>

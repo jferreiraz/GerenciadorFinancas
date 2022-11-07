@@ -19,7 +19,9 @@ const CadastrarVendasProdutosServicos = (props) => {
   const initalState = {
     categoria: "",
     descricao: "",
-    valor: "",
+    quantidadeUnitaria: "",
+    custoUnitario: "",
+    vendaUnitaria: "",
     dataHoje:date + " às " + time,
   };
 
@@ -38,7 +40,9 @@ const CadastrarVendasProdutosServicos = (props) => {
         await firebase.db.collection("produtos e serviços").add({
           categoria: state.categoria,
           descricao: state.descricao,
-          valor: state.valor,
+          quantidadeUnitaria: state.quantidadeUnitaria,
+          custoUnitario: state.custoUnitario,
+          vendaUnitaria: state.vendaUnitaria,
           dataHoje: state.dataHoje,
         });
 
@@ -76,9 +80,26 @@ const CadastrarVendasProdutosServicos = (props) => {
       {/* Input */}
       <View style={styles.inputGroup}>
         <TextInput
-          placeholder="Valor"
-          onChangeText={(value) => handleChangeText(value, "valor")}
-          value={state.valor}
+          placeholder="Quantidade unitária do produto"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "quantidadeUnitaria")}
+          value={state.quantidadeUnitaria}
+        />
+      </View>
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Custo de produção unitário"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "custoUnitario")}
+          value={state.custoUnitario}
+        />
+      </View>
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Custo de venda unitário"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "vendaUnitaria")}
+          value={state.vendaUnitaria}
         />
       </View>
 

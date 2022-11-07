@@ -111,6 +111,7 @@ const AlterarInvestimentoFixo = (props) => {
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
+          keyboardType="decimal-pad"
           onChangeText={(value) => handleTextChange(value, "valor")}
         />
       </View>
