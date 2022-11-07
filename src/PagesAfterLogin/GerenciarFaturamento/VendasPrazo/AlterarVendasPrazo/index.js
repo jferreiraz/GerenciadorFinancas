@@ -28,7 +28,7 @@ const AlterarVendasPrazo = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("custo fixo").doc(id);
+    const dbRef = firebase.db.collection("vendas prazo").doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -38,11 +38,11 @@ const AlterarVendasPrazo = (props) => {
   const deletarDados = async () => {
     setCarregar(true)
     const dbRef = firebase.db
-      .collection("custo fixo")
+      .collection("vendas prazo")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
-    props.navigation.navigate("Custo fixo");
+    props.navigation.navigate("Vendas a prazo");
   };
 
   const openConfirmationAlert = () => {
@@ -60,14 +60,14 @@ const AlterarVendasPrazo = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("custo fixo").doc(campos.id);
+    const camposRef = firebase.db.collection("vendas prazo").doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
     });
     setCampos(initialState);
-    props.navigation.navigate("Custo fixo");
+    props.navigation.navigate("Vendas a prazo");
   };
 
   useEffect(() => {

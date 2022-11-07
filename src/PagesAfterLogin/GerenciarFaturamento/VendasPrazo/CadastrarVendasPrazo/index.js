@@ -12,7 +12,7 @@ import Select from "../Components";
 import { SafeAreaView } from "react-native";
 import { categorias } from "../Components/categorias";
 
-const CadastrarMaoDeObra = (props) => {
+const CadastrarVendasPrazo = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
@@ -35,14 +35,14 @@ const CadastrarMaoDeObra = (props) => {
     } else {
 
       try {
-        await firebase.db.collection("mao de obra").add({
+        await firebase.db.collection("vendas prazo").add({
           categoria: state.categoria,
           descricao: state.descricao,
           valor: state.valor,
           dataHoje: state.dataHoje,
         });
 
-        props.navigation.navigate("Custos com mão de obra");
+        props.navigation.navigate("Vendas a prazo");
       } catch (error) {
         console.log(error)
       }
@@ -112,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CadastrarMaoDeObra;
+export default CadastrarVendasPrazo;

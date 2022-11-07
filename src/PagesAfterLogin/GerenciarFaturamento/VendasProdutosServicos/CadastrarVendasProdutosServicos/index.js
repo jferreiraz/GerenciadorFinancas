@@ -35,14 +35,14 @@ const CadastrarVendasProdutosServicos = (props) => {
     } else {
 
       try {
-        await firebase.db.collection("mao de obra").add({
+        await firebase.db.collection("produtos e serviços").add({
           categoria: state.categoria,
           descricao: state.descricao,
           valor: state.valor,
           dataHoje: state.dataHoje,
         });
 
-        props.navigation.navigate("Custos com mão de obra");
+        props.navigation.navigate("Vendas de produtos e serviços");
       } catch (error) {
         console.log(error)
       }
