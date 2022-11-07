@@ -13,11 +13,14 @@ import { SafeAreaView } from "react-native";
 import { categorias } from "../Components/categorias";
 
 const CadastrarInvestimentoFixo = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+
   const initalState = {
     categoria: "",
     descricao: "",
     valor: "",
-    //dataHoje:"",
+    dataHoje:date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -36,7 +39,7 @@ const CadastrarInvestimentoFixo = (props) => {
           categoria: state.categoria,
           descricao: state.descricao,
           valor: state.valor,
-          //dataHoje: state.dataHoje,
+          dataHoje: state.dataHoje,
         });
 
         props.navigation.navigate("Investimento fixo");

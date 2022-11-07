@@ -1,149 +1,115 @@
-import { doc, setDoc, getDoc, deleteDoc } from 'firebase/firestore'
-import React, { useState } from 'react'
-import { Text, TextInput, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform, Button } from 'react-native'
+import React, { useState } from "react";
+import {
+  Button,
+  View,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from "react-native";
 
-import { db } from '../../../../config'
+import firebase from "../../../../config";
+import Select from "../Components";
+import { SafeAreaView } from "react-native";
+import { categorias } from "../Components/categorias";
 
-export default function CadastrarCustoFixo(){
-    //Iniciar o bd
-    const [userDoc,setUserDoc] = useState(null)
+const CadastrarCustoFixo = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
 
-    //Texto de atualização do bd
-    const [text, setText, textName] = useState("")
+  const initalState = {
+    categoria: "",
+    descricao: "",
+    valor: "",
+    dataHoje:date + " às " + time,
+  };
 
-    //CRUD do banco de dados
-    const Create = () =>{
-        //Criação do documento
-        const myDoc = doc(db, "M2222n", "M222222")
+  const [state, setState] = useState(initalState);
 
-        const docData = {
-            "name": name1,
-            "bio": bio1
-        }
+  const handleChangeText = (value, categoria) => {
+    setState({ ...state, [categoria]: value });
+  };
 
-        setDoc(myDoc, docData)
-        .then(() => {
-         alert("Documento criado")
-        })
-        .catch((error) => {
-        //Falha na execução
-         alert(error.message)
-        })
+  const salvarNovo = async () => {
+    if (state.categoria === "") {
+      alert("Porfavor preencha todos os campos");
+    } else {
+
+      try {
+        await firebase.db.collection("custo fixo").add({
+          categoria: state.categoria,
+          descricao: state.descricao,
+          valor: state.valor,
+          dataHoje: state.dataHoje,
+        });
+
+        props.navigation.navigate("Custo fixo");
+      } catch (error) {
+        console.log(error)
+      }
     }
+  };
 
-    const Read = () => {
-        //Leitura do documento
-        const myDoc = doc(db, "MyCollection", "MyDocument")
+  return (
+    <ScrollView style={styles.container}>
+      {/* categoria Input */}
+      <SafeAreaView style={styles.inputGroup}>
+      <Select 
+          options={categorias} 
+          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+          text="Selecione uma categoria"
+          label="Categoria:"
+          value={state.categoria}         
+          />
+      </SafeAreaView>
 
-        getDoc(myDoc)
-        .then((snapshot) => {
-            if (snapshot.exists) {
-                setUserDoc(snapshot.data())
-            }
-            else {
-                alert("Nenhum documento foi encontrado")
-            }
-           })
-           .catch((error) => {
-            //Falha na execução
-            alert(error.message)
-            })
-    }
+      {/* descricao Input */}
+      <View style={styles.inputGroup}>
+        <TextInput 
+          placeholder="Descrição"
+          multiline={true}
+          numberOfLines={1}
+          onChangeText={(value) => handleChangeText(value, "descricao")}
+          value={state.descricao}
+        />
+      </View>
 
-    const Update = (value,merge) => {
-        const myDoc = doc(db,"MyCollection","MyDocument")
+      {/* Input */}
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Valor"
+          onChangeText={(value) => handleChangeText(value, "valor")}
+          value={state.valor}
+        />
+      </View>
 
-        setDoc(myDoc, value, { merge: merge })
-        .then(() => {
-            alert("Documento atualizado")
-            setText("")
-           })
-           .catch((error) => {
-           //Falha na execução
-            alert(error.message)
-           })
-    }
-
-    const Delete = () => {
-        const myDoc = doc(db,"MyCollection","MyDocument")
-
-        deleteDoc(myDoc)
-        .then(() => {
-            alert("Documento deletado")
-           })
-        .catch((error) => {
-            //Falha na execução
-             alert(error.message)
-            })
-    }
-  
-    return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-            <TextInput placeholder='Categoria do produto...' style={styles.input} onChangeText={(text) => { setText(text) }} value={text}></TextInput>
-            <TextInput placeholder='Descrição do produto...' style={styles.input} onChangeText={(textName) => { setText(textName) }} value={textName}></TextInput>
-            <TextInput placeholder='Valor do produto...'     style={styles.input} onChangeText={(text) => { setText(text) }} value={text}></TextInput>
-
-            <Button title='Create New Doc' onPress={Create}></Button>
-            {
-                userDoc != null &&
-                <Text>Bio: {userDoc.bio}</Text> &&
-                <Text>Name: {userDoc.name}</Text>
-            }
-            <Button title='Update the Doc' onPress={() => {
-                Update({"bio": text}, true)}} disabled={text == ""}>
-            </Button>
-        </View>
-        </SafeAreaView>
-    ); 
-}
+      <View style={styles.button}>
+        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    button1: {
-        padding: 10,
-        margin: 50,
-        alignItems: 'center',
-        backgroundColor: "blue",
-        borderRadius: 10,
-        width: 250,
-        justifyContent: 'center'        
-    },
-    button: {
-        padding: 10,
-        margin: 50,
-        alignItems: 'center',
-        backgroundColor: "blue",
-        borderRadius: 10,
-        width: 250,
-        justifyContent: 'center'        
-    },
-    container: {
-        flex: 1,
-        backgroundColor: "fff",
-    },
-    texts:{
-        color: "#FFF",
-        fontSize: 15,
-
-    },
-    headerContainer: {
-        padding: 20,
-        paddingTop: Platform.OS == 'android' ? 50 : 0
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "400",
-        color: "344422",
-    },
-    subTitle: {
-        fontSize: 14,
-        fontWeight: "400",
-        color: "300022",
-    },
-    input:{
-        borderBottomWidth: 1,
-        height: 40,
-        marginBottom: 12,
-        fontSize: 16
-    },
+  container: {
+    flex: 1,
+    padding: 35,
+  },
+  inputGroup: {
+    flex: 1,
+    padding: 0,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  loader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
+
+export default CadastrarCustoFixo;
