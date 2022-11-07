@@ -6,16 +6,13 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
-  SafeAreaView
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-
+import Select from "../../../../components/select";
 import firebase from "../../../../config";
-import Select from "../Components";
-import { categorias } from "../Components/categorias";
+import { categorias } from "../../../../components/categorias";
 
-
-const AlterarInvestimentoFixo = (props) => {
+const AlterarEstoque = (props) => {
   const initialState = {
     id: "",
     categoria: "",
@@ -26,12 +23,12 @@ const AlterarInvestimentoFixo = (props) => {
   const [campos, setCampos] = useState(initialState);
   const [carregar, setCarregar] = useState(true);
 
-  const handleTextChange = (value, prop) => {
+  const handleChangeText = (value, prop) => {
     setCampos({ ...campos, [prop]: value });
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("investimento fixo").doc(id);
+    const dbRef = firebase.db.collection("custo fixo").doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -41,11 +38,11 @@ const AlterarInvestimentoFixo = (props) => {
   const deletarDados = async () => {
     setCarregar(true)
     const dbRef = firebase.db
-      .collection("investimento fixo")
+      .collection("custo fixo")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
-    props.navigation.navigate("Investimento fixo");
+    props.navigation.navigate("Custo fixo");
   };
 
   const openConfirmationAlert = () => {
@@ -63,14 +60,14 @@ const AlterarInvestimentoFixo = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("investimento fixo").doc(campos.id);
+    const camposRef = firebase.db.collection("custo fixo").doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
     });
     setCampos(initialState);
-    props.navigation.navigate("Investimento fixo");
+    props.navigation.navigate("Custo fixo");
   };
 
   useEffect(() => {
@@ -87,22 +84,22 @@ const AlterarInvestimentoFixo = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <SafeAreaView style={styles.inputGroup}>
+      <View>
       <Select 
           options={categorias} 
-          onChangeSelect={(value)=> handleTextChange(value, "categoria")} 
+          onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
           text="Selecione uma categoria"
-          label="Categoria:"
+          label=""
           value={campos.categoria}         
           />
-      </SafeAreaView>
+      </View>
       <View>
         <TextInput
           autoCompleteType="Descricao"
           placeholder="descricao"
           style={styles.inputGroup}
           value={campos.descricao}
-          onChangeText={(value) => handleTextChange(value, "descricao")}
+          onChangeText={(value) => handleChangeText(value, "descricao")}
         />
       </View>
       <View>
@@ -111,7 +108,7 @@ const AlterarInvestimentoFixo = (props) => {
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
-          onChangeText={(value) => handleTextChange(value, "valor")}
+          onChangeText={(value) => handleChangeText(value, "valor")}
         />
       </View>
       <View style={styles.btn}>
@@ -154,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AlterarInvestimentoFixo;
+export default AlterarEstoque;

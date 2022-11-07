@@ -48,6 +48,10 @@ import CadastrarEstoque from                "../PagesAfterLogin/GerenciarFaturam
 import CadastrarVendasPrazo from            "../PagesAfterLogin/GerenciarFaturamento/VendasPrazo/CadastrarVendasPrazo";
 import CadastrarVendasProdutosServicos from "../PagesAfterLogin/GerenciarFaturamento/VendasProdutosServicos/CadastrarVendasProdutosServicos";
 
+import AlterarEstoque from                "../PagesAfterLogin/GerenciarFaturamento/Estoque/AlterarEstoque";
+import AlterarVendasPrazo from            "../PagesAfterLogin/GerenciarFaturamento/VendasPrazo/AlterarVendasPrazo";
+import AlterarVendasProdutosServicos from "../PagesAfterLogin/GerenciarFaturamento/VendasProdutosServicos/AlterarVendasProdutosServicos";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -146,6 +150,10 @@ return(
             component={CadastrarEstoque} 
         />
         <Stack.Screen 
+            name="Alterar estoque" 
+            component={AlterarEstoque} 
+        />
+        <Stack.Screen 
             name="Vendas a prazo" 
             component={VendasPrazo} 
         />
@@ -154,12 +162,20 @@ return(
             component={CadastrarVendasPrazo} 
         />
         <Stack.Screen 
+            name="Alterar vendas a prazo" 
+            component={AlterarVendasPrazo} 
+        />
+        <Stack.Screen 
             name="Vendas de produtos e serviços" 
             component={VendasProdutosServicos} 
         />
         <Stack.Screen 
             name="Cadastrar vendas de produtos e serviços" 
             component={CadastrarVendasProdutosServicos} 
+        />
+        <Stack.Screen 
+            name="Alterar vendas de produtos e serviços" 
+            component={AlterarVendasProdutosServicos} 
         />
         <Stack.Screen //--------------------------------------------------- OUTRAS PÁGINAS ------------------------------------------------------
             name="Profile" 

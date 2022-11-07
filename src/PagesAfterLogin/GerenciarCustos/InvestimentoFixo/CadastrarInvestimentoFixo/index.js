@@ -8,12 +8,16 @@ import {
 } from "react-native";
 
 import firebase from "../../../../config";
+import Select from "../Components";
+import { SafeAreaView } from "react-native";
+import { categorias } from "../Components/categorias";
 
 const CadastrarInvestimentoFixo = (props) => {
   const initalState = {
     categoria: "",
     descricao: "",
     valor: "",
+    //dataHoje:"",
   };
 
   const [state, setState] = useState(initalState);
@@ -32,6 +36,7 @@ const CadastrarInvestimentoFixo = (props) => {
           categoria: state.categoria,
           descricao: state.descricao,
           valor: state.valor,
+          //dataHoje: state.dataHoje,
         });
 
         props.navigation.navigate("Investimento fixo");
@@ -44,13 +49,15 @@ const CadastrarInvestimentoFixo = (props) => {
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
-      <View style={styles.inputGroup}>
-        <TextInput
-          placeholder="Categoria"
-          onChangeText={(value) => handleChangeText(value, "categoria")}
-          value={state.categoria}
-        />
-      </View>
+      <SafeAreaView style={styles.inputGroup}>
+      <Select 
+          options={categorias} 
+          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+          text="Selecione uma categoria"
+          label="Categoria:"
+          value={state.categoria}         
+          />
+      </SafeAreaView>
 
       {/* descricao Input */}
       <View style={styles.inputGroup}>
