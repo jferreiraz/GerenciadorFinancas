@@ -38,5 +38,13 @@ Open terminal
   * npm run start
   > (remember to install dependencies before npm run start or after if you didnt get the allert yet)<br>
    exx: npx expo install react-native-svg@12.3.0
+   
+Prototype: _(Click at the image below)_ <br><br> 
+<!-- ![image](https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png) -->
+
+[<img align="left" alt="jferreiraz | Figma" width="130px" src="https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png" />][figma]
+
+
+[figma]: https://www.figma.com/file/wykbMX8h6bLKc4b8am5yn0/Desgine-APP?node-id=0%3A1
 
  </h4>
