@@ -9,7 +9,7 @@ const CustosVariaveis = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("custos variáveis").onSnapshot((querySnapshot) => {
+    firebase.db.collection("custos variaveis").onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, valor } = doc.data();

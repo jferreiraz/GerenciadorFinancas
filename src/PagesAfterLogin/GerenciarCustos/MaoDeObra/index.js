@@ -9,7 +9,7 @@ const MaoDeObra = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("mão de obra").onSnapshot((querySnapshot) => {
+    firebase.db.collection("mao de obra").onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, valor } = doc.data();
@@ -28,7 +28,7 @@ const MaoDeObra = (props) => {
   return (
     <ScrollView>
       <Button
-        onPress={() => props.navigation.navigate("Cadastrar custos com mão de obra")}
+        onPress={() => props.navigation.navigate("Cadastrar mão de obra")}
         title="Cadastrar dados"
       />
       {campos.map((campos) => {
@@ -37,7 +37,7 @@ const MaoDeObra = (props) => {
             key={campos.id}
             bottomDivider
             onPress={() => {
-              props.navigation.navigate("Alterar custos com mão de obra", {
+              props.navigation.navigate("Alterar mão de obra", {
                 camposId: campos.id,
               });
             }}

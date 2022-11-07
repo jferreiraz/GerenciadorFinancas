@@ -60,7 +60,7 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("custos variáveis").doc(campos.id);
+    const camposRef = firebase.db.collection("custos variaveis").doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,

@@ -35,7 +35,7 @@ const CadastrarCustosVariaveis = (props) => {
     } else {
 
       try {
-        await firebase.db.collection("custos variáveis").add({
+        await firebase.db.collection("custos variaveis").add({
           categoria: state.categoria,
           descricao: state.descricao,
           valor: state.valor,
