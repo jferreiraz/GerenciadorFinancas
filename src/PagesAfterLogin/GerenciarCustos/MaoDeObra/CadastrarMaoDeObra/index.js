@@ -1,38 +1,115 @@
-import { View, StyleSheet, Text, Platform } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import {
+  Button,
+  View,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from "react-native";
 
+import firebase from "../../../../config";
+import Select from "../Components";
+import { SafeAreaView } from "react-native";
+import { categorias } from "../Components/categorias";
 
-export default function Information({ route }){
-    return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-            <Text style={styles.title}>Pagina tutorial/ ajuda</Text>
-            <Text></Text>
-            <Text style={styles.subTitle}>Apenas pagina de texto com exibição de informações, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-        </View>
-        </SafeAreaView>
-    );
-}
+const CadastrarCustoFixo = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
 
+  const initalState = {
+    categoria: "",
+    descricao: "",
+    valor: "",
+    dataHoje:date + " às " + time,
+  };
+
+  const [state, setState] = useState(initalState);
+
+  const handleChangeText = (value, categoria) => {
+    setState({ ...state, [categoria]: value });
+  };
+
+  const salvarNovo = async () => {
+    if (state.categoria === "") {
+      alert("Porfavor preencha todos os campos");
+    } else {
+
+      try {
+        await firebase.db.collection("custo fixo").add({
+          categoria: state.categoria,
+          descricao: state.descricao,
+          valor: state.valor,
+          dataHoje: state.dataHoje,
+        });
+
+        props.navigation.navigate("Custo fixo");
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  };
+
+  return (
+    <ScrollView style={styles.container}>
+      {/* categoria Input */}
+      <SafeAreaView style={styles.inputGroup}>
+      <Select 
+          options={categorias} 
+          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+          text="Selecione uma categoria"
+          label="Categoria:"
+          value={state.categoria}         
+          />
+      </SafeAreaView>
+
+      {/* descricao Input */}
+      <View style={styles.inputGroup}>
+        <TextInput 
+          placeholder="Descrição"
+          multiline={true}
+          numberOfLines={1}
+          onChangeText={(value) => handleChangeText(value, "descricao")}
+          value={state.descricao}
+        />
+      </View>
+
+      {/* Input */}
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Valor"
+          onChangeText={(value) => handleChangeText(value, "valor")}
+          value={state.valor}
+        />
+      </View>
+
+      <View style={styles.button}>
+        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "fff",
-    },
-    headerContainer: {
-        padding: 20,
-        paddingTop: Platform.OS == 'android' ? 50 : 0
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "400",
-        color: "344422",
-    },
-    subTitle: {
-        fontSize: 14,
-        fontWeight: "400",
-        color: "300022",
-    }
+  container: {
+    flex: 1,
+    padding: 35,
+  },
+  inputGroup: {
+    flex: 1,
+    padding: 0,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  loader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
+
+export default CadastrarCustoFixo;

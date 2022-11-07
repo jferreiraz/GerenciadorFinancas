@@ -1,58 +1,115 @@
-import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, Alert, StyleSheet } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
+import React, { useState } from "react";
+import {
+  Button,
+  View,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from "react-native";
 
+import firebase from "../../../../config";
+import Select from "../Components";
+import { SafeAreaView } from "react-native";
+import { categorias } from "../Components/categorias";
 
+const CadastrarCustosVariaveis = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
 
-const K_OPTIONS = [
-  {
-    item: 'Mão de obra',
-    id: 'Mo',
-  },
-  {
-    item: 'Custo fixo',
-    id: 'Cf',
-  },
-  {
-    item: 'Custos variaveis',
-    id: 'Cv',
-  }
-]
+  const initalState = {
+    categoria: "",
+    descricao: "",
+    valor: "",
+    dataHoje:date + " às " + time,
+  };
 
-export default function CadastrarCustosVariaveis() {
-  const [selectedTeam, setSelectedTeam] = useState({})
+  const [state, setState] = useState(initalState);
+
+  const handleChangeText = (value, categoria) => {
+    setState({ ...state, [categoria]: value });
+  };
+
+  const salvarNovo = async () => {
+    if (state.categoria === "") {
+      alert("Porfavor preencha todos os campos");
+    } else {
+
+      try {
+        await firebase.db.collection("custos variáveis").add({
+          categoria: state.categoria,
+          descricao: state.descricao,
+          valor: state.valor,
+          dataHoje: state.dataHoje,
+        });
+
+        props.navigation.navigate("Custos variáveis");
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  };
+
   return (
-    <View style={{ margin: 30 }}>
-      <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Gerenciar custos variáveis, comissões e outros</Text>
-      </View>
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Navegar</Text>
-      <SelectBox
-        label="Gerenciar custos"
-        options={K_OPTIONS}
-        hideInputFilter='true'
-        inputPlaceholder='Gerenciar'
-        value={selectedTeam}
-      />
-        <TouchableOpacity style={styles.button1} onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja adicionar esse item?',[{text:'Sim', onPress: () => {console.log('Yes Pressed');}},{text:'Não', onPress: () => {console.log('Yes Pressed');}}])  }><Text style={styles.text}>Adicionar</Text></TouchableOpacity>
+    <ScrollView style={styles.container}>
+      {/* categoria Input */}
+      <SafeAreaView style={styles.inputGroup}>
+      <Select 
+          options={categorias} 
+          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+          text="Selecione uma categoria"
+          label="Categoria:"
+          value={state.categoria}         
+          />
+      </SafeAreaView>
 
-    </View>
-  )
-}
+      {/* descricao Input */}
+      <View style={styles.inputGroup}>
+        <TextInput 
+          placeholder="Descrição"
+          multiline={true}
+          numberOfLines={1}
+          onChangeText={(value) => handleChangeText(value, "descricao")}
+          value={state.descricao}
+        />
+      </View>
+
+      {/* Input */}
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Valor"
+          onChangeText={(value) => handleChangeText(value, "valor")}
+          value={state.valor}
+        />
+      </View>
+
+      <View style={styles.button}>
+        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
-    button1: {
-        padding: 10,
-        margin: 50,
-        alignItems: 'center',
-        backgroundColor: "blue",
-        borderRadius: 10,
-        width: 250,
-        justifyContent: 'center'        
-    },
-    text:{
-        color: "#FFF",
-        fontSize: 15,
-
-    }
+  container: {
+    flex: 1,
+    padding: 35,
+  },
+  inputGroup: {
+    flex: 1,
+    padding: 0,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: "#cccccc",
+  },
+  loader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
+
+export default CadastrarCustosVariaveis;

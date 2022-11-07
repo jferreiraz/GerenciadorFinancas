@@ -28,7 +28,7 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("custos variaveis").doc(id);
+    const dbRef = firebase.db.collection("custos variáveis").doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -38,7 +38,7 @@ const AlterarCustosVariaveis = (props) => {
   const deletarDados = async () => {
     setCarregar(true)
     const dbRef = firebase.db
-      .collection("custos variaveis")
+      .collection("custos variáveis")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
@@ -60,7 +60,7 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("custos variaveis").doc(campos.id);
+    const camposRef = firebase.db.collection("custos variáveis").doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
@@ -150,7 +150,5 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
 });
-
-
 
 export default AlterarCustosVariaveis;

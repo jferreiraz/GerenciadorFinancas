@@ -1,38 +1,57 @@
-import { View, StyleSheet, Text, Platform } from "react-native";
-import React from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState, useEffect } from "react";
+import { Button, StyleSheet } from "react-native";
+import { ListItem, Avatar } from "react-native-elements";
+import { ScrollView } from "react-native-gesture-handler";
+
+import firebase from "../../../config";
+
+const CustoFixo = (props) => {
+  const [campos, setCampos] = useState([]);
+
+  useEffect(() => {
+    firebase.db.collection("custo fixo").onSnapshot((querySnapshot) => {
+      const campos = [];
+      querySnapshot.docs.forEach((doc) => {
+        const { categoria, descricao, valor } = doc.data();
+        campos.push({
+          id: doc.id,
+          categoria,
+          descricao,
+          valor,
+        });
+      });
+      setCampos(campos);
+    });
+  }, []); 
 
 
-export default function Information({ route }){
-    return (
-        <SafeAreaView style={styles.container}>
-        <View style={styles.headerContainer}>
-            <Text style={styles.title}>Pagina tutorial/ ajuda</Text>
-            <Text></Text>
-            <Text style={styles.subTitle}>Apenas pagina de texto com exibição de informações, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-        </View>
-        </SafeAreaView>
-    );
-}
+  return (
+    <ScrollView>
+      <Button
+        onPress={() => props.navigation.navigate("Cadastrar custo fixo")}
+        title="Cadastrar dados"
+      />
+      {campos.map((campos) => {
+        return (
+          <ListItem
+            key={campos.id}
+            bottomDivider
+            onPress={() => {
+              props.navigation.navigate("Alterar custo fixo", {
+                camposId: campos.id,
+              });
+            }}
+          >
+            <ListItem.Content>
+              <ListItem.Title>{campos.categoria}</ListItem.Title>
+              <ListItem.Subtitle>{campos.descricao}</ListItem.Subtitle>
+              <ListItem.Subtitle>{"R$ "+campos.valor}</ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        );
+      })}
+    </ScrollView>
+  );
+};
 
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "fff",
-    },
-    headerContainer: {
-        padding: 20,
-        paddingTop: Platform.OS == 'android' ? 50 : 0
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "400",
-        color: "344422",
-    },
-    subTitle: {
-        fontSize: 14,
-        fontWeight: "400",
-        color: "300022",
-    }
-});
+export default CustoFixo;

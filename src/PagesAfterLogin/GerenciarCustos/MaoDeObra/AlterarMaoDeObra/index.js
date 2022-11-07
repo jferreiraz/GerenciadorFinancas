@@ -12,7 +12,7 @@ import Select from "../../../../components/select";
 import firebase from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
-const AlterarMaoDeObra = (props) => {
+const AlterarCustoFixo = (props) => {
   const initialState = {
     id: "",
     categoria: "",
@@ -28,7 +28,7 @@ const AlterarMaoDeObra = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("mao de obra").doc(id);
+    const dbRef = firebase.db.collection("custo fixo").doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -38,11 +38,11 @@ const AlterarMaoDeObra = (props) => {
   const deletarDados = async () => {
     setCarregar(true)
     const dbRef = firebase.db
-      .collection("mao de obra")
+      .collection("custo fixo")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
-    props.navigation.navigate("Custos com mão de obra");
+    props.navigation.navigate("Custo fixo");
   };
 
   const openConfirmationAlert = () => {
@@ -60,14 +60,14 @@ const AlterarMaoDeObra = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("mao de obra").doc(campos.id);
+    const camposRef = firebase.db.collection("custo fixo").doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
     });
     setCampos(initialState);
-    props.navigation.navigate("Custos com mão de obra");
+    props.navigation.navigate("Custo fixo");
   };
 
   useEffect(() => {
@@ -151,6 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-export default AlterarMaoDeObra;
+export default AlterarCustoFixo;
