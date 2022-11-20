@@ -2,12 +2,31 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { firebase } from '../../config';
 
 import * as Animatable from 'react-native-animatable'
+import { createNativeStackNavigator, NavigationContainer } from '@react-navigation/native-stack';
 
-export default function Register() {
+const SignIn = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    //const app = initializeApp(firebaseConfig)
+    //const auth = getAuth(app);
+
     const navigation= useNavigation();
     const [hidePass, setHidePass] = useState(true);
+
+    loginUser = async (email, password) => {
+        try {
+            await firebase.auth().signInWithEmailAndPassword(email, password)
+            navigation.navigate('Home')
+        } catch (error){
+            alert(error.message)
+        }
+    }
 
     return(
         <View style={styles.container}>
@@ -17,17 +36,31 @@ export default function Register() {
 
             <Animatable.View animation="fadeInUp" style={styles.containerForm}>
                 <Text style={styles.title}> Email </Text>
-                <TextInput placeholder="Digite seu email..." style={styles.input} />
-
+                <TextInput 
+                    placeholder="Digite seu email..." style={styles.input}
+                    onChangeText={(email) => setEmail(email)}
+                    autoCapitalize="none"
+                    autoCorrect={false} 
+                />
                 <Text style={styles.title}> Senha </Text>
+
                 <View style={styles.inputArea}>
-                    <TextInput placeholder="Digite sua senha..." style={styles.inputPassword} secureTextEntry={hidePass}/>
+                    <TextInput
+                        placeholder="Digite sua senha..." 
+                        onChangeText={(password) => setPassword(password)} 
+                        style={styles.inputPassword}
+                        autoCapitalize="none"
+                        autoCorrect={false} 
+                        secureTextEntry={hidePass}
+                    />
                     <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
                         <Ionicons name="eye" color="a1a1a1" size={25} />
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-                    <Text style={styles.buttonText}>Acessar</Text>
+
+                <TouchableOpacity style={styles.button}  onPress={() => loginUser(email, password)}          // onPress={() => navigation.navigate('Home')}> 
+                >
+                    <Text style={styles.buttonText}>Acessar</Text> 
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('Register')}>
@@ -38,11 +71,12 @@ export default function Register() {
                     <Text style={styles.registerText}>Esqueceu sua senha? </Text>
                 </TouchableOpacity>
 
-
             </Animatable.View>
         </View>
     );
 }
+    
+export default SignIn
 
 const styles = StyleSheet.create({
     container:{

@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { initializeApp } from 'firebase/app'
+import { firebaseConfig } from '../../config';
+import firebase from "../../config";
 
 import * as Animatable from 'react-native-animatable'
+import { createNativeStackNavigator, NavigationContainer } from '@react-navigation/native-stack';
 
 
-export default function Register() {
+function Register() {
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app);
+
     const navigation= useNavigation();
     const [hidePass, setHidePass] = useState(true);
+
+    const handleCreateAccount = () => {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log('Account created!')
+            const user = userCredential.user;
+            console.log(user)
+        })
+        .catch(error => {
+            console.log(error)
+            Alert.alert(error.message)
+        })
+    }
 
     return(
         <ScrollView>
@@ -41,7 +64,7 @@ export default function Register() {
                     </TouchableOpacity>
                 </KeyboardAvoidingView>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity onPress={handleCreateAccount} style={styles.button}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
 
@@ -59,6 +82,19 @@ export default function Register() {
         </KeyboardAvoidingView>
         </ScrollView>
     );
+}
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+return (
+    <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Login" component={Register} />
+            <Stack.Screen name="Home" component={Register} />
+        </Stack.Navigator>
+    </NavigationContainer>
+);
 }
 
 const styles = StyleSheet.create({

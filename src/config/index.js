@@ -21,11 +21,22 @@ const firebaseConfig = {
 //const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+//Antes não havia if
+if (!firebase.apps.lenght){
+  firebase.initializeApp(firebaseConfig);
+}
 
 const db = firebase.firestore();
+
+//export default {
+export {
+  firebase
+};
 
 export default {
   firebase,
   db
-};
+}
+
+
+//Ajuste anterior = sem if e sem export 'default'
