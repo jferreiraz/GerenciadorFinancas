@@ -3,30 +3,44 @@ import React, { useState, useEffect } from "react";
 import SelectBox from 'react-native-multi-selectbox'
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons'
+import { firebase } from "../../config"
+//import { snapshot } from "firebase/auth"
 
 
-export default function Home({navigation}){
+const Home = ({navigation}) => {
+    useEffect(() => {
+        firebase.firestore().collection('users')
+        .doc(firebase.auth().currentUser.uid).get()
+        .then((snapshot) => {
+            if(snapshot.exists){
+                alert("Token desse email: \n\n"+firebase.auth().currentUser.uid) 
+            }
+            else {
+                console.log('User does not exist')
+            }
+        })
+    }, [])
 
     return (
         
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <View style={styles.inputArea}>
-                    <Text style={styles.title}> Bem-vindo de volta fulano!</Text>
+                    <Text style={styles.title}> Bem-vindo de volta fulano</Text>
                     <TouchableOpacity onPress={ () => navigation.navigate('Profile') }>
                         <Ionicons name="person-circle-outline" color="a1a1a1" size={30} style={styles.icon}/>
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Custos',{nome: 'João'})} style={styles.button}><Text>Gerenciar custos</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Faturamento',{nome: 'João'})} style={styles.button}><Text>Gerenciar faturamento</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('DRE',{nome: 'João'})} style={styles.button}><Text>Gerar DRE</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Custos')} style={styles.button}><Text>Gerenciar custos</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Gerenciar Faturamento')} style={styles.button}><Text>Gerenciar faturamento</Text></TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('DRE')} style={styles.button}><Text>Gerar DRE</Text></TouchableOpacity>
             </View>
         </SafeAreaView>
     );
 }
 
-
+export default Home
 
 const styles = StyleSheet.create({
     container: {

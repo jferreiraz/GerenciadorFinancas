@@ -25,8 +25,8 @@ const SignIn = () => {
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password)
             navigation.navigate('Home')
-            const token = getIdToken
-            alert('token: ',{token})
+            //const token = firebase.auth().currentUser.getIdToken
+            //alert('token: ',{token})
         } catch (error){
             alert(error.message)
         }

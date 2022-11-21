@@ -5,66 +5,108 @@ import { Ionicons } from '@expo/vector-icons'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { firebaseConfig } from '../../config';
-import firebase from "../../config";
+import { firebase } from "../../config";
 
 import * as Animatable from 'react-native-animatable'
-import { createNativeStackNavigator, NavigationContainer } from '@react-navigation/native-stack';
 
-
-function Register() {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const app = initializeApp(firebaseConfig)
-    const auth = getAuth(app);
+const Registration = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
 
     const navigation= useNavigation();
     const [hidePass, setHidePass] = useState(true);
 
-    const handleCreateAccount = () => {
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            console.log('Account created!')
-            const user = userCredential.user;
-            console.log(user)
+    registerUser = async (email, password, firstName, lastName) => {
+        await firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+            firebase.auth().currentUser.sendEmailVerification({
+                handleCodeInApp: true,
+                url:'https://financemanager-ef65d.firebaseapp.com',
+            })
+            .then(() => {
+                alert("Email enviado confirmando registro")
+                navigation.navigate('SignIn')
+            }).catch((error) => {
+                alert(error.message)
+            })
+            .then(() => {
+                firebase.firestore().collection('usersAutenticacao')
+                .doc(firebase.auth().currentUser.uid)
+                .set({
+                    firstName,
+                    lastName,
+                    email,
+                })
+            })
+            .catch((error) => {
+                alert(error.message)
+            })
         })
-        .catch(error => {
-            console.log(error)
-            Alert.alert(error.message)
+        .catch((error) => {
+            alert(error.message)
         })
     }
 
     return(
+        <KeyboardAvoidingView behavior="height" style={styles.container} keyboardVerticalOffset='50'>
         <ScrollView>
-        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container} keyboardVerticalOffset={50}>
             <Animatable.View animation="fadeInUp" delay={500} style={styles.containerHeader}>
                 <Text style={styles.message}> Realize seu cadastro!</Text>
                 <Text style={styles.description}> Complete os campos abaixo </Text>
             </Animatable.View>
 
             <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-                <Text style={styles.title}> Nome: </Text>
-                <TextInput placeholder="Digite seu nome..." style={styles.input} />
+                <Text style={styles.title}> Primeiro Nome: </Text>
+                <TextInput 
+                    placeholder="Digite seu nome..." 
+                    style={styles.input}
+                    onChangeText={(firstName) => setFirstName(firstName)}
+                    autoCorrect={false} />
+                <Text style={styles.title}> Sobrenome: </Text>
+                <TextInput 
+                    placeholder="Digite seu sobrenome..." 
+                    style={styles.input}
+                    onChangeText={(lastName) => setLastName(lastName)}
+                    autoCorrect={false} />
 
                 <Text style={styles.title}> Email: </Text>
-                <TextInput placeholder="Digite seu email..." style={styles.input} />
+                <TextInput 
+                    placeholder="Digite seu email..." 
+                    style={styles.input}
+                    onChangeText={(email) => setEmail(email)}
+                    autoCorrect={false} />
 
                 <Text style={styles.title}> Senha: </Text>
                 <View style={styles.inputArea}>
-                    <TextInput placeholder="Digite uma senha..." style={styles.inputPassword} secureTextEntry={hidePass} />
-                    <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
-                            <Ionicons name="eye" color="a1a1a1" size={25} />
-                    </TouchableOpacity>
+                <TextInput 
+                    placeholder="Digite uma senha..." 
+                    style={styles.inputPassword} 
+                    secureTextEntry={hidePass}
+                    onChangeText={(password) => setPassword(password)}
+                    autoCorrect={false} 
+                    autoCapitalize="none" />
+
+                <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
+                        <Ionicons name="eye" color="a1a1a1" size={25} />
+                </TouchableOpacity>
                 </View>
 
                 <Text style={styles.title}> Confirmar senha: </Text>
                 <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={50} style={styles.inputArea}>
-                    <TextInput placeholder="Confirme sua senha..." style={styles.inputPassword} secureTextEntry={hidePass} />
-                    <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
-                            <Ionicons name="eye" color="a1a1a1" size={25} />
-                    </TouchableOpacity>
+                <TextInput 
+                    placeholder="Confirme sua senha..." 
+                    style={styles.inputPassword} 
+                    secureTextEntry={hidePass} />
+                <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
+                    <Ionicons name="eye" color="a1a1a1" size={25} />
+                </TouchableOpacity>
                 </KeyboardAvoidingView>
 
-                <TouchableOpacity onPress={handleCreateAccount} style={styles.button}>
+                <TouchableOpacity 
+                    style={styles.button}
+                    onPress={() => registerUser(email, password, firstName, lastName)}>
                     <Text style={styles.buttonText}>Cadastrar</Text>
                 </TouchableOpacity>
 
@@ -78,24 +120,12 @@ function Register() {
 
 
             </Animatable.View>
-
+            </ScrollView>
         </KeyboardAvoidingView>
-        </ScrollView>
     );
 }
 
-const Stack = createNativeStackNavigator();
-
-export default function App() {
-return (
-    <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={Register} />
-            <Stack.Screen name="Home" component={Register} />
-        </Stack.Navigator>
-    </NavigationContainer>
-);
-}
+export default Registration
 
 const styles = StyleSheet.create({
     container:{
@@ -105,7 +135,7 @@ const styles = StyleSheet.create({
     containerHeader:{
         marginTop: '14%',
         marginBottom: '8%',
-        paddingStart: '5%'
+        paddingStart: '5%',
     },
     message:{
         fontSize: 28,
@@ -118,7 +148,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         paddingStart: '5%',
-        paddingEnd: '5%'
+        paddingEnd: '5%',
     },
     title:{
         fontSize: 20,

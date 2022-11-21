@@ -1,11 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
+import { firebase } from "../../config"
 
 import * as Animatable from 'react-native-animatable'
 
 export default function ForgetPassword() {
+    const [email, setEmail] = useState('')
+
     const navigation= useNavigation();
+
+    const forgetPassword = () => {
+        firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+            alert("Email enviado, confira na caixa de spam se o email foi recebido!")
+        }).catch((error) => {
+            alert(error)
+        })
+    }
 
     return(
         <View style={styles.container}>
@@ -16,9 +28,14 @@ export default function ForgetPassword() {
 
             <Animatable.View animation="fadeInUp" duration={1300} style={styles.containerForm}>
                 <Text style={styles.title}> Email: </Text>
-                <TextInput placeholder="Digite seu email..." style={styles.input} />
+                <TextInput 
+                    onChangeText={(email) => setEmail(email)}
+                    autoCapitalize="none"
+                    autoCorrect={false} 
+                    placeholder="Digite seu email..." 
+                    style={styles.input} />
 
-                <TouchableOpacity onPress={() => alert('Um email solicitando alteração de senha foi enviado, verifique seu gmail!')} style={styles.button}>
+                <TouchableOpacity onPress={() => forgetPassword()} style={styles.button}>
                     <Text style={styles.buttonText}>Enviar</Text>
                 </TouchableOpacity>
 

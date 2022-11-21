@@ -1,23 +1,12 @@
 import { View, Text, StyleSheet, SafeAreaView, TextInput, Button, TouchableOpacity } from "react-native";
-import { async } from "@firebase/util";
 import { doc, setDoc } from "firebase/firestore";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { dbacess } from "../../../config";
 import { collection, query, getDocs } from "firebase/firestore";
-//import { SafeAreaView } from "react-native-safe-area-context";
-
-
-import { id123123 } from "../../../PagesLogin/SignIn";
-
-//import { auth } from "../../../routes/auth"
-import { getIdToken } from "firebase/auth";
-import { User } from "firebase/auth";
-
+import { firebase } from "../../../config"
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const auth = getAuth();
-
-//userid = await auth.currentUser();
 
 const user = auth.currentUser;
 
@@ -32,17 +21,13 @@ if (user !== null) {
   // No user is signed in.
 }
 
-if (user !== null) {
+if (user != null) {
     user.providerData.forEach((profile) => {
       console.log("Sign-in provider: " + profile.providerId);
       console.log("  Provider-specific UID: " + profile.uid);
       console.log("  Email: " + profile.email);
     });
   }
-
-
-
-const token = onAuthStateChanged
 
 const MoreDetails = () => {
     const [details, setDetails] = useState({
@@ -68,7 +53,7 @@ const MoreDetails = () => {
         }));
         console.log(queryData);
         queryData.map(async (v) => {
-            await setDoc(doc(dbacess, `users/${user.uid}/more-details`, details.fname), {
+            await setDoc(doc(dbacess, `users/${firebase.auth().currentUser.uid}/more-details`, details.fname), {
                 fname: details.fname,
                 age: details.age,
                 currentLocation: details.currLoc,
@@ -109,7 +94,7 @@ const MoreDetails = () => {
                 >
                 <Text>Submit</Text>
                 </TouchableOpacity>
-                <Text>{user.uid}</Text>
+                <Text>{firebase.auth().currentUser.uid}</Text>
         </SafeAreaView>
     );
 }
@@ -131,7 +116,7 @@ function SignUp(props) {
 
     const handleSubmit = async () => {
         console.log(details);
-        await setDoc(doc(dbacess, "users", user.uid), {
+        await setDoc(doc(dbacess, "users", firebase.auth().currentUser.uid), {
             name: details.name,
             email: details.email,
             message: details.message,
@@ -185,6 +170,20 @@ function SignUp(props) {
 }
 
 function Teste() {
+    useEffect(() => {
+        firebase.firestore().collection('users')
+        .doc(firebase.auth().currentUser.uid).get()
+        .then((snapshot) => {
+            if(snapshot.exists){
+                alert("Token desse email: \n\n"+firebase.auth().currentUser.uid)
+                const token = firebase.auth().currentUser.uid; 
+            }
+            else {
+                console.log('User does not exist')
+            }
+        })
+    }, [])
+
     const [visible, setVisible] = useState(false);
     return (
         <>
