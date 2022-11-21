@@ -17,6 +17,7 @@ import Settings from    "../PagesAfterLogin/Settings";
 import DRE from         "../PagesAfterLogin/DRE";
 import Invoicing from   "../PagesAfterLogin/Invoicing";
 import Financas from    "../PagesAfterLogin/Financas";
+import Teste from       "../PagesAfterLogin/GerenciarCustos/Teste";
 
 import Courses from '../PagesAfterLogin/GerenciarCustos/MaoDeObra/CadastrarMaoDeObra';
 import CreateUserScreen from "../PagesAfterLogin/GerenciarCustos/InvestimentoFixo/CadastrarInvestimentoFixo";
@@ -217,6 +218,10 @@ return(
             name="UserDetailScreen"
             component={UserDetailScreen}
             options={{ title: "Users details" }}
+        />
+        <Stack.Screen
+            name="Teste"
+            component={Teste}
         />
     </Stack.Navigator>
     )

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, getIdToken} from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { firebase } from '../../config';
 
 import * as Animatable from 'react-native-animatable'
 import { createNativeStackNavigator, NavigationContainer } from '@react-navigation/native-stack';
+
+export const id123123 = 0
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
@@ -23,6 +25,8 @@ const SignIn = () => {
         try {
             await firebase.auth().signInWithEmailAndPassword(email, password)
             navigation.navigate('Home')
+            const token = getIdToken
+            alert('token: ',{token})
         } catch (error){
             alert(error.message)
         }

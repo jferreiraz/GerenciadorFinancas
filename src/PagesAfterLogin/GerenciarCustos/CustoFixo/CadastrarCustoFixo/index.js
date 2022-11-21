@@ -12,6 +12,8 @@ import Select from "../Components";
 import { SafeAreaView } from "react-native";
 import { categorias } from "../Components/categorias";
 
+const id = 5
+
 const CadastrarCustoFixo = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
