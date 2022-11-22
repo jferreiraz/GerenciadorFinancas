@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Select from "../../../../components/select";
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarCustoFixo = (props) => {
@@ -18,6 +18,7 @@ const AlterarCustoFixo = (props) => {
     categoria: "",
     descricao: "",
     valor: "",
+    dataHoje: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -28,7 +29,7 @@ const AlterarCustoFixo = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("custo fixo").doc(id);
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -37,8 +38,8 @@ const AlterarCustoFixo = (props) => {
 
   const deletarDados = async () => {
     setCarregar(true)
-    const dbRef = firebase.db
-      .collection("custo fixo")
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo')
+      //.collection("custo fixo")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
@@ -60,11 +61,12 @@ const AlterarCustoFixo = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("custo fixo").doc(campos.id);
+    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
+      dataHoje: campos.dataHoje,
     });
     setCampos(initialState);
     props.navigation.navigate("Custo fixo");

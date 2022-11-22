@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons } from '@expo/vector-icons'
 import { firebase } from "../../config"
 //import { snapshot } from "firebase/auth"
+//import { BackHandler } from 'react-native';
 
 
 const Home = ({navigation}) => {

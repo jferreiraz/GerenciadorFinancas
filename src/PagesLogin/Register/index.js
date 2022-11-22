@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { firebaseConfig } from '../../config';
 import { firebase } from "../../config";
@@ -12,114 +12,136 @@ import * as Animatable from 'react-native-animatable'
 const Registration = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
 
-    const navigation= useNavigation();
+    const navigation = useNavigation();
     const [hidePass, setHidePass] = useState(true);
 
     const registerUser = async (email, password, firstName, lastName) => {
-        await firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => {
-            firebase.auth().currentUser.sendEmailVerification({
-                handleCodeInApp: true,
-                url:'https://financemanager-ef65d.firebaseapp.com',
-            })
-            .then(() => {
-                alert("Email enviado confirmando registro")
-                navigation.navigate('SignIn')
-            }).catch((error) => {
-                alert(error.message)
-            })
-            .then(() => {
-                firebase.firestore().collection('usuarios')
-                .doc(firebase.auth().currentUser.uid)
-                .set({
-                    firstName,
-                    lastName,
-                    email,
-                })
-            })
-            .catch((error) => {
-                alert(error.message)
-            })
-        })
-        .catch((error) => {
-            alert(error.message)
-        })
+
+
+
+        if (email == "" | password == "" | firstName == "" | lastName == "") {
+            Alert.alert("Um/ou mais campos vazios", "Cetifique-se de preencher todos os campos")
+        } else {
+            if (password.length <= 6){
+                Alert.alert("Senha inválida","Sua senha deve ter no mínimo 6 dígitos")
+            }else{
+            if (password == confirmPassword) {
+                await firebase.auth().createUserWithEmailAndPassword(email, password)
+                    .then(() => {
+                        firebase.auth().currentUser.sendEmailVerification({
+                            handleCodeInApp: true,
+                            url: 'https://financemanager-ef65d.firebaseapp.com',
+                        })
+                            .then(() => {
+                                alert("Email enviado confirmando registro")
+                                navigation.navigate('SignIn')
+                            }).catch((error) => {
+                                alert(error.message) //0%
+                            })
+                            .then(() => {
+                                firebase.firestore().collection('usuarios')
+                                    .doc(firebase.auth().currentUser.uid)
+                                    .set({
+                                        firstName,
+                                        lastName,
+                                        email,
+                                    })
+                            })
+                            .catch((error) => {
+                                //alert(error.message) //Problema no firebase
+                                alert("Banco de dados se encontra offline no momento")
+                            })
+                    })
+                    .catch((error) => {
+                        //alert(error.message) //Email inválido ou vazio
+                        alert("Email ou senha inválidos")
+                    })
+            } else {
+                Alert.alert("Confirmação de senha", "A confirmação de senha foi digitada incorretamente, certifique-se de que ambas as senhas sejam iguais.")
+            }}
+        }
+
+
+
     }
-
-    return(
+    return (
         <KeyboardAvoidingView behavior="height" style={styles.container} keyboardVerticalOffset='50'>
-        <ScrollView>
-            <Animatable.View animation="fadeInUp" delay={500} style={styles.containerHeader}>
-                <Text style={styles.message}> Realize seu cadastro!</Text>
-                <Text style={styles.description}> Complete os campos abaixo </Text>
-            </Animatable.View>
+            <ScrollView>
+                <Animatable.View animation="fadeInUp" delay={500} style={styles.containerHeader}>
+                    <Text style={styles.message}> Realize seu cadastro!</Text>
+                    <Text style={styles.description}> Complete os campos abaixo </Text>
+                </Animatable.View>
 
-            <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-                <Text style={styles.title}> Primeiro Nome: </Text>
-                <TextInput 
-                    placeholder="Digite seu nome..." 
-                    style={styles.input}
-                    onChangeText={(firstName) => setFirstName(firstName)}
-                    autoCorrect={false} />
-                <Text style={styles.title}> Sobrenome: </Text>
-                <TextInput 
-                    placeholder="Digite seu sobrenome..." 
-                    style={styles.input}
-                    onChangeText={(lastName) => setLastName(lastName)}
-                    autoCorrect={false} />
+                <Animatable.View animation="fadeInUp" style={styles.containerForm}>
+                    <Text style={styles.title}> Primeiro Nome: </Text>
+                    <TextInput
+                        placeholder="Digite seu nome..."
+                        style={styles.input}
+                        onChangeText={(firstName) => setFirstName(firstName)}
+                        autoCorrect={false} />
+                    <Text style={styles.title}> Sobrenome: </Text>
+                    <TextInput
+                        placeholder="Digite seu sobrenome..."
+                        style={styles.input}
+                        onChangeText={(lastName) => setLastName(lastName)}
+                        autoCorrect={false} />
 
-                <Text style={styles.title}> Email: </Text>
-                <TextInput 
-                    placeholder="Digite seu email..." 
-                    style={styles.input}
-                    onChangeText={(email) => setEmail(email)}
-                    autoCorrect={false} />
+                    <Text style={styles.title}> Email: </Text>
+                    <TextInput
+                        placeholder="Digite seu email..."
+                        style={styles.input}
+                        onChangeText={(email) => setEmail(email)}
+                        autoCorrect={false} />
 
-                <Text style={styles.title}> Senha: </Text>
-                <View style={styles.inputArea}>
-                <TextInput 
-                    placeholder="Digite uma senha..." 
-                    style={styles.inputPassword} 
-                    secureTextEntry={hidePass}
-                    onChangeText={(password) => setPassword(password)}
-                    autoCorrect={false} 
-                    autoCapitalize="none" />
+                    <Text style={styles.title}> Senha: </Text>
+                    <View style={styles.inputArea}>
+                        <TextInput
+                            placeholder="Digite uma senha..."
+                            style={styles.inputPassword}
+                            secureTextEntry={hidePass}
+                            onChangeText={(password) => setPassword(password)}
+                            autoCorrect={false}
+                            autoCapitalize="none" />
 
-                <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
-                        <Ionicons name="eye" color="a1a1a1" size={25} />
-                </TouchableOpacity>
-                </View>
+                        <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+                            <Ionicons name="eye" color="a1a1a1" size={25} />
+                        </TouchableOpacity>
+                    </View>
 
-                <Text style={styles.title}> Confirmar senha: </Text>
-                <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={50} style={styles.inputArea}>
-                <TextInput 
-                    placeholder="Confirme sua senha..." 
-                    style={styles.inputPassword} 
-                    secureTextEntry={hidePass} />
-                <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
-                    <Ionicons name="eye" color="a1a1a1" size={25} />
-                </TouchableOpacity>
-                </KeyboardAvoidingView>
+                    <Text style={styles.title}> Confirmar senha: </Text>
+                    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={50} style={styles.inputArea}>
+                        <TextInput
+                            placeholder="Confirme sua senha..."
+                            style={styles.inputPassword}
+                            secureTextEntry={hidePass}
+                            onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
+                            autoCorrect={false}
+                            autoCapitalize="none" />
+                        <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+                            <Ionicons name="eye" color="a1a1a1" size={25} />
+                        </TouchableOpacity>
+                    </KeyboardAvoidingView>
 
-                <TouchableOpacity 
-                    style={styles.button}
-                    onPress={() => registerUser(email, password, firstName, lastName)}>
-                    <Text style={styles.buttonText}>Cadastrar</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => registerUser(email, password, firstName, lastName)}>
+                        <Text style={styles.buttonText}>Cadastrar</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignIn')}>
-                    <Text style={styles.registerText}>Realize seu login aqui </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('SignIn')}>
+                        <Text style={styles.registerText}>Realize seu login aqui </Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('ForgetPassword')}>
-                    <Text style={styles.registerText}>Esqueceu sua senha? </Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('ForgetPassword')}>
+                        <Text style={styles.registerText}>Esqueceu sua senha? </Text>
+                    </TouchableOpacity>
 
 
-            </Animatable.View>
+                </Animatable.View>
             </ScrollView>
         </KeyboardAvoidingView>
     );
@@ -128,47 +150,47 @@ const Registration = () => {
 export default Registration
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
+    container: {
+        flex: 1,
         backgroundColor: '#38a69d'
     },
-    containerHeader:{
+    containerHeader: {
         marginTop: '14%',
         marginBottom: '8%',
         paddingStart: '5%',
     },
-    message:{
+    message: {
         fontSize: 28,
         fontWeight: 'bold',
         color: '#FFF'
     },
-    containerForm:{
+    containerForm: {
         backgroundColor: '#FFF',
-        flex:1,
+        flex: 1,
         borderTopLeftRadius: 25,
         borderTopRightRadius: 25,
         paddingStart: '5%',
         paddingEnd: '5%',
     },
-    title:{
+    title: {
         fontSize: 20,
         marginTop: 28,
     },
-    input:{
+    input: {
         borderBottomWidth: 1,
         height: 40,
         marginBottom: 12,
         fontSize: 16,
         width: '98%'
     },
-    inputPassword:{
+    inputPassword: {
         borderBottomWidth: 1,
         height: 40,
         marginBottom: 12,
         fontSize: 16,
         width: '90%'
     },
-    button:{
+    button: {
         backgroundColor: '#38a69d',
         width: '100%',
         borderRadius: 4,
@@ -178,27 +200,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 40
     },
-    buttonText:{
+    buttonText: {
         color: "#FFF",
         fontSize: 18,
         fontWeight: 'bold'
     },
-    buttonRegister:{
+    buttonRegister: {
         marginTop: 14,
         alignSelf: 'center',
         marginBottom: 10
     },
-    registerText:{
-        color:'#1212a1',
+    registerText: {
+        color: '#1212a1',
         fontSize: 16
     },
-    description:{
+    description: {
         color: '#dcdcdc',
         fontSize: 17,
         fontWeight: 'bold',
         padding: 4
     },
-    inputArea:{
+    inputArea: {
         flexDirection: 'row',
         width: '100%'
     }

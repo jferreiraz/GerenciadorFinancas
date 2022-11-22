@@ -3,6 +3,7 @@ import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator} from '@react-navigation/native-stack'
 import { Feather } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
 import { firebase } from "../config"
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
@@ -116,15 +117,33 @@ return(
         />
         <Stack.Screen  
             name="Custo fixo" 
-            component={CustoFixo} 
+            component={CustoFixo}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#101010', 
+                headerRight: () => (
+                        <MaterialIcons name="attach-money" size={24} color="black" />
+            )}}  
         />
         <Stack.Screen 
             name="Cadastrar custo fixo" 
-            component={CadastrarCustoFixo} 
+            component={CadastrarCustoFixo}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#101010', 
+                headerRight: () => (
+                        <MaterialIcons name="attach-money" size={24} color="black" />
+            )}} 
         />
         <Stack.Screen 
             name="Alterar custo fixo" 
-            component={AlterarCustoFixo} 
+            component={AlterarCustoFixo}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#101010', 
+                headerRight: () => (
+                        <MaterialIcons name="attach-money" size={24} color="black" />
+            )}}  
         />
         <Stack.Screen 
             name="Custos com mão de obra" 

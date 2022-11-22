@@ -50,6 +50,7 @@ const CadastrarCustoFixo = (props) => {
           valor: state.valor,
           dataHoje: state.dataHoje,
         });
+        props.navigation.navigate("Custo fixo");
     })
 };
 

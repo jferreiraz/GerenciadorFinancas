@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, getIdToken} from 'firebase/auth'
 import { initializeApp } from 'firebase/app'
 import { firebase } from '../../config';
+import { Alert } from 'react-native';
 
 import * as Animatable from 'react-native-animatable'
 import { createNativeStackNavigator, NavigationContainer } from '@react-navigation/native-stack';
@@ -28,7 +29,8 @@ const SignIn = () => {
             //const token = firebase.auth().currentUser.getIdToken
             //alert('token: ',{token})
         } catch (error){
-            alert(error.message)
+            Alert.alert("Aviso","Usuário e/ou senha inválidos, tente novamente.")
+            //alert(error.message)
         }
     }
 
