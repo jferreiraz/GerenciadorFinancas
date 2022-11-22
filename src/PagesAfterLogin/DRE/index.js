@@ -1,58 +1,41 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, Alert, StyleSheet } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
 
-
-
-const K_OPTIONS = [
-  {
-    item: 'Mão de obra',
-    id: 'Mo',
-  },
-  {
-    item: 'Custo fixo',
-    id: 'Cf',
-  },
-  {
-    item: 'Custos variaveis',
-    id: 'Cv',
-  }
-]
-
-export default function Detail() {
-  const [selectedTeam, setSelectedTeam] = useState({})
+export default function Detail(props) {
   return (
-    <View style={{ margin: 30 }}>
+    <View style={{ width: '100%', alignItems: 'center' }}>
       <View style={{ width: '100%', alignItems: 'center' }}>
-        <Text style={{ fontSize: 30, paddingBottom: 20 }}>Gerenciador</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 30, paddingVertical: 20 }}>DRE</Text>
       </View>
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>Navegar</Text>
-      <SelectBox
-        label="Gerenciar custos"
-        options={K_OPTIONS}
-        hideInputFilter='true'
-        inputPlaceholder='Gerenciar'
-        value={selectedTeam}
-      />
-        <TouchableOpacity style={styles.button1} onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja encerrar sessão?',[{text:'Sim', onPress: () => {console.log('Yes Pressed');}},{text:'Não', onPress: () => {console.log('Yes Pressed');}}])  }><Text style={styles.text}>Encerrar sessão</Text></TouchableOpacity>
-
+      <View style={styles.container}>
+      <Text style={{ fontSize: 20, paddingBottom: 10 }}>A página DRE encontra-se no estado de desenvolvimento no momento, aguarde novas atualizações para mais funcionalidades!</Text>
+      </View>
+      <TouchableOpacity style={styles.button1}
+        onPress={() => Alert.alert('Notificação', 'Voltar para a tela principal', [
+          { text: 'OK', onPress: () => { props.navigation.navigate("Home") } },
+          ])}>
+        <Text style={styles.text}>Voltar</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-    button1: {
-        padding: 10,
-        margin: 50,
-        alignItems: 'center',
-        backgroundColor: "blue",
-        borderRadius: 10,
-        width: 250,
-        justifyContent: 'center'        
-    },
-    text:{
-        color: "#FFF",
-        fontSize: 15,
-
-    }
+  button1: {
+    padding: 10,
+    margin: 50,
+    alignItems: 'center',
+    backgroundColor: "blue",
+    borderRadius: 10,
+    width: 250,
+    justifyContent: 'center'
+  },
+  text: {
+    color: "#FFF",
+    fontSize: 15,
+  },
+  container: {
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+  }
 });

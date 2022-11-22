@@ -1,26 +1,38 @@
-import { View, Text, StyleSheet, SafeAreaView, Platform, Button, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Platform, ScrollView, Button, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from '@expo/vector-icons'
 
 export default function GerenciarCustos({navigation}){
     return (
         
-        <SafeAreaView style={styles.container}>
-            <View style={styles.headerContainer}>
+        <ScrollView style={styles.container}>
+            <SafeAreaView style={styles.headerContainer}>
                 <View style={styles.inputArea}>
-                    <Text style={styles.title}>Gerencie seus custos aqui, escolha abaixo qual custo deseja adicionar ou modificar!</Text>
-                    <TouchableOpacity onPress={ () => navigation.navigate('Profile') }>
-                        <Ionicons name="person-circle-outline" color="a1a1a1" size={30} style={styles.icon}/>
-                    </TouchableOpacity>
+                    <Text style={styles.title}>Gerencie seus custos aqui, escolha abaixo qual opção deseja adicionar ou modificar!</Text>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Investimento fixo',{nome: 'João'})} style={styles.button}><Text>Investimento fixo</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Custo fixo',{nome: 'João'})} style={styles.button}><Text>Custo fixo</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Custos com mão de obra',{nome: 'João'})} style={styles.button}><Text>Custos com mão de obra</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Custos variáveis',{nome: 'João'})} style={styles.button}><Text>Custos variáveis</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Teste',{nome: 'João'})} style={styles.button}><Text>Teste</Text></TouchableOpacity>
-            </View>
-        </SafeAreaView>
+                <TouchableOpacity onPress={()=> navigation.navigate('Investimento fixo',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="cellular-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Investimento fixo</Text>
+                    </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Custo fixo',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="calendar-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Custo fixo</Text>
+                    </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Custos com mão de obra',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="construct-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Custos com mão de obra</Text>
+                    </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Custos variáveis',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="calculator-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Custos variáveis</Text>
+                    </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Teste',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="layers-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Teste</Text>
+                    </TouchableOpacity>
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -32,14 +44,13 @@ const styles = StyleSheet.create({
         backgroundColor: "fff",
     },
     headerContainer: {
-        padding: 20,
+        paddingHorizontal: 20,
         paddingTop: Platform.OS == 'android' ? 50 : 0
     },
     title: {
         fontSize: 20,
         fontWeight: "500",
         color: "344422",
-        textAlign: 'justify',
     },
     subTitle: {
         fontSize: 16,
@@ -47,7 +58,7 @@ const styles = StyleSheet.create({
         color: "300022",
         paddingTop: 12,
         paddingBottom: 20,
-        paddingHorizontal: 6
+        paddingHorizontal: 0
     },
     button: {
         alignSelf: "center",
@@ -55,15 +66,24 @@ const styles = StyleSheet.create({
         backgroundColor: "#0022",
         margin: 10,
         padding: 10,
-        width: 300,
-        alignItems: 'center'
+        width: 320,
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderWidth: 0.5
     },
     inputArea:{
         flexDirection: 'row',
         width: '100%',
-        paddingTop: 20,
+        paddingTop: 0,
     },
     icon:{
         paddingLeft: 20,
+    },
+    text: {
+        color:"#E0FFFF",
+        paddingLeft: 30,
+        fontWeight: '900',
+        fontSize: 16,
+        width: '60%'
     }
 });

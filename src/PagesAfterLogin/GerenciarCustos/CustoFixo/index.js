@@ -31,11 +31,13 @@ const CustoFixo = (props) => {
 
   return (
     <ScrollView backgroundColor="white">
-      <TouchableOpacity
+      <Button
         onPress={() => props.navigation.navigate("Cadastrar custo fixo")}
         title="Cadastrar dados"
-        style={styles.button}
-      ><Text style={styles.title}>CADASTRAR DADOS</Text></TouchableOpacity>
+        style={styles.button}>
+        <Text style={styles.title}>CADASTRAR DADOS</Text>
+      </Button>
+
       {campos.map((campos) => {
         return (
           <ListItem

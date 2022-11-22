@@ -88,7 +88,8 @@ return(
             name="Home" 
             component={Tabs} 
             options={{
-                title: 'Gerenciador de Finanças', headerBackVisible:false ,
+                title: 'Gerenciador Financeiro', headerBackVisible:false ,
+                headerTitleStyle: {color: 'black', fontWeight: 'bold'},
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
                 headerTintColor:'#101010', 
                 headerRight: () => (
@@ -281,8 +282,9 @@ function Tabs(){
       />
       <Tab.Screen
         name="Configurações"
-        component={Configuracoes} 
+        component={Profile} 
         options={{
+        headerShown: false,
         tabBarIcon:({ color, size }) => (
             <Feather name="settings" size={24} color="black" />), 
       }}

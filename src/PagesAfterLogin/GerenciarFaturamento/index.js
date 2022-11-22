@@ -1,21 +1,31 @@
-import { View, Text, StyleSheet, SafeAreaView, Platform, Button, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, Platform, Button, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import { Ionicons } from '@expo/vector-icons'
 
 export default function GerenciarFaturamento({navigation}){
 
     return (
         
-        <SafeAreaView style={styles.container}>
-            <View style={styles.headerContainer}>
+        <ScrollView style={styles.container}>
+            <SafeAreaView style={styles.headerContainer}>
                 <View style={styles.inputArea}>
-                    <Text style={styles.title}> Gerencie seu faturamento aqui!</Text>
+                    <Text style={styles.title}>Gerencie seu faturamento aqui!</Text>
                 </View>
                 <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de produtos e serviços',{nome: 'João'})} style={styles.button}><Text>Vendas de produtos e serviços</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Vendas a prazo',{nome: 'João'})} style={styles.button}><Text>Vendas a prazo</Text></TouchableOpacity>
-                <TouchableOpacity onPress={()=> navigation.navigate('Estoque',{nome: 'João'})} style={styles.button}><Text>Estoque</Text></TouchableOpacity>
-            </View>
-        </SafeAreaView>
+                <TouchableOpacity onPress={()=> navigation.navigate('Vendas de produtos e serviços',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="fast-food-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Vendas de produtos e serviços</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Vendas a prazo',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="time-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Vendas a prazo</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> navigation.navigate('Estoque',{nome: 'João'})} style={styles.button}>
+                    <Ionicons name="file-tray-full-outline" color="a1a1a1" size={60} style={styles.icon}/>
+                    <Text style={styles.text}>Estoque</Text>
+                </TouchableOpacity>
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 
@@ -41,7 +51,6 @@ const styles = StyleSheet.create({
         color: "300022",
         paddingTop: 12,
         paddingBottom: 20,
-        paddingHorizontal: 6
     },
     button: {
         alignSelf: "center",
@@ -49,8 +58,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#0022",
         margin: 10,
         padding: 10,
-        width: 300,
-        alignItems: 'center'
+        width: 320,
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderWidth: 0.5
     },
     inputArea:{
         flexDirection: 'row',
@@ -59,5 +70,12 @@ const styles = StyleSheet.create({
     },
     icon:{
         paddingLeft: 20,
+    },
+    text:{
+        color:"#E0FFFF",
+        paddingLeft: 20,
+        fontWeight: '900',
+        fontSize: 16,
+        width: '70%'
     }
 });

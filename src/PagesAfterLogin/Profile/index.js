@@ -19,6 +19,7 @@ export default function Register() {
     const [details, setDetails] = useState({
         firstName: "",
         lastName: "",
+        telefone: "",
         //email: "",
         //password: "",
     });
@@ -43,8 +44,8 @@ export default function Register() {
             await setDoc(doc(dbacess, "usuarios", firebase.auth().currentUser.uid), {
                 firstName: details.firstName,
                 lastName: details.lastName,
-                email: firebase.auth().currentUser.email
-                //telefone: details.telefone
+                email: firebase.auth().currentUser.email,
+                telefone: details.telefone
             });
         })
     };
@@ -76,6 +77,15 @@ export default function Register() {
                 style={styles.input} />
 
                 <Text style={styles.title}> Alterar telefone: </Text>
+                <TextInput
+                id="telefone"
+                value={details.telefone}
+                onChangeText={(value) => handleChange(value, "telefone")}
+                name="telefone" 
+                placeholder="Digite seu telefone..." 
+                style={styles.input} />
+
+                <Text style={styles.title}> Alterar senha: </Text>
                 <View style={styles.inputArea}>
                     <TextInput placeholder="Digite uma senha...(não funcional no momento)" style={styles.inputPassword} secureTextEntry={hidePass} />
                     <TouchableOpacity onPress={ () => setHidePass(!hidePass) }>
@@ -97,7 +107,7 @@ export default function Register() {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: '#38a69d'
+        backgroundColor: '#5CC6BA'
     },
     containerHeader:{
         marginTop: '14%',
@@ -112,8 +122,8 @@ const styles = StyleSheet.create({
     containerForm:{
         backgroundColor: '#FFF',
         flex:1,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
         paddingStart: '5%',
         paddingEnd: '5%'
     },

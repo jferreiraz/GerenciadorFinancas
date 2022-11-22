@@ -7,9 +7,15 @@ export default function Information({ route }){
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
-            <Text style={styles.title}>Pagina tutorial/ ajuda</Text>
+            <Text style={styles.title}>Página de informações</Text>
             <Text></Text>
-            <Text style={styles.subTitle}>Apenas pagina de texto com exibição de informações, Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
+            <Text style={styles.subTitle}>Sobre</Text>
+            <Text></Text>
+            <Text style={styles.text}>Aplicação desenvolvida com o intuito de auxiliar a gestão financeira do seu comércio, ou até mesmo, vida pessoal. Com um maior controle e organização dos gastos buscamos elevar a rentabilidade otimizando o planejamento e o investimento de fomra correta.</Text>
+            <Text></Text>
+            <Text style={styles.subTitle}>Segurança de dados</Text>
+            <Text></Text>
+            <Text style={styles.text}>O projeto foi desenvolvido utilizando o banco do google firebase, ele é responsável por armazenar todos os dados registrados dos nossos usuários, assim como autenticar os mesmos com a segurança de uma tecnologia de ponta.</Text>
         </View>
         </SafeAreaView>
     );
@@ -23,16 +29,23 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         padding: 20,
-        paddingTop: Platform.OS == 'android' ? 50 : 0
+        paddingTop: Platform.OS == 'android' ? 30 : 0
     },
     title: {
         fontSize: 24,
         fontWeight: "400",
         color: "344422",
+        fontWeight: 'bold'
     },
     subTitle: {
-        fontSize: 14,
+        fontSize: 20,
         fontWeight: "400",
-        color: "300022",
+        color: "##414141",
+        fontWeight: '600'
+    },
+    text: {
+        fontSize: 16,
+        fontWeight: "400",
+        color: "gray",
     }
 });
