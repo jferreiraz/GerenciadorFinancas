@@ -53,7 +53,7 @@ const MoreDetails = () => {
         }));
         console.log(queryData);
         queryData.map(async (v) => {
-            await setDoc(doc(dbacess, `users/${firebase.auth().currentUser.uid}/more-details`, details.fname), {
+            await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/more-details`, details.fname), {
                 fname: details.fname,
                 age: details.age,
                 currentLocation: details.currLoc,
@@ -116,7 +116,7 @@ function SignUp(props) {
 
     const handleSubmit = async () => {
         console.log(details);
-        await setDoc(doc(dbacess, "users", firebase.auth().currentUser.uid), {
+        await setDoc(doc(dbacess, "usuarios", firebase.auth().currentUser.uid), {
             name: details.name,
             email: details.email,
             message: details.message,
@@ -176,7 +176,7 @@ function Teste() {
         .then((snapshot) => {
             if(snapshot.exists){
                 alert("Token desse email: \n\n"+firebase.auth().currentUser.uid)
-                const token = firebase.auth().currentUser.uid; 
+                //const token = firebase.auth().currentUser.uid; 
             }
             else {
                 console.log('User does not exist')

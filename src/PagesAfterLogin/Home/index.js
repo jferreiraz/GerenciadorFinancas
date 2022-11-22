@@ -8,12 +8,15 @@ import { firebase } from "../../config"
 
 
 const Home = ({navigation}) => {
+    const [name, setName] = useState ('')
+
     useEffect(() => {
-        firebase.firestore().collection('users')
+        firebase.firestore().collection('usuarios')
         .doc(firebase.auth().currentUser.uid).get()
         .then((snapshot) => {
             if(snapshot.exists){
-                alert("Token desse email: \n\n"+firebase.auth().currentUser.uid) 
+                alert("Token desse email: \n\n"+firebase.auth().currentUser.uid)
+                setName(snapshot.data()) 
             }
             else {
                 console.log('User does not exist')
@@ -26,7 +29,7 @@ const Home = ({navigation}) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
                 <View style={styles.inputArea}>
-                    <Text style={styles.title}> Bem-vindo de volta fulano</Text>
+                    <Text style={styles.title}> Bem-vindo de volta {name.firstName} {name.lastName}</Text>
                     <TouchableOpacity onPress={ () => navigation.navigate('Profile') }>
                         <Ionicons name="person-circle-outline" color="a1a1a1" size={30} style={styles.icon}/>
                     </TouchableOpacity>

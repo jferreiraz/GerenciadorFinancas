@@ -3,6 +3,9 @@ import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator} from '@react-navigation/native-stack'
 import { Feather } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { firebase } from "../config"
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native'
 
 import Welcome from        '../PagesLogin/Welcome'
 import SignIn from         '../PagesLogin/SignIn'
@@ -10,13 +13,14 @@ import Register from       '../PagesLogin/Register'
 import ForgetPassword from '../PagesLogin/ForgetPassword'
 
 import Home from        "../PagesAfterLogin/Home";
-import Detail from      "../PagesAfterLogin/Detail";
+import Configuracoes from      "../PagesAfterLogin/Configuracoes";
 import Information from "../PagesAfterLogin/Information";
 import Profile from     "../PagesAfterLogin/Profile";
 import Settings from    "../PagesAfterLogin/Settings";
 import DRE from         "../PagesAfterLogin/DRE";
 import Invoicing from   "../PagesAfterLogin/Invoicing";
 import Financas from    "../PagesAfterLogin/Financas";
+import encerrarAlerta from "../components/encerrarAlerta";
 import Teste from       "../PagesAfterLogin/GerenciarCustos/Teste";
 
 import Courses from '../PagesAfterLogin/GerenciarCustos/MaoDeObra/CadastrarMaoDeObra';
@@ -56,7 +60,7 @@ import AlterarVendasProdutosServicos from "../PagesAfterLogin/GerenciarFaturamen
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-export default function Routes({navigation}){
+export default function Routes(navigation){
 return(
     <Stack.Navigator>
         <Stack.Screen //--------------------------------------------------- PÁGINAS DE LOGIN ------------------------------------------------------
@@ -82,8 +86,16 @@ return(
         <Stack.Screen   //--------------------------------------------------- PÁGINA PRINCIPAL ------------------------------------------------------
             name="Home" 
             component={Tabs} 
-            options={{title: 'Gerenciador de Finanças', headerBackVisible:false ,headerStyle: {backgroundColor: '#5CC6BA'}, headerTintColor:'#101010', headerRight: () => (
-              <TouchableOpacity onPress={()=> alert('Settings') }><Feather name="settings" size={24} color="black" /></TouchableOpacity>
+            options={{
+                title: 'Gerenciador de Finanças', headerBackVisible:false ,
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#101010', 
+                headerRight: () => (
+                    <TouchableOpacity onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja encerrar sessão?',
+                        [{text:'Sim', onPress: () => {console.log('Yes Pressed');}},
+                         {text:'Não', onPress: () => {console.log('No Pressed ');}}])}  >
+                        <MaterialCommunityIcons name="exit-to-app" color={'black'} size={24} />
+                    </TouchableOpacity>
             )}}
         />
         <Stack.Screen //--------------------------------------------------- PÁGINAS GERENCIAR CUSTOS ------------------------------------------------------
@@ -248,12 +260,12 @@ function Tabs(){
             <MaterialCommunityIcons name="menu" color={color} size={size} />), 
         }}
       />
-      <Tab.Screen 
-        name="Encerrar sessão" 
-        component={Detail}
+      <Tab.Screen
+        name="Configurações"
+        component={Configuracoes} 
         options={{
         tabBarIcon:({ color, size }) => (
-          <MaterialCommunityIcons name="exit-to-app" color={color} size={size} />), 
+            <Feather name="settings" size={24} color="black" />), 
       }}
       />
     </Tab.Navigator>

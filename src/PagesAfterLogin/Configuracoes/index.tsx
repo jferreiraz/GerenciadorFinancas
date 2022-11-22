@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, Alert, StyleSheet, SafeAreaView, Platform } from 'react-native'
-import SelectBox from 'react-native-multi-selectbox'
+//import SelectBox from 'react-native-multi-selectbox'
 
-export default function Detail({ route }){
+export default function Configuracoes({ route }){
+    
     return (
         <SafeAreaView style={styles.container}>
         <View style={styles.headerContainer}>
@@ -13,7 +14,7 @@ export default function Detail({ route }){
         <TouchableOpacity style={styles.button1} onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja encerrar sessão?',[{text:'Sim', onPress: () => {console.log('Yes Pressed');}},{text:'Não', onPress: () => {console.log('Yes Pressed');}}])  }><Text style={styles.text}>Encerrar</Text></TouchableOpacity>
         </SafeAreaView>
     ); 
-}
+} 
 
 const styles = StyleSheet.create({
     button1: {

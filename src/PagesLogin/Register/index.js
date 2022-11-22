@@ -18,7 +18,7 @@ const Registration = () => {
     const navigation= useNavigation();
     const [hidePass, setHidePass] = useState(true);
 
-    registerUser = async (email, password, firstName, lastName) => {
+    const registerUser = async (email, password, firstName, lastName) => {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => {
             firebase.auth().currentUser.sendEmailVerification({
@@ -32,7 +32,7 @@ const Registration = () => {
                 alert(error.message)
             })
             .then(() => {
-                firebase.firestore().collection('usersAutenticacao')
+                firebase.firestore().collection('usuarios')
                 .doc(firebase.auth().currentUser.uid)
                 .set({
                     firstName,
