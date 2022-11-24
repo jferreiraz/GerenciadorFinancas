@@ -23,8 +23,8 @@ const CustoFixo = (props) => {
           valor,
           dataHoje
         });
-      });
-      setCampos(campos);
+      }); 
+      setCampos(campos); 
     });
   }, []); 
 
