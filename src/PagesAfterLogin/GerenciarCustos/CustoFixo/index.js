@@ -20,7 +20,7 @@ const CustoFixo = (props) => {
           id: doc.id,
           categoria,
           descricao,
-          valor,
+          valor, 
           dataHoje 
         });
       }); 
