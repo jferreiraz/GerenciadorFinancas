@@ -21,7 +21,7 @@ const CustoFixo = (props) => {
           categoria,
           descricao,
           valor,
-          dataHoje
+          dataHoje 
         });
       }); 
       setCampos(campos); 
