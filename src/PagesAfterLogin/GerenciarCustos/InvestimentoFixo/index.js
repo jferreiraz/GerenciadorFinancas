@@ -3,13 +3,13 @@ import { Button, StyleSheet } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
-import firebase from "../../../config";
+import { firebase } from "../../../config";
 
 const InvestimentoFixo = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("investimento fixo").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, valor } = doc.data();
@@ -17,7 +17,7 @@ const InvestimentoFixo = (props) => {
           id: doc.id,
           categoria,
           descricao,
-          valor,
+          valor
         });
       });
       setCampos(campos);

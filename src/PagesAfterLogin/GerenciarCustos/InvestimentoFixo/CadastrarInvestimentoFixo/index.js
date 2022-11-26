@@ -7,12 +7,26 @@ import {
   ScrollView,
 } from "react-native";
 
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import Select from "../Components";
 import { SafeAreaView } from "react-native";
 import { categorias } from "../Components/categorias";
 
+import { doc, setDoc } from "firebase/firestore";
+import { dbacess } from "../../../../config";
+import { collection, query, getDocs } from "firebase/firestore";
+
+
+
+
+
 const CadastrarInvestimentoFixo = (props) => {
+  const [isEditable, setisEditable] = useState(false);
+
+  const updateState = () => {
+    setisEditable(!isEditable);
+  }
+
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
@@ -30,52 +44,68 @@ const CadastrarInvestimentoFixo = (props) => {
   };
 
   const salvarNovo = async () => {
-    if (state.categoria === "") {
-      alert("Porfavor preencha todos os campos");
-    } else {
+    const token = state.descricao+" - "+time;
 
-      try {
-        await firebase.db.collection("investimento fixo").add({
-          categoria: state.categoria,
+    const q = query(collection(dbacess, "usuarios"));
+    const querySnapshot = await getDocs(q);
+    const queryData = querySnapshot.docs.map((detail) => ({
+        ...detail.data(),
+        id: detail.id,
+    }));
+    console.log(queryData);
+    queryData.map(async (v) => {
+      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/investimento fixo`, token), {
+          categoria: state.categoria, 
           descricao: state.descricao,
           valor: state.valor,
           dataHoje: state.dataHoje,
         });
-
         props.navigation.navigate("Investimento fixo");
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  };
+    })
+};
 
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Select 
+      <Select
           options={categorias} 
           onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
           text="Selecione uma categoria"
           label="Categoria:"
-          value={state.categoria}         
+          value={state.categoria}          
           />
       </SafeAreaView>
+
+      <Button
+        onPress={updateState}
+        title={isEditable ? "Clique para desabilitar descrição" : "Clique para habilitar descrição"}>
+      </Button>
 
       {/* descricao Input */}
       <View style={styles.inputGroup}>
         <TextInput 
-          placeholder="Descrição"
+          placeholder={isEditable ? 'Descrição' : 'Desabilitado'}
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
           value={state.descricao}
+          editable={isEditable}
+          underlineColorAndroid="transparent"
+          style={[
+            styles.textInputStyle,
+            {
+              borderColor: isEditable ? 'black' : 'red',
+              backgroundColor: isEditable ? 'white' : '#d7d7d7'
+            }
+          ]}
         />
       </View>
 
       {/* Input */}
       <View style={styles.inputGroup}>
         <TextInput
+          style={styles.textInputStyle} 
           placeholder="Valor"
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
@@ -111,6 +141,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  textInputStyle: {
+    height: 60,
+    borderWidth: 0.5,
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 20,
+    paddingLeft: 12,
+  }
 });
 
 export default CadastrarInvestimentoFixo;

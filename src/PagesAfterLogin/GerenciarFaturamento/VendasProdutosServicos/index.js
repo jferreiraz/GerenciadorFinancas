@@ -3,13 +3,13 @@ import { Button, StyleSheet } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
-import firebase from "../../../config";
+import { firebase } from "../../../config";
 
 const VendasProdutosServicos = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("produtos e serviços").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('produtos e serviços').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, quantidadeUnitaria, custoUnitario, vendaUnitaria } = doc.data();

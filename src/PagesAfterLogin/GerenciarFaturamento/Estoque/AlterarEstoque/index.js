@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Select from "../../../../components/select";
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarEstoque = (props) => {
@@ -28,7 +28,7 @@ const AlterarEstoque = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("estoque").doc(id);
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque').doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -37,8 +37,8 @@ const AlterarEstoque = (props) => {
 
   const deletarDados = async () => {
     setCarregar(true)
-    const dbRef = firebase.db
-      .collection("estoque")
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque')
+      //.collection("estoque")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
@@ -60,7 +60,7 @@ const AlterarEstoque = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("estoque").doc(campos.id);
+    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,

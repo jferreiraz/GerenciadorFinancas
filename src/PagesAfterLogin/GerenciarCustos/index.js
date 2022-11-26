@@ -82,8 +82,11 @@ const styles = StyleSheet.create({
     text: {
         color:"#E0FFFF",
         paddingLeft: 30,
-        fontWeight: '900',
+        fontWeight: 'bold',
         fontSize: 16,
-        width: '60%'
+        width: '60%',
+        textShadowColor:'black',
+        textShadowOffset:{width: 0, height: 0},
+        textShadowRadius:8,
     }
 });

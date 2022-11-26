@@ -29,7 +29,7 @@ export default function ForgetPassword() {
             <Animatable.View animation="fadeInUp" duration={1300} style={styles.containerForm}>
                 <Text style={styles.title}> Email: </Text>
                 <TextInput 
-                    onChangeText={(email) => setEmail(email)}
+                    onChangeText={(email) => setEmail(email.trim())}
                     autoCapitalize="none"
                     autoCorrect={false} 
                     placeholder="Digite seu email..." 

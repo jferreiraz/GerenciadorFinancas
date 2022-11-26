@@ -9,13 +9,26 @@ import {
   SafeAreaView
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import Select from "../Components";
 import { categorias } from "../Components/categorias";
 
 
 const AlterarInvestimentoFixo = (props) => {
+  const [isEditable, setisEditable] = useState(false);
+
+  const checkUpdateState = () => {
+    if(campos.descricao != ""){
+    setisEditable(!isEditable);
+    } else {
+    setisEditable(isEditable);
+    }
+  }
+
+  const updateState = () => {
+    setisEditable(!isEditable);
+  }
+
   const initialState = {
     id: "",
     categoria: "",
@@ -31,7 +44,7 @@ const AlterarInvestimentoFixo = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("investimento fixo").doc(id);
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -40,8 +53,8 @@ const AlterarInvestimentoFixo = (props) => {
 
   const deletarDados = async () => {
     setCarregar(true)
-    const dbRef = firebase.db
-      .collection("investimento fixo")
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo')
+      //.collection("investimento fixo")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
@@ -63,7 +76,7 @@ const AlterarInvestimentoFixo = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("investimento fixo").doc(campos.id);
+    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
@@ -91,20 +104,12 @@ const AlterarInvestimentoFixo = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(value)=> handleTextChange(value, "categoria")} 
-          text="Selecione uma categoria"
+          text={campos.categoria}
           label="Categoria:"
-          value={campos.categoria}         
+          value={campos.categoria}
+          placeholder={campos.categoria}         
           />
       </SafeAreaView>
-      <View>
-        <TextInput
-          autoCompleteType="Descricao"
-          placeholder="descricao"
-          style={styles.inputGroup}
-          value={campos.descricao}
-          onChangeText={(value) => handleTextChange(value, "descricao")}
-        />
-      </View>
       <View>
         <TextInput
           placeholder="Valor"
@@ -113,6 +118,20 @@ const AlterarInvestimentoFixo = (props) => {
           value={campos.valor}
           keyboardType="decimal-pad"
           onChangeText={(value) => handleTextChange(value, "valor")}
+        />
+      </View>
+      <Button
+        onPress={updateState}
+        title={isEditable ? "Clique para desabilitar descrição" : "Clique para habilitar descrição"}>
+      </Button>
+      <View style={styles.container}>
+        <TextInput
+          autoCompleteType="Descricao"
+          placeholder={isEditable ? 'Descrição' : 'Desabilitado'}
+          style={styles.inputGroup}
+          value={campos.descricao}
+          onChangeText={(value) => handleTextChange(value, "descricao")}
+          editable={isEditable}
         />
       </View>
       <View style={styles.btn}>

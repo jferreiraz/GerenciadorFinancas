@@ -3,13 +3,13 @@ import { Button, StyleSheet } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
-import firebase from "../../../config";
+import { firebase } from "../../../config";
 
 const CustosVariaveis = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("custos variaveis").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, valor } = doc.data();

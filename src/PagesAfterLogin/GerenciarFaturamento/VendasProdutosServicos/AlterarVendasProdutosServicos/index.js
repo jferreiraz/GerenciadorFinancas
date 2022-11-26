@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Select from "../../../../components/select";
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarVendasProdutosServicos = (props) => {
@@ -30,7 +30,7 @@ const AlterarVendasProdutosServicos = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("produtos e serviços").doc(id);
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('produtos e serviços').doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -39,8 +39,8 @@ const AlterarVendasProdutosServicos = (props) => {
 
   const deletarDados = async () => {
     setCarregar(true)
-    const dbRef = firebase.db
-      .collection("produtos e serviços")
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('produtos e serviços')
+      //.collection("produtos e serviços")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
@@ -62,7 +62,7 @@ const AlterarVendasProdutosServicos = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("produtos e serviços").doc(campos.id);
+    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('produtos e serviços').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,

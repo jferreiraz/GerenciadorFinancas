@@ -94,7 +94,7 @@ const Registration = () => {
                     <TextInput
                         placeholder="Digite seu email..."
                         style={styles.input}
-                        onChangeText={(email) => setEmail(email)}
+                        onChangeText={(email) => setEmail(email.trim())}
                         autoCorrect={false} />
 
                     <Text style={styles.title}> Senha: </Text>

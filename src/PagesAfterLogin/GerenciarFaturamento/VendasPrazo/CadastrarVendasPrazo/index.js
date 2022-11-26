@@ -7,10 +7,14 @@ import {
   ScrollView,
 } from "react-native";
 
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import Select from "../Components";
 import { SafeAreaView } from "react-native";
 import { categorias } from "../Components/categorias";
+
+import { doc, setDoc } from "firebase/firestore";
+import { dbacess } from "../../../../config";
+import { collection, query, getDocs } from "firebase/firestore";
 
 const CadastrarVendasPrazo = (props) => {
   const date = new Date().toLocaleDateString();
@@ -30,24 +34,25 @@ const CadastrarVendasPrazo = (props) => {
   };
 
   const salvarNovo = async () => {
-    if (state.categoria === "") {
-      alert("Porfavor preencha todos os campos");
-    } else {
+    const token = state.descricao+" - "+time;
 
-      try {
-        await firebase.db.collection("vendas prazo").add({
-          categoria: state.categoria,
+    const q = query(collection(dbacess, "usuarios"));
+    const querySnapshot = await getDocs(q);
+    const queryData = querySnapshot.docs.map((detail) => ({
+        ...detail.data(),
+        id: detail.id,
+    }));
+    console.log(queryData);
+    queryData.map(async (v) => {
+      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/vendas prazo`, token), {
+          categoria: state.categoria, 
           descricao: state.descricao,
           valor: state.valor,
           dataHoje: state.dataHoje,
         });
-
         props.navigation.navigate("Vendas a prazo");
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  };
+    })
+};
 
   return (
     <ScrollView style={styles.container}>

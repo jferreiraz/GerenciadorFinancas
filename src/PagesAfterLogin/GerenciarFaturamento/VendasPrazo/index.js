@@ -3,13 +3,13 @@ import { Button, StyleSheet } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
-import firebase from "../../../config";
+import { firebase } from "../../../config";
 
 const VendasPrazo = (props) => {
   const [campos, setCampos] = useState([]);
 
   useEffect(() => {
-    firebase.db.collection("vendas prazo").onSnapshot((querySnapshot) => {
+    firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('vendas prazo').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
         const { categoria, descricao, valor } = doc.data();

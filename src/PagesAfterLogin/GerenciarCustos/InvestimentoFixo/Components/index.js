@@ -2,6 +2,7 @@ import { View, TouchableOpacity, Text, Modal, FlatList, StyleSheet } from 'react
 import React from 'react';
 import {useState} from 'react';
 import { categorias } from './categorias';
+import { Ionicons } from '@expo/vector-icons'
 
 const Select = ({options, text, onChangeSelect, label}) => {
     const [txt, setTxt] = useState(text);
@@ -36,14 +37,10 @@ const Select = ({options, text, onChangeSelect, label}) => {
              
              <View style={styles.headerModal}>
                 <TouchableOpacity onPress={()=> setModalVisible(false)}>
-                    <Text>Voltar</Text>
+                <Ionicons name="arrow-back-outline" color="a1a1a1" size={25} style={styles.icon}/>
                 </TouchableOpacity>
 
                 <Text style={styles.modalTitle}>{text}</Text>
-
-                <TouchableOpacity onPress={()=> setModalVisible(false)}>
-                    <Text style={styles.modalCancel}>Cancelar</Text>
-                </TouchableOpacity>
             </View>
              
              <FlatList 
@@ -59,14 +56,17 @@ const Select = ({options, text, onChangeSelect, label}) => {
 
 const styles = StyleSheet.create({
     container:{
-        height: 40,
+        textAlign: 'center',
+        height: 60,
+        borderWidth: 0.5,
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 20,
         flex: 1,
         backgroundColor: '#F8F9FA',
         paddingHorizontal: 10,
         marginHorizontal: 0,
         borderRadius: 5,
-        fontSize: 18,
-        borderWidth:1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     headerModal:{
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         paddingHorizontal: 12,
         borderBottomColor: '#ddd',
         borderBottomWidth: 1,
@@ -88,7 +88,9 @@ const styles = StyleSheet.create({
     },
     modalTitle:{
         fontSize: 18,
-        color: '#555',
+        color: 'black',
+        fontWeight: '500',
+        paddingLeft: 20,
     },
     modalCancel:{
         fontSize: 14,

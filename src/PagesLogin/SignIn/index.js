@@ -44,7 +44,7 @@ const SignIn = () => {
                 <Text style={styles.title}> Email </Text>
                 <TextInput 
                     placeholder="Digite seu email..." style={styles.input}
-                    onChangeText={(email) => setEmail(email)}
+                    onChangeText={(email) => setEmail(email.trim())}
                     autoCapitalize="none"
                     autoCorrect={false} 
                 />

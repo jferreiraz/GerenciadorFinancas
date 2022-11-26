@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Select from "../../../../components/select";
-import firebase from "../../../../config";
+import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarCustosVariaveis = (props) => {
@@ -28,7 +28,7 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const pegarDadosID = async (id) => {
-    const dbRef = firebase.db.collection("custos variaveis").doc(id);
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').doc(id);
     const doc = await dbRef.get();
     const campos = doc.data();
     setCampos({ ...campos, id: doc.id });
@@ -37,8 +37,8 @@ const AlterarCustosVariaveis = (props) => {
 
   const deletarDados = async () => {
     setCarregar(true)
-    const dbRef = firebase.db
-      .collection("custos variáveis")
+    const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis')
+      //.collection("custos variáveis")
       .doc(props.route.params.camposId);
     await dbRef.delete();
     setCarregar(false)
@@ -60,7 +60,7 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.db.collection("custos variaveis").doc(campos.id);
+    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
