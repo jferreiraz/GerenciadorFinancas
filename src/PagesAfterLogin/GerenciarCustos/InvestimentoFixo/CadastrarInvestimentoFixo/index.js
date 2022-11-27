@@ -4,7 +4,8 @@ import {
   View,
   StyleSheet,
   TextInput,
-  ScrollView,
+  ScrollView, 
+  Text,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -30,11 +31,19 @@ const CadastrarInvestimentoFixo = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
+  const today = new Date().getDate();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; 
+
   const initalState = {
     categoria: "",
-    descricao: "",
+    descricao: "item investimento fixo",
     valor: "",
-    dataHoje:date + " às " + time,
+    dataAdicao:date + " às " + time,
+    dataUltimaAlteracao:date + " às " + time,
+    desgasteTaxaAnual:"",
+    desgasteVidaUtil:"",
+    custoDesgaste:"",
   };
 
   const [state, setState] = useState(initalState);
@@ -44,7 +53,9 @@ const CadastrarInvestimentoFixo = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.descricao+" - "+time;
+    const result = categorias.find( element => element.name === state.categoria );
+    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
+    const custoDesgaste = state.valor/(result.vidaUtil * 12);
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
@@ -58,11 +69,24 @@ const CadastrarInvestimentoFixo = (props) => {
           categoria: state.categoria, 
           descricao: state.descricao,
           valor: state.valor,
-          dataHoje: state.dataHoje,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
+          desgasteTaxaAnual: result.taxaAnual,
+          desgasteVidaUtil: result.vidaUtil,
+          custoDesgaste: custoDesgaste,
         });
         props.navigation.navigate("Investimento fixo");
     })
 };
+
+
+
+
+
+
+
+
+
 
   return (
     <ScrollView style={styles.container}>
@@ -117,8 +141,23 @@ const CadastrarInvestimentoFixo = (props) => {
         <Button title="Salvar Dados" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
+
+    
   );
 };
+
+
+export default CadastrarInvestimentoFixo;
+
+
+
+
+
+
+
+
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -150,5 +189,3 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
   }
 });
-
-export default CadastrarInvestimentoFixo;

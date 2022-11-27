@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, StyleSheet } from "react-native";
+import { Button, StyleSheet, Text } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+import TouchableScale from 'react-native-touchable-scale';
 
 import { firebase } from "../../../config";
+import categorias from "./Components/categorias";
 
 const InvestimentoFixo = (props) => {
   const [campos, setCampos] = useState([]);
@@ -12,28 +14,63 @@ const InvestimentoFixo = (props) => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
-        const { categoria, descricao, valor } = doc.data();
+        const { categoria, descricao, valor, dataAdicao, dataUltimaAlteracao, desgasteTaxaAnual, desgasteVidaUtil, custoDesgaste } = doc.data();
         campos.push({
           id: doc.id,
           categoria,
           descricao,
-          valor
+          valor,
+          dataAdicao,
+          dataUltimaAlteracao,
+          desgasteTaxaAnual,
+          desgasteVidaUtil,
+          custoDesgaste,
         });
       });
       setCampos(campos);
     });
-  }, []); 
+  }, []);
 
 
   return (
     <ScrollView>
+      <ListItem
+        Component={TouchableScale}
+        friction={100} //
+        tension={120} // These props are passed to the parent component (here TouchableScale)
+        activeScale={0.92} //
+        key={campos.id}
+        bottomDivider
+      >
+        <ListItem.Content>
+          <ListItem.Subtitle style={styles.subTitle}>{"Total em investimento fixo: R$" + campos.totalInvestimentoFixo}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Custo de manutenção geral: R$" + campos.valor}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}></ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
       <Button
         onPress={() => props.navigation.navigate("Cadastrar investimento fixo")}
         title="Cadastrar dados"
       />
       {campos.map((campos) => {
+        var numeros = []
+        numeros.push(campos.valor)
+        console.log(numeros)
+
+        var soma = 0;
+for(var i = 0; i < numeros.length; i++) {
+    soma += numeros[i];
+}
+      console.log(soma)
+    
+
         return (
           <ListItem
+            Component={TouchableScale}
+            friction={100}
+            tension={120} 
+            activeScale={0.92}
             key={campos.id}
             bottomDivider
             onPress={() => {
@@ -43,9 +80,12 @@ const InvestimentoFixo = (props) => {
             }}
           >
             <ListItem.Content>
-              <ListItem.Title>{campos.categoria}</ListItem.Title>
-              <ListItem.Subtitle>{campos.descricao}</ListItem.Subtitle>
-              <ListItem.Subtitle>{"R$ "+campos.valor}</ListItem.Subtitle>
+              <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
+              <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$" + campos.valor}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDesgaste}>{"Desgasta " + campos.desgasteTaxaAnual + "% durante " + campos.desgasteVidaUtil + " anos, custo de reparo anual: R$" + campos.custoDesgaste}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         );
@@ -55,3 +95,29 @@ const InvestimentoFixo = (props) => {
 };
 
 export default InvestimentoFixo;
+
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    paddingBottom: 4,
+    fontSize: 18,
+  },
+  subTitle: {
+    paddingBottom: 1,
+    color: 'black',
+    fontSize: 14,
+  },
+  subTitleDate: {
+    paddingLeft: 5,
+    paddingBottom: 1,
+    fontSize: 14,
+    fontStyle: 'italic',
+  },
+  subTitleDesgaste: {
+    paddingLeft: 5,
+    paddingBottom: 1,
+    fontSize: 14,
+    color: "#596E85",
+    fontStyle: 'italic',
+  }
+});

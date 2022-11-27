@@ -14,7 +14,16 @@ import Select from "../Components";
 import { categorias } from "../Components/categorias";
 
 
+
+
+
+
+
+
 const AlterarInvestimentoFixo = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+
   const [isEditable, setisEditable] = useState(false);
 
   const checkUpdateState = () => {
@@ -34,6 +43,10 @@ const AlterarInvestimentoFixo = (props) => {
     categoria: "",
     descricao: "",
     valor: "",
+    dataUltimaAlteracao:date + " às " + time,
+    desgasteTaxaAnual:"",
+    desgasteVidaUtil:"",
+    custoDesgaste:"",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -76,11 +89,18 @@ const AlterarInvestimentoFixo = (props) => {
   };
 
   const atualizarDados = async () => {
+    const result = categorias.find( element => element.name === campos.categoria );  //Para alterar categoria
+    const custoDesgaste = campos.valor/(result.vidaUtil * 12);                       //Para alterar categoria
     const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
+      dataUltimaAlteracao: date + " às " + time,
+      dataAdicao: campos.dataAdicao,
+      desgasteTaxaAnual: result.taxaAnual,
+      desgasteVidaUtil: result.vidaUtil,
+      custoDesgaste: custoDesgaste,
     });
     setCampos(initialState);
     props.navigation.navigate("Investimento fixo");
@@ -97,6 +117,13 @@ const AlterarInvestimentoFixo = (props) => {
       </View>
     );
   }
+
+
+
+
+
+
+
 
   return (
     <ScrollView style={styles.container}>
@@ -148,6 +175,17 @@ const AlterarInvestimentoFixo = (props) => {
   );
 };
 
+export default AlterarInvestimentoFixo;
+
+
+
+
+
+
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -173,5 +211,3 @@ const styles = StyleSheet.create({
     marginBottom: 7,
   },
 });
-
-export default AlterarInvestimentoFixo;

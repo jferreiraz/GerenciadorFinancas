@@ -17,6 +17,7 @@ const Select = ({options, text, onChangeSelect, label}) => {
                 setModalVisible(false);
                 setSelected(item.id);
             }}>
+                <Ionicons name={item.logo} color="a1a1a1" size={25} style={styles.icon}/>
                 <Text style={styles.optionTxt}>{item.name}</Text>
                 {item.id == selected}
             </TouchableOpacity>)
@@ -80,11 +81,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingHorizontal: 12,
+        paddingLeft: 12,
+        paddingRight: 18,
         borderBottomColor: '#ddd',
         borderBottomWidth: 1,
-        paddingBottom: 12,
-        paddingTop: 8,
+        paddingBottom: 15,
+        paddingTop: 15,
     },
     modalTitle:{
         fontSize: 18,
@@ -100,7 +102,7 @@ const styles = StyleSheet.create({
     optionContainer:{
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
         borderBottomColor: '#eee',
         borderBottomWidth: 1,
         padding:10,
@@ -108,13 +110,15 @@ const styles = StyleSheet.create({
     optionTxt:{
         fontSize: 16,
         color: '#555',
+        paddingLeft: 10,
     },
     label:{
         fontSize:14,
         color: '#737373',
         paddingBottom:5,
-        
-        
+    },
+    icon: {
+        paddingLeft: 5,
     }
 
 })
