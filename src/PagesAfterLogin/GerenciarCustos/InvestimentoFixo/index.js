@@ -54,22 +54,23 @@ const InvestimentoFixo = (props) => {
         title="Cadastrar dados"
       />
       {campos.map((campos) => {
+        //----------------------
         var numeros = []
         numeros.push(campos.valor)
         console.log(numeros)
 
         var soma = 0;
-for(var i = 0; i < numeros.length; i++) {
-    soma += numeros[i];
-}
-      console.log(soma)
-    
+        for (var i = 0; i < numeros.length; i++) {
+          soma += numeros[i];
+        }
+        console.log(soma)
+        //---------------------------------
 
         return (
           <ListItem
             Component={TouchableScale}
             friction={100}
-            tension={120} 
+            tension={120}
             activeScale={0.92}
             key={campos.id}
             bottomDivider
