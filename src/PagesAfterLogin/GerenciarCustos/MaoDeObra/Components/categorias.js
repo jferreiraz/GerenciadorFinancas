@@ -1,23 +1,22 @@
 export const categorias = [
     {
-        id: "Computadores",
-        name: 'Computadores',
+        id: "Profissional autônomo (freelancer)",
+        name: 'Profissional autônomo (freelancer)',
+        logo: "people-outline",
     },
     {
-        id: "Móveis",
-        name: 'Móveis',
+        id: "Assalariado (contratado)",
+        name: 'Assalariado (contratado)',
+        logo: "person-outline",
     },
     {
-        id: "Gasolina",
-        name: 'Gasolina',
+        id: "Estágio profissional",
+        name: 'Estágio profissional',
+        logo: "cube-outline",
     },
     {
-        id: "Aparelhos",
-        name: 'Aparelhos',
-    },
-    {
-        id: "Marketing",
-        name: 'Marketing',
+        id: "Outros",
+        name: 'Outros',
+        logo: "add-outline",
     }
-    
 ]

@@ -20,11 +20,18 @@ const CadastrarMaoDeObra = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
+  const today = new Date().getDate();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; 
+
   const initalState = {
     categoria: "",
-    descricao: "",
-    valor: "",
-    dataHoje:date + " às " + time,
+    funcao: "",
+    numeroFuncionarios: "",
+    salario: "",
+    gastosFuncao: "",
+    dataAdicao:date + " às " + time,
+    dataUltimaAlteracao:date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -34,7 +41,8 @@ const CadastrarMaoDeObra = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.descricao+" - "+time;
+    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
+    const totalGastosFuncao = state.numeroFuncionarios * state.salario;
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
@@ -46,9 +54,12 @@ const CadastrarMaoDeObra = (props) => {
     queryData.map(async (v) => {
       await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/mão de obra`, token), {
           categoria: state.categoria, 
-          descricao: state.descricao,
-          valor: state.valor,
-          dataHoje: state.dataHoje,
+          funcao: state.funcao,
+          numeroFuncionarios: state.numeroFuncionarios,
+          salario: state.salario,
+          gastosFuncao: totalGastosFuncao,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Custos com mão de obra");
     })
@@ -67,24 +78,34 @@ const CadastrarMaoDeObra = (props) => {
           />
       </SafeAreaView>
 
-      {/* descricao Input */}
+      {/* funcao Input */}
       <View style={styles.inputGroup}>
         <TextInput 
           placeholder="Descrição"
           multiline={true}
           numberOfLines={1}
-          onChangeText={(value) => handleChangeText(value, "descricao")}
-          value={state.descricao}
+          onChangeText={(value) => handleChangeText(value, "funcao")}
+          value={state.funcao}
+        />
+      </View>
+
+      {/* Input */}
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Quantidade com essa função"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "numeroFuncionarios")}
+          value={state.numeroFuncionarios}
         />
       </View>
       
       {/* Input */}
       <View style={styles.inputGroup}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Salário"
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "valor")}
-          value={state.valor}
+          onChangeText={(value) => handleChangeText(value, "salario")}
+          value={state.salario}
         />
       </View>
 

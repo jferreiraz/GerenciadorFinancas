@@ -20,11 +20,16 @@ const CadastrarVendasPrazo = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
+  const today = new Date().getDate();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; 
+
   const initalState = {
     categoria: "",
     descricao: "",
     valor: "",
-    dataHoje:date + " às " + time,
+    dataAdicao:date + " às " + time,
+    dataUltimaAlteracao:date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -34,7 +39,7 @@ const CadastrarVendasPrazo = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.descricao+" - "+time;
+    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
@@ -48,7 +53,8 @@ const CadastrarVendasPrazo = (props) => {
           categoria: state.categoria, 
           descricao: state.descricao,
           valor: state.valor,
-          dataHoje: state.dataHoje,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Vendas a prazo");
     })

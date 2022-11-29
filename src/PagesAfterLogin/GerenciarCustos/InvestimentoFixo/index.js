@@ -36,9 +36,9 @@ const InvestimentoFixo = (props) => {
     <ScrollView>
       <ListItem
         Component={TouchableScale}
-        friction={100} //
-        tension={120} // These props are passed to the parent component (here TouchableScale)
-        activeScale={0.92} //
+        friction={100}
+        tension={120} 
+        activeScale={0.92}
         key={campos.id}
         bottomDivider
       >
@@ -46,7 +46,6 @@ const InvestimentoFixo = (props) => {
           <ListItem.Subtitle style={styles.subTitle}>{"Total em investimento fixo: R$" + campos.totalInvestimentoFixo}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Custo de manutenção geral: R$" + campos.valor}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
-          <ListItem.Subtitle style={styles.subTitle}></ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
       <Button
@@ -55,7 +54,7 @@ const InvestimentoFixo = (props) => {
       />
       {campos.map((campos) => {
         //----------------------
-        var numeros = []
+        var numeros = [] 
         numeros.push(campos.valor)
         console.log(numeros)
 

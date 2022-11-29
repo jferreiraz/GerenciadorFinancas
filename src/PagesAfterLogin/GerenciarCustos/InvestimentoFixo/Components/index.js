@@ -1,23 +1,23 @@
 import { View, TouchableOpacity, Text, Modal, FlatList, StyleSheet } from 'react-native';
 import React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import { categorias } from './categorias';
 import { Ionicons } from '@expo/vector-icons'
 
-const Select = ({options, text, onChangeSelect, label}) => {
+const Select = ({ options, text, onChangeSelect, label }) => {
     const [txt, setTxt] = useState(text);
     const [modalVisible, setModalVisible] = useState(false);
     const [selected, setSelected] = useState('');
-    function renderOption(item){
+    function renderOption(item) {
         return (
-            (<TouchableOpacity style={[styles.optionContainer,{backgroundColor:item.id == selected ? '#eee':'#fff'}]}
-                onPress={()=>{
-                onChangeSelect(item.id);
-                setTxt(item.name);
-                setModalVisible(false);
-                setSelected(item.id);
-            }}>
-                <Ionicons name={item.logo} color="a1a1a1" size={25} style={styles.icon}/>
+            (<TouchableOpacity style={[styles.optionContainer, { backgroundColor: item.id == selected ? '#eee' : '#fff' }]}
+                onPress={() => {
+                    onChangeSelect(item.id);
+                    setTxt(item.name);
+                    setModalVisible(false);
+                    setSelected(item.id);
+                }}>
+                <Ionicons name={item.logo} color="a1a1a1" size={25} style={styles.icon} />
                 <Text style={styles.optionTxt}>{item.name}</Text>
                 {item.id == selected}
             </TouchableOpacity>)
@@ -25,38 +25,38 @@ const Select = ({options, text, onChangeSelect, label}) => {
     }
 
     return (
-     <>
-        <Text style={styles.label}>{label}</Text>
+        <>
+            <Text style={styles.label}>{label}</Text>
 
-        <TouchableOpacity style={styles.container} onPress={()=> setModalVisible(true)}>
-            <Text style={styles.textButtom} numberOfLines={1}>
-                {txt}
-            </Text>
-        </TouchableOpacity>
-       
-        <Modal animationType='slide' visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
-             
-             <View style={styles.headerModal}>
-                <TouchableOpacity onPress={()=> setModalVisible(false)}>
-                <Ionicons name="arrow-back-outline" color="a1a1a1" size={25} style={styles.icon}/>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.container} onPress={() => setModalVisible(true)}>
+                <Text style={styles.textButtom} numberOfLines={1}>
+                    {txt}
+                </Text>
+            </TouchableOpacity>
 
-                <Text style={styles.modalTitle}>{text}</Text>
-            </View>
-             
-             <FlatList 
-                data={options}
-                keyExtractor={(item) => String(item.id)}
-                renderItem={({item}) => renderOption(item)}
-             />
-        </Modal>
-    </>
-    );   
+            <Modal animationType='slide' visible={modalVisible} onRequestClose={() => setModalVisible(false)}>
+
+                <View style={styles.headerModal}>
+                    <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <Ionicons name="arrow-back-outline" color="a1a1a1" size={25} style={styles.icon} />
+                    </TouchableOpacity>
+
+                    <Text style={styles.modalTitle}>{text}</Text>
+                </View>
+
+                <FlatList
+                    data={options}
+                    keyExtractor={(item) => String(item.id)}
+                    renderItem={({ item }) => renderOption(item)}
+                />
+            </Modal>
+        </>
+    );
 };
 
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         textAlign: 'center',
         height: 60,
         borderWidth: 0.5,
@@ -72,12 +72,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-    textButtom:{
+    textButtom: {
         color: '#555',
-        fontSize:18,
-        
+        fontSize: 18,
+
     },
-    headerModal:{
+    headerModal: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -88,34 +88,34 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
         paddingTop: 15,
     },
-    modalTitle:{
+    modalTitle: {
         fontSize: 18,
         color: 'black',
         fontWeight: '500',
         paddingLeft: 20,
     },
-    modalCancel:{
+    modalCancel: {
         fontSize: 14,
         color: '#5CC6BA',
         fontWeight: '600',
     },
-    optionContainer:{
+    optionContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
         borderBottomColor: '#eee',
         borderBottomWidth: 1,
-        padding:10,
+        padding: 10,
     },
-    optionTxt:{
+    optionTxt: {
         fontSize: 16,
         color: '#555',
         paddingLeft: 10,
     },
-    label:{
-        fontSize:14,
+    label: {
+        fontSize: 14,
         color: '#737373',
-        paddingBottom:5,
+        paddingBottom: 5,
     },
     icon: {
         paddingLeft: 5,

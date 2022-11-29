@@ -8,17 +8,20 @@ import {
   StyleSheet,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Select from "../../../../components/select";
+import Select from "../Components";
 import { firebase } from "../../../../config";
-import { categorias } from "../../../../components/categorias";
+import { categorias } from "../Components/categorias";
 
 const AlterarCustoFixo = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+
   const initialState = {
     id: "",
     categoria: "",
     descricao: "",
     valor: "",
-    dataHoje: "",
+    dataUltimaAlteracao:date + " às " + time,
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -66,7 +69,8 @@ const AlterarCustoFixo = (props) => {
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
-      dataHoje: campos.dataHoje,
+      dataUltimaAlteracao: date + " às " + time,
+      dataAdicao: campos.dataAdicao,
     });
     setCampos(initialState);
     props.navigation.navigate("Custo fixo");
@@ -90,8 +94,8 @@ const AlterarCustoFixo = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text="Selecione uma categoria"
-          label=""
+          text={campos.categoria}
+          label="Categoria: (label)"
           value={campos.categoria}         
           />
       </View>

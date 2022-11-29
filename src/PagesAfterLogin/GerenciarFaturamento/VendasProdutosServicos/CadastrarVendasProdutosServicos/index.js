@@ -20,13 +20,22 @@ const CadastrarVendasProdutosServicos = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
+  const today = new Date().getDate();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; 
+
   const initalState = {
     categoria: "",
     descricao: "",
     quantidadeUnitaria: "",
     custoUnitario: "",
+    custoGeral: "",
     vendaUnitaria: "",
-    dataHoje:date + " às " + time,
+    vendaGeral: "",
+    lucroUnitario: "",
+    lucroGeral: "",
+    dataAdicao:date + " às " + time,
+    dataUltimaAlteracao:date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -36,7 +45,7 @@ const CadastrarVendasProdutosServicos = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.descricao+" - "+time;
+    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
@@ -51,8 +60,13 @@ const CadastrarVendasProdutosServicos = (props) => {
           descricao: state.descricao,
           quantidadeUnitaria: state.quantidadeUnitaria,
           custoUnitario: state.custoUnitario,
+          custoGeral: state.custoGeral,
           vendaUnitaria: state.vendaUnitaria,
-          dataHoje: state.dataHoje,
+          vendaGeral: state.vendaGeral,
+          lucroUnitario: state.lucroUnitario,
+          lucroGeral: state.lucroGeral,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Vendas de produtos e serviços");
     })

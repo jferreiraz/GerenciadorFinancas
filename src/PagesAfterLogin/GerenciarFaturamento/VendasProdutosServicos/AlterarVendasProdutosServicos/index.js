@@ -13,13 +13,22 @@ import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarVendasProdutosServicos = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+  
   const initialState = {
     id: "",
     categoria: "",
     descricao: "",
     quantidadeUnitaria: "",
     custoUnitario: "",
+    custoGeral: "",
     vendaUnitaria: "",
+    vendaGeral: "",
+    lucroUnitario: "",
+    lucroGeral: "",
+    dataAdicao: "",
+    dataUltimaAlteracao: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -68,7 +77,13 @@ const AlterarVendasProdutosServicos = (props) => {
       descricao: campos.descricao,
       quantidadeUnitaria: campos.quantidadeUnitaria,
       custoUnitario: campos.custoUnitario,
+      custoGeral: campos.custoGeral,
       vendaUnitaria: campos.vendaUnitaria,
+      vendaGeral: campos.vendaGeral,
+      lucroUnitario: campos.lucroUnitario,
+      lucroGeral: campos.lucroGeral,
+      dataAdicao: campos.dataAdicao,
+      dataUltimaAlteracao: date + " às " + time,
     });
     setCampos(initialState);
     props.navigation.navigate("Vendas de produtos e serviços");
@@ -92,7 +107,7 @@ const AlterarVendasProdutosServicos = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text="Selecione uma categoria"
+          text={campos.categoria}
           label=""
           value={campos.categoria}         
           />

@@ -13,11 +13,16 @@ import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarVendasPrazo = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+  
   const initialState = {
     id: "",
     categoria: "",
     descricao: "",
     valor: "",
+    dataAdicao: "",
+    dataUltimaAlteracao: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -65,6 +70,8 @@ const AlterarVendasPrazo = (props) => {
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
+      dataAdicao: campos.dataAdicao,
+      dataUltimaAlteracao: date + " às " + time,
     });
     setCampos(initialState);
     props.navigation.navigate("Vendas a prazo");
@@ -88,7 +95,7 @@ const AlterarVendasPrazo = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text="Selecione uma categoria"
+          text={campos.categoria}
           label=""
           value={campos.categoria}         
           />

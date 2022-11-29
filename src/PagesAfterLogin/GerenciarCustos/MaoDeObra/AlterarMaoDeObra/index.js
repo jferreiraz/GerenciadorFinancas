@@ -8,16 +8,22 @@ import {
   StyleSheet,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Select from "../../../../components/select";
+import Select from "../Components";
 import { firebase } from "../../../../config";
-import { categorias } from "../../../../components/categorias";
+import { categorias } from "../Components/categorias";
 
 const AlterarMaoDeObra = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+
   const initialState = {
     id: "",
     categoria: "",
-    descricao: "",
-    valor: "",
+    funcao: "",
+    gastosFuncao: "",
+    numeroFuncionarios: "",
+    salario: "",
+    dataUltimaAlteracao:date + " às " + time,
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -60,11 +66,16 @@ const AlterarMaoDeObra = (props) => {
   };
 
   const atualizarDados = async () => {
+    const totalGastosFuncao = campos.numeroFuncionarios * campos.salario;
     const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('mão de obra').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
-      descricao: campos.descricao,
-      valor: campos.valor,
+      funcao: campos.funcao,
+      numeroFuncionarios: campos.numeroFuncionarios,
+      gastosFuncao: totalGastosFuncao,
+      salario: campos.salario,
+      dataUltimaAlteracao: date + " às " + time,
+      dataAdicao: campos.dataAdicao,
     });
     setCampos(initialState);
     props.navigation.navigate("Custos com mão de obra");
@@ -88,28 +99,37 @@ const AlterarMaoDeObra = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text="Selecione uma categoria"
+          text={campos.categoria} 
           label=""
-          value={campos.categoria}         
+          value={campos.categoria}     
           />
       </View>
       <View>
         <TextInput
-          autoCompleteType="Descricao"
-          placeholder="descricao"
+          autoCompleteType="funcao"
+          placeholder="Função"
           style={styles.inputGroup}
-          value={campos.descricao}
-          onChangeText={(value) => handleChangeText(value, "descricao")}
+          value={campos.funcao}
+          onChangeText={(value) => handleChangeText(value, "funcao")}
         />
       </View>
       <View>
         <TextInput
-          placeholder="Valor"
-          autoCompleteType="valor"
+          autoCompleteType="numeroFuncionarios"
+          placeholder="Número de funcionários"
           style={styles.inputGroup}
-          value={campos.valor}
+          value={campos.numeroFuncionarios}
+          onChangeText={(value) => handleChangeText(value, "numeroFuncionarios")}
+        />
+      </View>
+      <View>
+        <TextInput
+          placeholder="Salário"
+          autoCompleteType="salario"
+          style={styles.inputGroup}
+          value={campos.salario}
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "valor")}
+          onChangeText={(value) => handleChangeText(value, "salario")}
         />
       </View>
       <View style={styles.btn}>

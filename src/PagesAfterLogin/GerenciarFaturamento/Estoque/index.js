@@ -12,12 +12,14 @@ const Estoque = (props) => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
-        const { categoria, descricao, valor } = doc.data();
+        const { categoria, descricao, valor, dataAdicao, dataUltimaAlteracao } = doc.data();
         campos.push({
           id: doc.id,
           categoria,
           descricao,
           valor,
+          dataAdicao,
+          dataUltimaAlteracao,
         });
       });
       setCampos(campos);
@@ -43,9 +45,11 @@ const Estoque = (props) => {
             }}
           >
             <ListItem.Content>
-              <ListItem.Title>{campos.categoria}</ListItem.Title>
-              <ListItem.Subtitle>{campos.descricao}</ListItem.Subtitle>
-              <ListItem.Subtitle>{"R$ "+campos.valor}</ListItem.Subtitle>
+              <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
+              <ListItem.Subtitle style={styles.subTitle}>{campos.descricao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"R$ "+campos.valor}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: "+campos.dataAdicao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: "+campos.dataUltimaAlteracao}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         );
@@ -55,3 +59,22 @@ const Estoque = (props) => {
 };
 
 export default Estoque;
+
+const styles = StyleSheet.create({
+  title: {
+    fontWeight: 'bold',
+    paddingBottom: 4,
+    fontSize: 18,
+  },
+  subTitle: {
+    paddingBottom: 1,
+    color: 'black',
+    fontSize: 14,
+  },
+  subTitleDate: {
+    paddingLeft: 5,
+    paddingBottom: 1,
+    fontSize: 14,
+    fontStyle: 'italic',
+  }
+});

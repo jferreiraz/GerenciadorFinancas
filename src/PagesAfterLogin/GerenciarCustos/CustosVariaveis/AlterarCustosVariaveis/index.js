@@ -13,11 +13,16 @@ import { firebase } from "../../../../config";
 import { categorias } from "../../../../components/categorias";
 
 const AlterarCustosVariaveis = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+
   const initialState = {
     id: "",
     categoria: "",
     descricao: "",
     valor: "",
+    dataAdicao: "",
+    dataUltimaAlteracao: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -65,6 +70,8 @@ const AlterarCustosVariaveis = (props) => {
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
+      dataAdicao: campos.dataAdicao,
+      dataUltimaAlteracao: date + " às " + time,
     });
     setCampos(initialState);
     props.navigation.navigate("Custos variáveis");
@@ -88,7 +95,7 @@ const AlterarCustosVariaveis = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text="Selecione uma categoria"
+          text={campos.categoria}
           label=""
           value={campos.categoria}         
           />

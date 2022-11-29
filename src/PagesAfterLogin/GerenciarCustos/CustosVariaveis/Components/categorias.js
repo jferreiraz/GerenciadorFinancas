@@ -1,23 +1,22 @@
 export const categorias = [
     {
-        id: "Computadores",
-        name: 'Computadores',
+        id: "Cartão de crédito",
+        name: 'Cartão de crédito',
+        logo: 'card-outline',
     },
     {
-        id: "Móveis",
-        name: 'Móveis',
+        id: "Cartão de débito",
+        name: 'Cartão de débito',
+        logo: 'card',
     },
     {
-        id: "Gasolina",
-        name: 'Gasolina',
+        id: "Comissões",
+        name: 'Comissões',
+        logo: 'reader-outline',
     },
     {
-        id: "Aparelhos",
-        name: 'Aparelhos',
-    },
-    {
-        id: "Marketing",
-        name: 'Marketing',
+        id: "Outros",
+        name: 'Outros',
+        logo: 'add-outline'
     }
-    
 ]

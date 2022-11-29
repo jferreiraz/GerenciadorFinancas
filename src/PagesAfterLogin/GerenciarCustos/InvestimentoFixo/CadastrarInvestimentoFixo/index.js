@@ -43,7 +43,7 @@ const CadastrarInvestimentoFixo = (props) => {
     dataUltimaAlteracao:date + " às " + time,
     desgasteTaxaAnual:"",
     desgasteVidaUtil:"",
-    custoDesgaste:"",
+    custoDesgaste:"", 
   };
 
   const [state, setState] = useState(initalState);

@@ -1,23 +1,12 @@
 export const categorias = [
     {
-        id: "Computadores",
-        name: 'Computadores',
+        id: "Caixa, engradado ou conjunto",
+        name: 'Caixa, engradado ou conjunto',
+        logo: "file-tray-stacked-outline"
     },
     {
-        id: "Móveis",
-        name: 'Móveis',
-    },
-    {
-        id: "Gasolina",
-        name: 'Gasolina',
-    },
-    {
-        id: "Aparelhos",
-        name: 'Aparelhos',
-    },
-    {
-        id: "Marketing",
-        name: 'Marketing',
+        id: "Produto unitário",
+        name: 'Produto unitário',
+        logo: "file-tray-outline"
     }
-    
 ]

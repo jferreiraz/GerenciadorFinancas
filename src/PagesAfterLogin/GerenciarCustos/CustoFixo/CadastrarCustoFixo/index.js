@@ -20,11 +20,16 @@ const CadastrarCustoFixo = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
 
+  const today = new Date().getDate();
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1; 
+
   const initalState = {
     categoria: "",
     descricao: "",
     valor: "",
-    dataHoje:date + " às " + time,
+    dataAdicao:date + " às " + time,
+    dataUltimaAlteracao:date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -34,7 +39,7 @@ const CadastrarCustoFixo = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.descricao+" - "+time;
+    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
@@ -48,7 +53,8 @@ const CadastrarCustoFixo = (props) => {
           categoria: state.categoria, 
           descricao: state.descricao,
           valor: state.valor,
-          dataHoje: state.dataHoje,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Custo fixo");
     })
@@ -71,7 +77,7 @@ const CadastrarCustoFixo = (props) => {
       {/* descricao Input */}
       <View style={styles.inputGroup}>
         <TextInput 
-          placeholder="Descrição"
+          placeholder="Descrição (Opcional)"
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}

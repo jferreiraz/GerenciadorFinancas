@@ -18,6 +18,8 @@ const AlterarEstoque = (props) => {
     categoria: "",
     descricao: "",
     valor: "",
+    dataAdicao: "",
+    dataUltimaAlteracao: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -65,6 +67,8 @@ const AlterarEstoque = (props) => {
       categoria: campos.categoria,
       descricao: campos.descricao,
       valor: campos.valor,
+      dataAdicao: campos.dataAdicao,
+      dataUltimaAlteracao:date + " às " + time,
     });
     setCampos(initialState);
     props.navigation.navigate("Estoque");
@@ -88,7 +92,7 @@ const AlterarEstoque = (props) => {
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text="Selecione uma categoria"
+          text={campos.categoria}
           label=""
           value={campos.categoria}         
           />
