@@ -17,6 +17,7 @@ const AlterarEstoque = (props) => {
     id: "",
     categoria: "",
     descricao: "",
+    quantidade: "",
     valor: "",
     dataAdicao: "",
     dataUltimaAlteracao: "",
@@ -66,6 +67,8 @@ const AlterarEstoque = (props) => {
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
+      quantidade: campos.quantidade,
+      custo: campos.custo,
       valor: campos.valor,
       dataAdicao: campos.dataAdicao,
       dataUltimaAlteracao:date + " às " + time,
@@ -100,7 +103,7 @@ const AlterarEstoque = (props) => {
       <View>
         <TextInput
           autoCompleteType="Descricao"
-          placeholder="descricao"
+          placeholder="Nome do produto"
           style={styles.inputGroup}
           value={campos.descricao}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -108,7 +111,27 @@ const AlterarEstoque = (props) => {
       </View>
       <View>
         <TextInput
-          placeholder="Valor"
+          placeholder="Quantidade unitária"
+          autoCompleteType="quantidade"
+          style={styles.inputGroup}
+          value={campos.quantidade}
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "quantidade")}
+        />
+      </View>
+      <View>
+        <TextInput
+          placeholder="Custo de compra"
+          autoCompleteType="custo"
+          style={styles.inputGroup}
+          value={campos.custo}
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "custo")}
+        />
+      </View>
+      <View>
+        <TextInput
+          placeholder="Valor de venda"
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}

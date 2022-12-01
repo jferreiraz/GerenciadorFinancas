@@ -22,14 +22,16 @@ const CadastrarEstoque = (props) => {
 
   const today = new Date().getDate();
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; 
+  const currentMonth = new Date().getMonth() + 1;
 
   const initalState = {
     categoria: "",
     descricao: "",
+    quantidade: "",
+    custo: "",
     valor: "",
-    dataAdicao:date + " às " + time,
-    dataUltimaAlteracao:date + " às " + time,
+    dataAdicao: date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -39,44 +41,46 @@ const CadastrarEstoque = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
+    const token = state.categoria + " - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
     const queryData = querySnapshot.docs.map((detail) => ({
-        ...detail.data(),
-        id: detail.id,
+      ...detail.data(),
+      id: detail.id,
     }));
     console.log(queryData);
     queryData.map(async (v) => {
       await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/estoque`, token), {
-          categoria: state.categoria, 
-          descricao: state.descricao,
-          valor: state.valor,
-          dataAdicao: state.dataAdicao,
-          dataUltimaAlteracao: state.dataUltimaAlteracao,
-        });
-        props.navigation.navigate("Estoque");
+        categoria: state.categoria,
+        descricao: state.descricao,
+        quantidade: state.quantidade,
+        custo: state.custo,
+        valor: state.valor,
+        dataAdicao: state.dataAdicao,
+        dataUltimaAlteracao: state.dataUltimaAlteracao,
+      });
+      props.navigation.navigate("Estoque");
     })
-};
+  };
 
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+        <Select
+          options={categorias}
+          onChangeSelect={(value) => handleChangeText(value, "categoria")}
           text="Selecione uma categoria"
           label="Categoria:"
-          value={state.categoria}         
-          />
+          value={state.categoria}
+        />
       </SafeAreaView>
 
       {/* descricao Input */}
       <View style={styles.inputGroup}>
-        <TextInput 
-          placeholder="Descrição"
+        <TextInput
+          placeholder="Nome do produto"
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -87,7 +91,25 @@ const CadastrarEstoque = (props) => {
       {/* Input */}
       <View style={styles.inputGroup}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Quantidade unitária"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "quantidade")}
+          value={state.quantidade}
+        />
+      </View>
+      {/* Input */}
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Custo de compra"
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "custo")}
+          value={state.custo}
+        />
+      </View>
+      {/* Input */}
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="Valor de venda"
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}

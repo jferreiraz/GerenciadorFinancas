@@ -12,11 +12,13 @@ const Estoque = (props) => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque').onSnapshot((querySnapshot) => {
       const campos = [];
       querySnapshot.docs.forEach((doc) => {
-        const { categoria, descricao, valor, dataAdicao, dataUltimaAlteracao } = doc.data();
+        const { categoria, descricao, quantidade, custo, valor, dataAdicao, dataUltimaAlteracao } = doc.data();
         campos.push({
           id: doc.id,
           categoria,
           descricao,
+          quantidade,
+          custo,
           valor,
           dataAdicao,
           dataUltimaAlteracao,
@@ -45,9 +47,11 @@ const Estoque = (props) => {
             }}
           >
             <ListItem.Content>
-              <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
-              <ListItem.Subtitle style={styles.subTitle}>{campos.descricao}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitle}>{"R$ "+campos.valor}</ListItem.Subtitle>
+              <ListItem.Title style={styles.title}>{campos.descricao}</ListItem.Title>
+              <ListItem.Subtitle style={styles.subTitle}>{campos.categoria}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Unidades: "+campos.quantidade}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Custo de compra: R$ "+campos.custo}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Valor de venda: R$ "+campos.valor}</ListItem.Subtitle>
               <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: "+campos.dataAdicao}</ListItem.Subtitle>
               <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: "+campos.dataUltimaAlteracao}</ListItem.Subtitle>
             </ListItem.Content>

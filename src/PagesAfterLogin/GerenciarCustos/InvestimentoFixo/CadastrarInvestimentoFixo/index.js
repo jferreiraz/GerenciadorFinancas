@@ -17,7 +17,7 @@ import { doc, setDoc } from "firebase/firestore";
 import { dbacess } from "../../../../config";
 import { collection, query, getDocs } from "firebase/firestore";
 
-
+import {APP_NAME, API_KEY, COMPANY_EMAIL} from '@env'
 
 
 
@@ -86,15 +86,14 @@ const CadastrarInvestimentoFixo = (props) => {
 
 
 
-
-
   return (
+    
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
       <Select
           options={categorias} 
-          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+          onChangeSelect={(value)=> {handleChangeText(value, "categoria")}} 
           text="Selecione uma categoria"
           label="Categoria:"
           value={state.categoria}          
@@ -135,6 +134,7 @@ const CadastrarInvestimentoFixo = (props) => {
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}
         />
+        <Text>teste: {APP_NAME}</Text>
       </View>
 
       <View style={styles.button}>
