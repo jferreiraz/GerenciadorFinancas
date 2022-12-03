@@ -2,6 +2,9 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { initializeAuth, getReactNativePersistence} from 'firebase/auth/react-native';
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
@@ -19,10 +22,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-//const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase
-//Antes não havia if
 if (!firebase.apps.lenght){
   firebase.initializeApp(firebaseConfig);
 }
@@ -42,4 +41,13 @@ export default {
 export const dbacess = getFirestore();
 
 
-//Ajuste anterior = sem if e sem export 'default'
+// Linhas abaixo podem ser retiradas, sendo utilizadas apenas para evitar o aviso de :
+//"AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage"
+
+//const app = initializeApp(firebaseConfig);
+
+//const auth = initializeAuth(app, {
+//  persistence: getReactNativePersistence(AsyncStorage)
+//  });
+  
+//  export { auth };

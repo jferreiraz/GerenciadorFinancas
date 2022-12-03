@@ -10,7 +10,6 @@ export default function Welcome () {
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/logo.png")} style={styles.img} />
-      <Text style={styles.title}>OFINAM</Text>
       <Text style={styles.detail}>
       Organize seus gastos e seu faturamento em qualquer lugar a qualquer hora. Gere seu próprio DRE e acompanhe a evolução do seu comércio.
       </Text>

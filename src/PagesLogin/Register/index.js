@@ -26,7 +26,7 @@ const Registration = () => {
         if (email == "" | password == "" | firstName == "" | lastName == "") {
             Alert.alert("Um/ou mais campos vazios", "Cetifique-se de preencher todos os campos")
         } else {
-            if (password.length <= 6){
+            if (password.length < 6){
                 Alert.alert("Senha inválida","Sua senha deve ter no mínimo 6 dígitos")
             }else{
             if (password == confirmPassword) {
@@ -81,13 +81,13 @@ const Registration = () => {
                     <TextInput
                         placeholder="Digite seu nome..."
                         style={styles.input}
-                        onChangeText={(firstName) => setFirstName(firstName)}
+                        onChangeText={(firstName) => setFirstName(firstName.trim())}
                         autoCorrect={false} />
                     <Text style={styles.title}> Sobrenome: </Text>
                     <TextInput
                         placeholder="Digite seu sobrenome..."
                         style={styles.input}
-                        onChangeText={(lastName) => setLastName(lastName)}
+                        onChangeText={(lastName) => setLastName(lastName.trim())}
                         autoCorrect={false} />
 
                     <Text style={styles.title}> Email: </Text>

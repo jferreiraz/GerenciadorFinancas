@@ -6,7 +6,6 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, ge
 import { initializeApp } from 'firebase/app'
 import { firebase } from '../../config';
 import { Alert } from 'react-native';
-import { generateEmailVerificationLink } from 'firebase-admin'
 
 import * as Animatable from 'react-native-animatable'
 import { createNativeStackNavigator, NavigationContainer } from '@react-navigation/native-stack';
@@ -18,7 +17,7 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
 
     //const app = initializeApp(firebaseConfig)
-    const auth = getAuth(app);
+    //const auth = getAuth(app);
 
     const navigation= useNavigation();
     const [hidePass, setHidePass] = useState(true);
@@ -34,39 +33,6 @@ const SignIn = () => {
             //alert(error.message)
         }
     }
-
-    const actionCodeSettings = {
-        // URL you want to redirect back to. The domain (www.example.com) for
-        // this URL must be whitelisted in the Firebase Console.
-        url: 'https://www.google.com',
-        // This must be true for email link sign-in.
-        handleCodeInApp: true,
-        iOS: {
-          bundleId: 'com.example.ios',
-        },
-        android: {
-          packageName: 'com.example.android',
-          installApp: true,
-          minimumVersion: '12',
-        },
-        // FDL custom domain.
-        dynamicLinkDomain: 'coolapp.page.link',
-      };
-    
-    
-    // Admin SDK API to generate the email verification link.
-    const useremail = 'hotjoaofelipe@gmail.com';
-    getAuth()
-      .generateEmailVerificationLink(useremail, actionCodeSettings)
-      .then((link) => {
-        // Construct email verification template, embed the link and send
-        // using custom SMTP server.
-        return sendCustomVerificationEmail(useremail, displayName, link);
-      })
-      .catch((error) => {
-        // Some error occurred.
-      });
-    
 
     return(
         <View style={styles.container}>
@@ -104,7 +70,7 @@ const SignIn = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('Register')}>
-                    <Text style={styles.registerText}>Crie uma conta gratuitamente, clique aqui!</Text>
+                    <Text style={styles.registerText}>Crie uma conta gratuitamente, {'\n'}clique aqui!</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('ForgetPassword')}>
@@ -164,7 +130,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius: 4,
         paddingVertical: 8,
-        marginTop: 14,
+        marginTop: 25,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 40
@@ -181,7 +147,10 @@ const styles = StyleSheet.create({
     },
     registerText:{
         color:'#1212a1',
-        fontSize: 16
+        fontSize: 16,
+        justifyContent: 'center',
+        textAlign: 'center',
+
     },
     inputArea:{
         flexDirection: 'row',

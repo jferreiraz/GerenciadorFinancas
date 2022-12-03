@@ -90,15 +90,14 @@ return(
             options={{
                 title: 'Gerenciador Financeiro', headerBackVisible:false ,
                 headerTitleStyle: {color: 'black', fontWeight: 'bold'},
-                headerStyle: {backgroundColor: '#5CC6BA'}, 
-                headerTintColor:'#101010', 
-                headerRight: () => (
-                    <TouchableOpacity onPress={()=> Alert.alert('Confirmação','Tem certeza que deseja encerrar sessão?',
-                        [{text:'Sim', onPress: () => {console.log('Yes Pressed');}},
-                         {text:'Não', onPress: () => {console.log('No Pressed ');}}])}  >
-                        <MaterialCommunityIcons name="exit-to-app" color={'black'} size={24} />
-                    </TouchableOpacity>
-            )}}
+                headerStyle: {backgroundColor: 
+                    '#5CC6BA'
+                    //'#FEF'
+                }, 
+                //headerTintColor:'#101010',
+                headerShadowVisible: false,
+                headerShown: false,
+             }}
         />
         <Stack.Screen //--------------------------------------------------- PÁGINAS GERENCIAR CUSTOS ------------------------------------------------------
             name="Gerenciar Custos" 
