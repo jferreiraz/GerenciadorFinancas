@@ -79,7 +79,6 @@ const CadastrarCustosVariaveis = (props) => {
       <View style={styles.input}>
         <TextInput 
           placeholder="Descrição (Opcional)                                              "
-          multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
           value={state.descricao}

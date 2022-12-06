@@ -11,6 +11,10 @@ import { firebase } from "../../../config";
 
 const CustoFixo = (props) => {
   const [campos, setCampos] = useState([]);
+  const totalCF = 0;
+  let sum = 0;
+  const sumFunction = async (a, b) => a + b;
+  const arrayCF = []
 
   useEffect(() => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').onSnapshot((querySnapshot) => {
@@ -28,11 +32,48 @@ const CustoFixo = (props) => {
       });
       setCampos(campos);
     });
+    for(let g of campos) {
+      console.log(g.valor);
+      campos.forEach(async (campos) => {
+        sum = await sumFunction(sum, g.valor);
+      });
+      console.log(sum)
+    }
+    campos.forEach(async (campos) => {
+      sum = await sumFunction(sum, campos.valor);
+    });
+    //console.log(campos[0].valor)
+    //console.log(sum);
   }, []);
 
-  console.log(campos)
+  //console.log(campos.categoria)
+ 
+  for(let g of campos) {
+    console.log(g.valor);
+
+  }
+
+  campos.forEach(async (campos) => {
+    sum = await sumFunction(sum, campos.valor);
+  });
+  
+
+  campos.forEach((element) => {
+    console.log({ element });
+    sum++;
+  });
+
+  //console.log(arrayCF)
+  
+
+
+
+
+
+
 
   return (
+
     <ScrollView backgroundColor="white">
       <ListItem
         Component={TouchableScale}

@@ -39,6 +39,14 @@ const CadastrarCustoFixo = (props) => {
     setState({ ...state, [categoria]: value });
   };
 
+  const validation = () => {
+    if(state.descricao == ""){
+      return "Item custo fixo"
+    }else{
+      return state.descricao
+    }
+  }
+
   const salvarNovo = async () => {
     const token = state.categoria + " - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
 
@@ -52,7 +60,7 @@ const CadastrarCustoFixo = (props) => {
     queryData.map(async (v) => {
       await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/custo fixo`, token), {
         categoria: state.categoria,
-        descricao: state.descricao,
+        descricao: validation(),
         valor: state.valor,
         dataAdicao: state.dataAdicao,
         dataUltimaAlteracao: state.dataUltimaAlteracao,
@@ -80,7 +88,6 @@ const CadastrarCustoFixo = (props) => {
       <View style={styles.input}>
         <TextInput
           placeholder="Descrição (Opcional)                             "
-          multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
           value={state.descricao}

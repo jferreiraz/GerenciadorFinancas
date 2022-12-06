@@ -111,7 +111,6 @@ const CadastrarInvestimentoFixo = (props) => {
       <View style={styles.inputGroup}>
         <TextInput 
           placeholder={isEditable ? 'Descrição                                              ' : 'Desabilitado'}
-          multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
           value={isEditable ? state.descricao : state.descricaoDefault}

@@ -85,7 +85,6 @@ const CadastrarEstoque = (props) => {
       <View style={styles.input}>
         <TextInput
           placeholder="Nome do produto                                              "
-          multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
           value={state.descricao}

@@ -92,7 +92,6 @@ const CadastrarVendasProdutosServicos = (props) => {
       <View style={styles.input}>
         <TextInput 
           placeholder="Descrição                                              "
-          multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
           value={state.descricao}
