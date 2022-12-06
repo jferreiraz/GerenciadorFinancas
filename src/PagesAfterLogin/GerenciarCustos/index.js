@@ -2,42 +2,34 @@ import { View, Text, StyleSheet, SafeAreaView, Platform, ScrollView, Button, Tou
 import React, { useState } from "react";
 import { Ionicons } from '@expo/vector-icons'
 
-
-
-
 export default function GerenciarCustos({ navigation }) {
     return (
-
         <ScrollView style={styles.container}>
             <SafeAreaView style={styles.headerContainer}>
-                <View style={styles.inputArea}>
-                    <Text style={styles.title}>Gerencie seus custos aqui, escolha abaixo qual opção deseja adicionar ou modificar!</Text>
+                <View style={styles.subContainer}>
+                    <Text style={styles.subText}>Gastos mensais</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Custo fixo')} style={styles.button}>
+                        <Ionicons name="calendar-outline" color="a1a1a1" size={30} style={styles.icon} />
+                        <Text style={styles.text}>Custo fixo</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Custos com mão de obra')} style={styles.button}>
+                        <Ionicons name="construct-outline" color="a1a1a1" size={30} style={styles.icon} />
+                        <Text style={styles.text}>Custos com mão de obra</Text>
+                    </TouchableOpacity>
                 </View>
-                <Text style={styles.subTitle}>O que você deseja fazer?</Text>
-                <TouchableOpacity onPress={() => navigation.navigate('Investimento fixo', { nome: 'João' })} style={styles.button}>
-                    <Ionicons name="cellular-outline" color="a1a1a1" size={60} style={styles.icon} />
-                    <Text style={styles.text}>Investimento fixo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Custo fixo', { nome: 'João' })} style={styles.button}>
-                    <Ionicons name="calendar-outline" color="a1a1a1" size={60} style={styles.icon} />
-                    <Text style={styles.text}>Custo fixo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Custos com mão de obra', { nome: 'João' })} style={styles.button}>
-                    <Ionicons name="construct-outline" color="a1a1a1" size={60} style={styles.icon} />
-                    <Text style={styles.text}>Custos com mão de obra</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Custos variáveis', { nome: 'João' })} style={styles.button}>
-                    <Ionicons name="calculator-outline" color="a1a1a1" size={60} style={styles.icon} />
-                    <Text style={styles.text}>Custos variáveis</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Teste', { nome: 'João' })} style={styles.button}>
-                    <Ionicons name="layers-outline" color="a1a1a1" size={60} style={styles.icon} />
-                    <Text style={styles.text}>Teste</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('Teste2')} style={styles.button}>
-                    <Ionicons name="layers-outline" color="a1a1a1" size={60} style={styles.icon} />
-                    <Text style={styles.text}>Teste</Text>
-                </TouchableOpacity>
+                </SafeAreaView>
+                <SafeAreaView style={styles.headerContainer}>
+                <View style={styles.subContainer}>
+                    <Text style={styles.subText}>Gastos inconstantes</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Custos variáveis')} style={styles.button}>
+                        <Ionicons name="calculator-outline" color="a1a1a1" size={30} style={styles.icon} />
+                        <Text style={styles.text}>Custos variáveis</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('Investimento fixo')} style={styles.button}>
+                        <Ionicons name="cellular-outline" color="a1a1a1" size={30} style={styles.icon} />
+                        <Text style={styles.text}>Investimento fixo</Text>
+                    </TouchableOpacity>
+                </View>
             </SafeAreaView>
         </ScrollView>
     );
@@ -48,11 +40,13 @@ export default function GerenciarCustos({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "fff",
+        backgroundColor: "#FFF",
     },
     headerContainer: {
         paddingHorizontal: 20,
-        paddingTop: Platform.OS == 'android' ? 50 : 0
+        paddingTop: 30,
+        borderBottomWidth: 0.19,
+        borderBottomColor: "gray",
     },
     title: {
         fontSize: 20,
@@ -69,14 +63,15 @@ const styles = StyleSheet.create({
     },
     button: {
         alignSelf: "center",
-        borderRadius: 5,
-        backgroundColor: "#0022",
+        borderRadius: 3,
+        backgroundColor: "#F5F0F5",
         margin: 10,
         padding: 10,
         width: 320,
         alignItems: 'center',
         flexDirection: 'row',
-        borderWidth: 0.5
+        borderWidth: 0.1,
+        borderColor: 'gray',
     },
     inputArea: {
         flexDirection: 'row',
@@ -84,16 +79,32 @@ const styles = StyleSheet.create({
         paddingTop: 0,
     },
     icon: {
-        paddingLeft: 20,
+        paddingLeft: 0,
+        color: "#5C5C5C"
     },
     text: {
-        color: "#E0FFFF",
+        color: "black",
         paddingLeft: 30,
-        fontWeight: 'bold',
+        fontWeight: '300',
         fontSize: 16,
         width: '60%',
-        textShadowColor: 'black',
-        textShadowOffset: { width: 0, height: 0 },
-        textShadowRadius: 8,
-    }
+    },
+    subText: {
+        color: "black",
+        paddingLeft: 15,
+        paddingBottom: 10,
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    buttonContainer: {
+        borderWidth: 1,
+        borderBottomWidth: 0,
+        marginHorizontal: 15,
+        marginTop: 20,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+    },
+    subContainer:{
+        marginBottom: 30,
+    },
 });

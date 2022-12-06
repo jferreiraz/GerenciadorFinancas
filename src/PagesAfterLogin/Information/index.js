@@ -37,21 +37,22 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
     },
     headerContainer: {
-        padding: 20,
+        padding: 10,
         paddingTop: Platform.OS == 'android' ? 30 : 0
     },
     subContainer: {
         backgroundColor: "#FFF",
-        margin: 10,
+        margin: 5,
         padding: 10,
-        borderRadius: 10,
+        borderRadius: 5,
         borderWidth: 1,
     },
     title: {
         fontSize: 24,
         fontWeight: "400",
         color: "344422",
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        paddingLeft: 10,
     },
     subTitle: {
         fontSize: 20,

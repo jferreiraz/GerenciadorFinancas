@@ -29,7 +29,9 @@ const Registration = () => {
             if (password.length < 6){
                 Alert.alert("Senha inválida","Sua senha deve ter no mínimo 6 dígitos")
             }else{
-            if (password == confirmPassword) {
+            if (password != confirmPassword) {
+                Alert.alert("Confirmação de senha", "A confirmação de senha foi digitada incorretamente, certifique-se de que ambas as senhas sejam iguais.")
+            } else {
                 await firebase.auth().createUserWithEmailAndPassword(email, password)
                     .then(() => {
                         firebase.auth().currentUser.sendEmailVerification({
@@ -58,10 +60,8 @@ const Registration = () => {
                     })
                     .catch((error) => {
                         //alert(error.message) //Email inválido ou vazio
-                        alert("Email ou senha inválidos")
+                        alert("Email inválido")
                     })
-            } else {
-                Alert.alert("Confirmação de senha", "A confirmação de senha foi digitada incorretamente, certifique-se de que ambas as senhas sejam iguais.")
             }}
         }
 
@@ -152,7 +152,7 @@ export default Registration
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#38a69d'
+        backgroundColor: '#5CC6BA'
     },
     containerHeader: {
         marginTop: '14%',

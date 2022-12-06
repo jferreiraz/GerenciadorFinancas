@@ -101,117 +101,211 @@ return(
         />
         <Stack.Screen //--------------------------------------------------- PÁGINAS GERENCIAR CUSTOS ------------------------------------------------------
             name="Gerenciar Custos" 
-            component={GerenciarCustos} 
+            component={GerenciarCustos}
+            options={{
+                headerStyle: {backgroundColor: "#FEF"}
+            }} 
         />
         <Stack.Screen 
             name="Investimento fixo" 
             component={InvestimentoFixo} 
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen 
             name="Cadastrar investimento fixo" 
             component={CadastrarInvestimentoFixo} 
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen 
             name="Alterar investimento fixo" 
             component={AlterarInvestimentoFixo} 
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen  
             name="Custo fixo" 
             component={CustoFixo}
             options={{
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
-                headerTintColor:'#101010', 
-                headerRight: () => (
-                        <MaterialIcons name="attach-money" size={24} color="black" />
-            )}}  
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Cadastrar custo fixo" 
             component={CadastrarCustoFixo}
             options={{
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
-                headerTintColor:'#101010', 
-                headerRight: () => (
-                        <MaterialIcons name="attach-money" size={24} color="black" />
-            )}} 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen 
             name="Alterar custo fixo" 
             component={AlterarCustoFixo}
             options={{
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
-                headerTintColor:'#101010', 
-                headerRight: () => (
-                        <MaterialIcons name="attach-money" size={24} color="black" />
-            )}}  
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Custos com mão de obra" 
-            component={MaoDeObra} 
+            component={MaoDeObra}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}   
         />
         <Stack.Screen 
             name="Cadastrar mão de obra" 
-            component={CadastrarMaoDeObra} 
+            component={CadastrarMaoDeObra}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}   
         />
         <Stack.Screen 
             name="Alterar mão de obra" 
-            component={AlterarMaoDeObra} 
+            component={AlterarMaoDeObra}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen 
             name="Custos variáveis" 
             component={CustosVariaveis} 
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen 
             name="Cadastrar custos variáveis" 
             component={CadastrarCustosVariaveis} 
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen 
             name="Alterar custos variáveis" 
             component={AlterarCustosVariaveis} 
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }} 
         />
         <Stack.Screen //--------------------------------------------------- PÁGINAS GERENCIAR FATURAMENTO ------------------------------------------------------
             name="Gerenciar Faturamento" 
-            component={GerenciarFaturamento} 
+            component={GerenciarFaturamento}
+            options={{
+                headerStyle: {backgroundColor: "#FEF"}
+            }}  
         />
         <Stack.Screen 
             name="Estoque" 
-            component={Estoque} 
+            component={Estoque}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Cadastrar estoque" 
-            component={CadastrarEstoque} 
+            component={CadastrarEstoque}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Alterar estoque" 
-            component={AlterarEstoque} 
+            component={AlterarEstoque}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Vendas a prazo" 
-            component={VendasPrazo} 
+            component={VendasPrazo}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Cadastrar vendas a prazo" 
-            component={CadastrarVendasPrazo} 
+            component={CadastrarVendasPrazo}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Alterar vendas a prazo" 
-            component={AlterarVendasPrazo} 
+            component={AlterarVendasPrazo}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Vendas de produtos e serviços" 
-            component={VendasProdutosServicos} 
+            component={VendasProdutosServicos}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Cadastrar vendas de produtos e serviços" 
-            component={CadastrarVendasProdutosServicos} 
+            component={CadastrarVendasProdutosServicos}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen 
             name="Alterar vendas de produtos e serviços" 
-            component={AlterarVendasProdutosServicos} 
+            component={AlterarVendasProdutosServicos}
+            options={{
+                headerStyle: {backgroundColor: '#5CC6BA'}, 
+                headerTintColor:'#EDEDED',
+                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                }}  
         />
         <Stack.Screen //--------------------------------------------------- OUTRAS PÁGINAS ------------------------------------------------------
             name="Profile" 
-            component={Profile} 
+            component={Profile}
+            options={{headerShown: false}} 
         />
         <Stack.Screen 
             name="Settings" 

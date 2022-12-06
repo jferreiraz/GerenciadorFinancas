@@ -22,8 +22,8 @@ export default function ForgetPassword() {
     return(
         <View style={styles.container}>
             <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-                <Text style={styles.message}> Esqueceu sua senha?</Text>
-                <Text style={styles.description}> Preencha com seu email o campo abaixo </Text>
+                <Text style={styles.message}>Esqueceu sua senha?</Text>
+                <Text style={styles.description}>Recupere utilizando o email de registro </Text>
             </Animatable.View>
 
             <Animatable.View animation="fadeInUp" duration={1300} style={styles.containerForm}>
@@ -44,7 +44,7 @@ export default function ForgetPassword() {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('Register')}>
-                    <Text style={styles.registerText}>Crie uma conta gratuitamente, clique aqui!</Text>
+                    <Text style={styles.registerText}>Crie uma conta gratuitamente, {'\n'}clique aqui!</Text>
                 </TouchableOpacity>
 
             </Animatable.View>
@@ -55,7 +55,7 @@ export default function ForgetPassword() {
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor: '#38a69d'
+        backgroundColor: '#5CC6BA'
     },
     containerHeader:{
         marginTop: '14%',
@@ -107,7 +107,9 @@ const styles = StyleSheet.create({
     },
     registerText:{
         color:'#1212a1',
-        fontSize: 16
+        fontSize: 16,
+        justifyContent: 'center',
+        textAlign: 'center',
     },
     description:{
         color: '#dcdcdc',
