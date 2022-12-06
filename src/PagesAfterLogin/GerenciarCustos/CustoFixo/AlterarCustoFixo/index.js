@@ -5,7 +5,9 @@ import {
   View,
   Alert,
   ActivityIndicator,
-  StyleSheet,
+  StyleSheet, 
+  Text,
+  TouchableOpacity,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Select from "../Components";
@@ -91,6 +93,7 @@ const AlterarCustoFixo = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
+      <Text style={styles.text}>Tipo de custo fixo:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
@@ -99,7 +102,8 @@ const AlterarCustoFixo = (props) => {
           value={campos.categoria}         
           />
       </View>
-      <View>
+      <Text style={styles.text}>Descreva esse custo fixo:</Text>
+      <View style={styles.input}>
         <TextInput
           autoCompleteType="Descricao"
           placeholder="descricao"
@@ -108,7 +112,8 @@ const AlterarCustoFixo = (props) => {
           onChangeText={(value) => handleChangeText(value, "descricao")}
         />
       </View>
-      <View>
+      <Text style={styles.text}>Gastos com esse custo fixo:</Text>
+      <View style={styles.input}>
         <TextInput
           placeholder="Valor"
           autoCompleteType="valor"
@@ -119,14 +124,14 @@ const AlterarCustoFixo = (props) => {
         />
       </View>
       <View style={styles.btn}>
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" style={styles.btnStl}/>
+      </View>
+      <View style={styles.btnDel}>
         <Button
           title="Deletar"
           onPress={() => openConfirmationAlert()}
-          color="#E37399"
+          color="#FF7368"
         />
-      </View>
-      <View>
-        <Button title="Atualizar" onPress={() => atualizarDados()} color="#19AC52" />
       </View>
     </ScrollView>
   );
@@ -138,24 +143,54 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
+    color: 'gray',
+    fontSize: 16,
   },
   btn: {
     marginBottom: 7,
+    marginTop: 10,
+    paddingHorizontal: 30,
+    width: '100%',
   },
+  btnStl:{
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  btnDel: {
+    width: '100%',
+    align: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+  },
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 15,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  }
 });
 
 export default AlterarCustoFixo;

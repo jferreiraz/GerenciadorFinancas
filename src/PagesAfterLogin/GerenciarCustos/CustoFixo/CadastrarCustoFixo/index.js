@@ -3,7 +3,8 @@ import {
   Button,
   View,
   StyleSheet,
-  TextInput,
+  TextInput, 
+  Text,
   ScrollView,
 } from "react-native";
 
@@ -22,14 +23,14 @@ const CadastrarCustoFixo = (props) => {
 
   const today = new Date().getDate();
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; 
+  const currentMonth = new Date().getMonth() + 1;
 
   const initalState = {
     categoria: "",
     descricao: "",
     valor: "",
-    dataAdicao:date + " às " + time,
-    dataUltimaAlteracao:date + " às " + time,
+    dataAdicao: date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -39,44 +40,45 @@ const CadastrarCustoFixo = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
+    const token = state.categoria + " - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
 
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
     const queryData = querySnapshot.docs.map((detail) => ({
-        ...detail.data(),
-        id: detail.id,
+      ...detail.data(),
+      id: detail.id,
     }));
     console.log(queryData);
     queryData.map(async (v) => {
       await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/custo fixo`, token), {
-          categoria: state.categoria, 
-          descricao: state.descricao,
-          valor: state.valor,
-          dataAdicao: state.dataAdicao,
-          dataUltimaAlteracao: state.dataUltimaAlteracao,
-        });
-        props.navigation.navigate("Custo fixo");
+        categoria: state.categoria,
+        descricao: state.descricao,
+        valor: state.valor,
+        dataAdicao: state.dataAdicao,
+        dataUltimaAlteracao: state.dataUltimaAlteracao,
+      });
+      props.navigation.navigate("Custo fixo");
     })
-};
+  };
 
 
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+        <Text style={styles.text}>Tipo de custo fixo:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(value) => handleChangeText(value, "categoria")}
           text="Selecione uma categoria"
-          label="Categoria:"
-          value={state.categoria}         
-          />
+          value={state.categoria}
+        />
       </SafeAreaView>
 
       {/* descricao Input */}
-      <View style={styles.inputGroup}>
-        <TextInput 
+      <Text style={styles.text}>Descreva esse custo fixo:</Text>
+      <View style={styles.input}>
+        <TextInput
           placeholder="Descrição (Opcional)"
           multiline={true}
           numberOfLines={1}
@@ -86,7 +88,8 @@ const CadastrarCustoFixo = (props) => {
       </View>
 
       {/* Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Gastos com esse custo fixo:</Text>
+      <View style={styles.input}>
         <TextInput
           placeholder="Valor"
           keyboardType="decimal-pad"
@@ -109,20 +112,30 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
   },
-  loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 20,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  }
 });
 
 export default CadastrarCustoFixo;
