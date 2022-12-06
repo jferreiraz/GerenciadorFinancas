@@ -8,7 +8,7 @@ export default function Detail(props) {
         <Text style={{ fontWeight: 'bold', fontSize: 30, paddingVertical: 20 }}>DRE</Text>
       </View>
       <View style={styles.container}>
-      <Text style={{ fontSize: 20, paddingBottom: 10 }}>A página DRE encontra-se no estado de desenvolvimento no momento, aguarde novas atualizações para mais funcionalidades!</Text>
+      <Text style={{ textAlign: 'center', fontSize: 20, paddingBottom: 10 }}>A página DRE está em desenvolvimento no momento, aguarde novas atualizações para mais funcionalidades!</Text>
       </View>
       <TouchableOpacity style={styles.button1}
         onPress={() => Alert.alert('Notificação', 'Voltar para a tela principal', [

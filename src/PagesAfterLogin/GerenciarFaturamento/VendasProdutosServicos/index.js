@@ -55,6 +55,7 @@ const VendasProdutosServicos = (props) => {
       <Button
         onPress={() => props.navigation.navigate("Cadastrar vendas de produtos e serviços")}
         title="Cadastrar dados"
+        color="#5CC6DD"
       />
       {campos.map((campos) => {
         return (

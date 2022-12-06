@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Text,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -64,19 +65,20 @@ const CadastrarCustosVariaveis = (props) => {
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
+      <Text style={styles.text}>Selecione qual o tipo de custo:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
           text="Selecione uma categoria"
-          label="Categoria:"
           value={state.categoria}         
           />
       </SafeAreaView>
 
       {/* descricao Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Descreva esse custo:</Text>
+      <View style={styles.input}>
         <TextInput 
-          placeholder="Descrição"
+          placeholder="Descrição (Opcional)                                              "
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -85,9 +87,10 @@ const CadastrarCustosVariaveis = (props) => {
       </View>
 
       {/* Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Valor desse custo variável:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Custo                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}
@@ -95,7 +98,7 @@ const CadastrarCustosVariaveis = (props) => {
       </View>
 
       <View style={styles.button}>
-        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+        <Button title="Salvar Dados" color="#5CC6BA" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
   );
@@ -108,20 +111,30 @@ const styles = StyleSheet.create({
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
   },
-  loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 20,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  }
 });
 
 export default CadastrarCustosVariaveis;

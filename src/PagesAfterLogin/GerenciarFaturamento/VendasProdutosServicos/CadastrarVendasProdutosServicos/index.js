@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Text,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -76,6 +77,7 @@ const CadastrarVendasProdutosServicos = (props) => {
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
+      <Text style={styles.text}>Categoria desse item:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
@@ -86,9 +88,10 @@ const CadastrarVendasProdutosServicos = (props) => {
       </SafeAreaView>
 
       {/* descricao Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Descrição do item:</Text>
+      <View style={styles.input}>
         <TextInput 
-          placeholder="Descrição"
+          placeholder="Descrição                                              "
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -97,25 +100,28 @@ const CadastrarVendasProdutosServicos = (props) => {
       </View>
 
       {/* Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Quantidade unitária desse item:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Quantidade unitária do produto"
+          placeholder="Quantidade unitária                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "quantidadeUnitaria")}
           value={state.quantidadeUnitaria}
         />
       </View>
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Gastos com a produção do item:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Custo de produção unitário"
+          placeholder="Custo de produção                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "custoUnitario")}
           value={state.custoUnitario}
         />
       </View>
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Custo de venda unitário:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Custo de venda unitário"
+          placeholder="Venda unitária                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "vendaUnitaria")}
           value={state.vendaUnitaria}
@@ -123,7 +129,7 @@ const CadastrarVendasProdutosServicos = (props) => {
       </View>
 
       <View style={styles.button}>
-        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+        <Button title="Salvar Dados" color="#5CC6BA" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
   );
@@ -133,23 +139,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 35,
+    paddingTop: 15,
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
+    marginBottom: 5,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
   },
-  loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 20,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  },
+  button: {
+    paddingBottom: 80,
+  }
 });
 
 export default CadastrarVendasProdutosServicos;

@@ -6,11 +6,12 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
+  Text,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Select from "../../../../components/select";
+import Select from "../Components/index";
 import { firebase } from "../../../../config";
-import { categorias } from "../../../../components/categorias";
+import { categorias } from "../Components/categorias";
 
 const AlterarCustosVariaveis = (props) => {
   const date = new Date().toLocaleDateString();
@@ -92,6 +93,7 @@ const AlterarCustosVariaveis = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
+      <Text style={styles.text}>Selecione qual o tipo de custo:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
@@ -100,18 +102,20 @@ const AlterarCustosVariaveis = (props) => {
           value={campos.categoria}         
           />
       </View>
-      <View>
+      <Text style={styles.text}>Descreva esse custo:</Text>
+      <View style={styles.input}>
         <TextInput
           autoCompleteType="Descricao"
-          placeholder="descricao"
+          placeholder="Descrição                                               "
           style={styles.inputGroup}
           value={campos.descricao}
           onChangeText={(value) => handleChangeText(value, "descricao")}
         />
       </View>
-      <View>
+      <Text style={styles.text}>Valor desse custo variável:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Custo                                              "
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
@@ -119,15 +123,15 @@ const AlterarCustosVariaveis = (props) => {
           onChangeText={(value) => handleChangeText(value, "valor")}
         />
       </View>
+      <View>
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" />
+      </View>
       <View style={styles.btn}>
         <Button
           title="Deletar"
           onPress={() => openConfirmationAlert()}
           color="#E37399"
         />
-      </View>
-      <View>
-        <Button title="Atualizar" onPress={() => atualizarDados()} color="#19AC52" />
       </View>
     </ScrollView>
   );
@@ -139,24 +143,54 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
+    color: 'gray',
+    fontSize: 16,
   },
   btn: {
     marginBottom: 7,
+    marginTop: 10,
+    paddingHorizontal: 30,
+    width: '100%',
   },
+  btnStl:{
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  btnDel: {
+    width: '100%',
+    align: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+  },
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 15,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  }
 });
 
 export default AlterarCustosVariaveis;

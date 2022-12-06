@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Button, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import { collection, query, getDocs } from "firebase/firestore";
@@ -30,6 +30,7 @@ const CustoFixo = (props) => {
     });
   }, []);
 
+  console.log(campos)
 
   return (
     <ScrollView backgroundColor="white">
@@ -49,34 +50,35 @@ const CustoFixo = (props) => {
       <Button
         onPress={() => props.navigation.navigate("Cadastrar custo fixo")}
         title="Cadastrar dados"
-        style={styles.button}>
+        style={styles.button}
+        color="#5CC6DD">
         <Text style={styles.buttonTitle}>CADASTRAR DADOS</Text>
       </Button>
 
       {campos.map((campos) => {
-        return (
-          <ListItem
-            Component={TouchableScale}
-            friction={100}
-            tension={120}
-            activeScale={0.92}
-            key={campos.id}
-            bottomDivider
-            onPress={() => {
-              props.navigation.navigate("Alterar custo fixo", {
-                camposId: campos.id,
-              });
-            }}
-          >
-            <ListItem.Content>
-              <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
-              <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$ " + campos.valor}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
-            </ListItem.Content>
-          </ListItem>
-        );
+          return (
+            <ListItem
+              Component={TouchableScale}
+              friction={100}
+              tension={120}
+              activeScale={0.92}
+              key={campos.id}
+              bottomDivider
+              onPress={() => {
+                props.navigation.navigate("Alterar custo fixo", {
+                  camposId: campos.id,
+                });
+              }}
+            >
+              <ListItem.Content>
+                <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
+                <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$ " + campos.valor}</ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
+                <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
+              </ListItem.Content>
+            </ListItem>
+          );  
       })}
     </ScrollView>
   );
@@ -97,7 +99,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "white",
-
   },
   title: {
     fontSize: 18,

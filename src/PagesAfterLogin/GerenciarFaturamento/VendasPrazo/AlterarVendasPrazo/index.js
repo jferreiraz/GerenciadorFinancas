@@ -6,11 +6,12 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
+  Text,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Select from "../../../../components/select";
+import Select from "../Components/index";
 import { firebase } from "../../../../config";
-import { categorias } from "../../../../components/categorias";
+import { categorias } from "../Components/categorias";
 
 const AlterarVendasPrazo = (props) => {
   const date = new Date().toLocaleDateString();
@@ -20,7 +21,13 @@ const AlterarVendasPrazo = (props) => {
     id: "",
     categoria: "",
     descricao: "",
-    valor: "",
+    quantidadeUnitaria: "",
+    custoUnitario: "",
+    custoGeral: "",
+    vendaUnitaria: "",
+    vendaGeral: "",
+    lucroUnitario: "",
+    lucroGeral: "",
     dataAdicao: "",
     dataUltimaAlteracao: "",
   };
@@ -69,7 +76,13 @@ const AlterarVendasPrazo = (props) => {
     await camposRef.set({
       categoria: campos.categoria,
       descricao: campos.descricao,
-      valor: campos.valor,
+      quantidadeUnitaria: campos.quantidadeUnitaria,
+      custoUnitario: campos.custoUnitario,
+      custoGeral: campos.custoGeral,
+      vendaUnitaria: campos.vendaUnitaria,
+      vendaGeral: campos.vendaGeral,
+      lucroUnitario: campos.lucroUnitario,
+      lucroGeral: campos.lucroGeral,
       dataAdicao: campos.dataAdicao,
       dataUltimaAlteracao: date + " às " + time,
     });
@@ -92,6 +105,7 @@ const AlterarVendasPrazo = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
+      <Text style={styles.text}>Categoria do item:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
@@ -100,24 +114,48 @@ const AlterarVendasPrazo = (props) => {
           value={campos.categoria}         
           />
       </View>
-      <View>
+      <Text style={styles.text}>Descrição do item:</Text>
+      <View style={styles.input}>
         <TextInput
           autoCompleteType="Descricao"
-          placeholder="descricao"
+          placeholder="Descrição                                               "
           style={styles.inputGroup}
           value={campos.descricao}
           onChangeText={(value) => handleChangeText(value, "descricao")}
         />
       </View>
-      <View>
+      <Text style={styles.text}>Quantidade unitária desse item:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Valor"
-          autoCompleteType="valor"
+          placeholder="Quantidade unitária do produto                                              "
           style={styles.inputGroup}
-          value={campos.valor}
+          value={campos.quantidadeUnitaria}
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "valor")}
+          onChangeText={(value) => handleChangeText(value, "quantidadeUnitaria")}
         />
+      </View>
+      <Text style={styles.text}>Gastos com a produção do item:</Text>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.inputGroup}
+          placeholder="Custo de produção unitário                                              "
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "custoUnitario")}
+          value={campos.custoUnitario}
+        />
+      </View>
+      <Text style={styles.text}>Custo de venda unitário:</Text>
+      <View style={styles.input}>
+        <TextInput
+          style={styles.inputGroup}
+          placeholder="Venda unitária                                              "
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "vendaUnitaria")}
+          value={campos.vendaUnitaria}
+        />
+      </View>
+      <View>
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" />
       </View>
       <View style={styles.btn}>
         <Button
@@ -125,9 +163,6 @@ const AlterarVendasPrazo = (props) => {
           onPress={() => openConfirmationAlert()}
           color="#E37399"
         />
-      </View>
-      <View>
-        <Button title="Atualizar" onPress={() => atualizarDados()} color="#19AC52" />
       </View>
     </ScrollView>
   );
@@ -139,24 +174,54 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
+    color: 'gray',
+    fontSize: 16,
   },
   btn: {
-    marginBottom: 7,
+    marginBottom: 100,
+    marginTop: 10,
+    paddingHorizontal: 30,
+    width: '100%',
   },
+  btnStl:{
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  btnDel: {
+    width: '100%',
+    align: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+  },
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 15,
+    fontSize: 16,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  }
 });
 
 export default AlterarVendasPrazo;

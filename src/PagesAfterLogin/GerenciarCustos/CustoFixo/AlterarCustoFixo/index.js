@@ -106,7 +106,7 @@ const AlterarCustoFixo = (props) => {
       <View style={styles.input}>
         <TextInput
           autoCompleteType="Descricao"
-          placeholder="descricao"
+          placeholder="Descrição                                               "
           style={styles.inputGroup}
           value={campos.descricao}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -115,7 +115,7 @@ const AlterarCustoFixo = (props) => {
       <Text style={styles.text}>Gastos com esse custo fixo:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Valor                                               "
           autoCompleteType="valor"
           style={styles.inputGroup}
           keyboardType="decimal-pad"

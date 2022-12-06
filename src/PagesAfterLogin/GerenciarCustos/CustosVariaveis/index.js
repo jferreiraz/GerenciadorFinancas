@@ -32,6 +32,7 @@ const CustosVariaveis = (props) => {
       <Button
         onPress={() => props.navigation.navigate("Cadastrar custos variáveis")}
         title="Cadastrar dados"
+        color="#5CC6DD"
       />
       {campos.map((campos) => {
         return (

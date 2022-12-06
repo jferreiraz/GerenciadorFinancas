@@ -51,6 +51,7 @@ const InvestimentoFixo = (props) => {
       <Button
         onPress={() => props.navigation.navigate("Cadastrar investimento fixo")}
         title="Cadastrar dados"
+        color="#5CC6DD"
       />
       {campos.map((campos) => {
         //----------------------

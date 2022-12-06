@@ -17,8 +17,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { dbacess } from "../../../../config";
 import { collection, query, getDocs } from "firebase/firestore";
 
-import {APP_NAME, API_KEY, COMPANY_EMAIL} from '@env'
-
 
 
 const CadastrarInvestimentoFixo = (props) => {
@@ -37,7 +35,8 @@ const CadastrarInvestimentoFixo = (props) => {
 
   const initalState = {
     categoria: "",
-    descricao: "item investimento fixo",
+    descricao: "",
+    descricaoDefault: "Item investimento fixo",
     valor: "",
     dataAdicao:date + " às " + time,
     dataUltimaAlteracao:date + " às " + time,
@@ -67,7 +66,7 @@ const CadastrarInvestimentoFixo = (props) => {
     queryData.map(async (v) => {
       await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/investimento fixo`, token), {
           categoria: state.categoria, 
-          descricao: state.descricao,
+          descricao: isEditable ? state.descricao : state.descricaoDefault,
           valor: state.valor,
           dataAdicao: state.dataAdicao,
           dataUltimaAlteracao: state.dataUltimaAlteracao,
@@ -91,6 +90,7 @@ const CadastrarInvestimentoFixo = (props) => {
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
+      <Text style={styles.text}>Categoria desse investimento:</Text>
       <Select
           options={categorias} 
           onChangeSelect={(value)=> {handleChangeText(value, "categoria")}} 
@@ -100,45 +100,47 @@ const CadastrarInvestimentoFixo = (props) => {
           />
       </SafeAreaView>
 
+      <Text style={styles.text}>Descrição desse item:</Text>
       <Button
         onPress={updateState}
-        title={isEditable ? "Clique para desabilitar descrição" : "Clique para habilitar descrição"}>
+        color="#5CC6BA"
+        title={isEditable ? "Desabilitar descrição" : "Habilitar descrição"}>
       </Button>
 
       {/* descricao Input */}
       <View style={styles.inputGroup}>
         <TextInput 
-          placeholder={isEditable ? 'Descrição' : 'Desabilitado'}
+          placeholder={isEditable ? 'Descrição                                              ' : 'Desabilitado'}
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
-          value={state.descricao}
+          value={isEditable ? state.descricao : state.descricaoDefault}
           editable={isEditable}
           underlineColorAndroid="transparent"
           style={[
             styles.textInputStyle,
             {
               borderColor: isEditable ? 'black' : 'red',
-              backgroundColor: isEditable ? 'white' : '#d7d7d7'
+              backgroundColor: isEditable ? '#F8F9FA' : '#E1E1E1'
             }
           ]}
         />
       </View>
 
       {/* Input */}
+      <Text style={styles.text}>Gastos com esse investimento:</Text>
       <View style={styles.inputGroup}>
         <TextInput
           style={styles.textInputStyle} 
-          placeholder="Valor"
+          placeholder="Valor                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}
         />
-        <Text>teste: {APP_NAME}</Text>
       </View>
 
       <View style={styles.button}>
-        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+        <Button title="Salvar Dados" color="#5CC6BA" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
 
@@ -160,32 +162,44 @@ export default CadastrarInvestimentoFixo;
 
 
 const styles = StyleSheet.create({
+  textInputStyle: {
+    height: 60,
+    borderWidth: 0.5,
+    marginTop: 0,
+    marginBottom: 10,
+    fontSize: 16,
+    paddingLeft: 12,
+    borderRadius: 5,
+    backgroundColor: '#F8F9FA'
+  },
   container: {
     flex: 1,
     padding: 35,
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 0,
   },
-  loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  textInputStyle: {
+  input: {
+    textAlign: 'center',
     height: 60,
     borderWidth: 0.5,
-    marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 20,
     fontSize: 20,
-    paddingLeft: 12,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
   }
 });

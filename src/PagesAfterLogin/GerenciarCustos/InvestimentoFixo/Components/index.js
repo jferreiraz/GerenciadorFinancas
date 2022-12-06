@@ -26,7 +26,6 @@ const Select = ({ options, text, onChangeSelect, label }) => {
 
     return (
         <>
-            <Text style={styles.label}>{label}</Text>
 
             <TouchableOpacity style={styles.container} onPress={() => setModalVisible(true)}>
                 <Text style={styles.textButtom} numberOfLines={1}>
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         height: 60,
         borderWidth: 0.5,
-        marginTop: 10,
+        marginTop: 0,
         marginBottom: 10,
         fontSize: 20,
         flex: 1,
@@ -73,8 +72,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     textButtom: {
-        color: '#555',
-        fontSize: 18,
+        color: 'gray',
+        fontSize: 16,
 
     },
     headerModal: {

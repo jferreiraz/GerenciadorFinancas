@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  Text,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -30,6 +31,7 @@ const CadastrarEstoque = (props) => {
     quantidade: "",
     custo: "",
     valor: "",
+    lucro: "",
     dataAdicao: date + " às " + time,
     dataUltimaAlteracao: date + " às " + time,
   };
@@ -57,6 +59,7 @@ const CadastrarEstoque = (props) => {
         quantidade: state.quantidade,
         custo: state.custo,
         valor: state.valor,
+        lucro: state.valor*state.quantidade-state.custo,
         dataAdicao: state.dataAdicao,
         dataUltimaAlteracao: state.dataUltimaAlteracao,
       });
@@ -68,19 +71,20 @@ const CadastrarEstoque = (props) => {
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
+      <Text style={styles.text}>Categoria de quantidade:</Text>
         <Select
           options={categorias}
           onChangeSelect={(value) => handleChangeText(value, "categoria")}
           text="Selecione uma categoria"
-          label="Categoria:"
           value={state.categoria}
         />
       </SafeAreaView>
 
       {/* descricao Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Produto adquirido:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Nome do produto"
+          placeholder="Nome do produto                                              "
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -89,27 +93,30 @@ const CadastrarEstoque = (props) => {
       </View>
 
       {/* Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Quantidade unitária adquirida:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Quantidade unitária"
+          placeholder="Quantidade unitária                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "quantidade")}
           value={state.quantidade}
         />
       </View>
       {/* Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Gasto total da compra:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Custo de compra"
+          placeholder="Custo de compra                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "custo")}
           value={state.custo}
         />
       </View>
       {/* Input */}
-      <View style={styles.inputGroup}>
+      <Text style={styles.text}>Custo de venda unitário:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Valor de venda"
+          placeholder="Valor de venda                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}
@@ -117,7 +124,7 @@ const CadastrarEstoque = (props) => {
       </View>
 
       <View style={styles.button}>
-        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+        <Button title="Salvar Dados" color="#5CC6BA" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
   );
@@ -127,23 +134,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 35,
+    paddingTop: 15,
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
-    marginBottom: 15,
-    borderBottomWidth: 1,
+    marginBottom: 5,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
   },
-  loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "center",
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 20,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  },
+  button: {
+    paddingBottom: 80,
+  }
 });
 
 export default CadastrarEstoque;

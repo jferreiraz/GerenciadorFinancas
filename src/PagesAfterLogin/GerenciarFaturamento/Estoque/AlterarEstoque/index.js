@@ -6,19 +6,24 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
+  Text,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import Select from "../../../../components/select";
+import Select from "../Components/index";
 import { firebase } from "../../../../config";
-import { categorias } from "../../../../components/categorias";
+import { categorias } from "../Components/categorias";
 
 const AlterarEstoque = (props) => {
+  const date = new Date().toLocaleDateString();
+  const time = new Date().toLocaleTimeString();
+  
   const initialState = {
     id: "",
     categoria: "",
     descricao: "",
     quantidade: "",
     valor: "",
+    lucro: "",
     dataAdicao: "",
     dataUltimaAlteracao: "",
   };
@@ -70,6 +75,7 @@ const AlterarEstoque = (props) => {
       quantidade: campos.quantidade,
       custo: campos.custo,
       valor: campos.valor,
+      lucro: campos.valor*campos.quantidade-campos.custo,
       dataAdicao: campos.dataAdicao,
       dataUltimaAlteracao:date + " às " + time,
     });
@@ -92,6 +98,7 @@ const AlterarEstoque = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
+      <Text style={styles.text}>Categoria de quantidade:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
@@ -100,18 +107,20 @@ const AlterarEstoque = (props) => {
           value={campos.categoria}         
           />
       </View>
-      <View>
+      <Text style={styles.text}>Produto adquirido:</Text>
+      <View style={styles.input}>
         <TextInput
           autoCompleteType="Descricao"
-          placeholder="Nome do produto"
+          placeholder="Nome do produto                                              "
           style={styles.inputGroup}
           value={campos.descricao}
           onChangeText={(value) => handleChangeText(value, "descricao")}
         />
       </View>
-      <View>
+      <Text style={styles.text}>Quantidade unitária adquirida:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Quantidade unitária"
+          placeholder="Quantidade unitária                                              "
           autoCompleteType="quantidade"
           style={styles.inputGroup}
           value={campos.quantidade}
@@ -119,9 +128,10 @@ const AlterarEstoque = (props) => {
           onChangeText={(value) => handleChangeText(value, "quantidade")}
         />
       </View>
-      <View>
+      <Text style={styles.text}>Gasto total da compra:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Custo de compra"
+          placeholder="Custo de compra                                              "
           autoCompleteType="custo"
           style={styles.inputGroup}
           value={campos.custo}
@@ -129,15 +139,19 @@ const AlterarEstoque = (props) => {
           onChangeText={(value) => handleChangeText(value, "custo")}
         />
       </View>
-      <View>
+      <Text style={styles.text}>Custo de venda unitário:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Valor de venda"
+          placeholder="Valor de venda                                              "
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
         />
+      </View>
+      <View>
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" />
       </View>
       <View style={styles.btn}>
         <Button
@@ -146,9 +160,7 @@ const AlterarEstoque = (props) => {
           color="#E37399"
         />
       </View>
-      <View>
-        <Button title="Atualizar" onPress={() => atualizarDados()} color="#19AC52" />
-      </View>
+    
     </ScrollView>
   );
 };
@@ -159,24 +171,54 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
+    color: 'gray',
+    fontSize: 16,
   },
   btn: {
-    marginBottom: 7,
+    marginBottom: 100,
+    marginTop: 10,
+    paddingHorizontal: 30,
+    width: '100%',
   },
+  btnStl:{
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  btnDel: {
+    width: '100%',
+    align: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+  },
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 15,
+    fontSize: 16,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  }
 });
 
 export default AlterarEstoque;

@@ -6,7 +6,8 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
-  SafeAreaView
+  SafeAreaView,
+  Text
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { firebase } from "../../../../config";
@@ -42,6 +43,7 @@ const AlterarInvestimentoFixo = (props) => {
     id: "",
     categoria: "",
     descricao: "",
+    descricaoDefault: "Item investimento fixo",
     valor: "",
     dataUltimaAlteracao:date + " às " + time,
     desgasteTaxaAnual:"",
@@ -94,7 +96,7 @@ const AlterarInvestimentoFixo = (props) => {
     const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(campos.id);
     await camposRef.set({
       categoria: campos.categoria,
-      descricao: campos.descricao,
+      descricao: isEditable ? campos.descricao : campos.descricaoDefault,
       valor: campos.valor,
       dataUltimaAlteracao: date + " às " + time,
       dataAdicao: campos.dataAdicao,
@@ -128,6 +130,7 @@ const AlterarInvestimentoFixo = (props) => {
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView style={styles.inputGroup}>
+      <Text style={styles.text}>Gastos com esse investimento:</Text>
       <Select 
           options={categorias} 
           onChangeSelect={(value)=> handleTextChange(value, "categoria")} 
@@ -137,9 +140,10 @@ const AlterarInvestimentoFixo = (props) => {
           placeholder={campos.categoria}         
           />
       </SafeAreaView>
-      <View>
+      <Text style={styles.text}>Gastos com esse investimento:</Text>
+      <View style={styles.input}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Valor                                              "
           autoCompleteType="valor"
           style={styles.inputGroup}
           value={campos.valor}
@@ -147,19 +151,32 @@ const AlterarInvestimentoFixo = (props) => {
           onChangeText={(value) => handleTextChange(value, "valor")}
         />
       </View>
+      <Text style={styles.text}>Gastos com esse investimento:</Text>
       <Button
         onPress={updateState}
-        title={isEditable ? "Clique para desabilitar descrição" : "Clique para habilitar descrição"}>
+        color="#5CC6BA"
+        title={isEditable ? "Desabilitar descrição" : "Habilitar descrição"}>
       </Button>
-      <View style={styles.container}>
+      <View style={styles.inputGroup}>
         <TextInput
           autoCompleteType="Descricao"
-          placeholder={isEditable ? 'Descrição' : 'Desabilitado'}
-          style={styles.inputGroup}
-          value={campos.descricao}
+          placeholder={isEditable ? 'Descrição                                              ' : 'Desabilitado'}
+
+          value={isEditable ? campos.descricao : campos.descricaoDefault}
           onChangeText={(value) => handleTextChange(value, "descricao")}
           editable={isEditable}
+          underlineColorAndroid="transparent"
+          style={[
+            styles.textInputStyle,
+            {
+              borderColor: isEditable ? 'black' : 'red',
+              backgroundColor: isEditable ? '#F8F9FA' : '#E1E1E1'
+            }
+          ]}
         />
+      </View>
+      <View>
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" />
       </View>
       <View style={styles.btn}>
         <Button
@@ -167,9 +184,6 @@ const AlterarInvestimentoFixo = (props) => {
           onPress={() => openConfirmationAlert()}
           color="#E37399"
         />
-      </View>
-      <View>
-        <Button title="Atualizar" onPress={() => atualizarDados()} color="#19AC52" />
       </View>
     </ScrollView>
   );
@@ -192,22 +206,62 @@ const styles = StyleSheet.create({
     padding: 35,
   },
   loader: {
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
     position: "absolute",
     alignItems: "center",
     justifyContent: "center",
   },
   inputGroup: {
     flex: 1,
-    padding: 0,
     marginBottom: 15,
-    borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+    marginTop: 5,
+    color: 'gray',
+    fontSize: 16,
   },
   btn: {
     marginBottom: 7,
+    marginTop: 10,
+    paddingHorizontal: 45,
+    width: '100%',
+  },
+  btnStl:{
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  btnDel: {
+    width: '100%',
+    align: 'center',
+    alignItems: 'center',
+    paddingTop: 15,
+  },
+  input: {
+    textAlign: 'center',
+    height: 60,
+    borderWidth: 0.5,
+    marginBottom: 15,
+    fontSize: 20,
+    flex: 1,
+    backgroundColor: '#F8F9FA',
+    paddingHorizontal: 10,
+    marginHorizontal: 0,
+    borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text:{
+    fontWeight: '300',
+    fontSize: 16,
+    paddingBottom: 5,
+  },
+  textInputStyle: {
+    height: 60,
+    borderWidth: 0.5,
+    marginTop: 0,
+    marginBottom: 10,
+    fontSize: 16,
+    paddingLeft: 12,
+    borderRadius: 5,
+    backgroundColor: '#F8F9FA'
   },
 });

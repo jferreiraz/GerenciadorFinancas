@@ -128,22 +128,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#5CC6BA'
     },
     containerHeader: {
-        marginTop: '14%',
-        marginBottom: '8%',
+        marginTop: '20%',
+        marginBottom: '20%',
         paddingStart: '5%'
     },
     message: {
-        fontSize: 28,
+        fontSize: 30,
         fontWeight: 'bold',
-        color: '#FFF'
+        color: '#FEF'
     },
     containerForm: {
         backgroundColor: '#FFF',
         flex: 1,
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
         paddingStart: '5%',
         paddingEnd: '5%',
         marginHorizontal: 2,

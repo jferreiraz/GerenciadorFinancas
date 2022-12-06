@@ -49,6 +49,7 @@ const MaoDeObra = (props) => {
       <Button
         onPress={() => props.navigation.navigate("Cadastrar mão de obra")}
         title="Cadastrar dados"
+        color="#5CC6DD"
       />
       {campos.map((campos) => {
         return (

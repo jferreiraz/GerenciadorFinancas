@@ -79,7 +79,7 @@ const CadastrarCustoFixo = (props) => {
       <Text style={styles.text}>Descreva esse custo fixo:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Descrição (Opcional)"
+          placeholder="Descrição (Opcional)                             "
           multiline={true}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -91,7 +91,7 @@ const CadastrarCustoFixo = (props) => {
       <Text style={styles.text}>Gastos com esse custo fixo:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Valor"
+          placeholder="Valor                                               "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "valor")}
           value={state.valor}
@@ -99,7 +99,7 @@ const CadastrarCustoFixo = (props) => {
       </View>
 
       <View style={styles.button}>
-        <Button title="Salvar Dados" onPress={() => salvarNovo()} />
+        <Button title="Salvar Dados" color="#5CC6BA" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
   );
