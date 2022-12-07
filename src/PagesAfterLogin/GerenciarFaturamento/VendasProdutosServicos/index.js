@@ -41,13 +41,13 @@ const VendasProdutosServicos = (props) => {
   }, []);
 
   campos.forEach((element) => {
-    arrTotal.push(parseFloat(element.gastosFuncao));
+    arrTotal.push(parseFloat(element.vendaGeral));
     arrLucroBruto.push(parseFloat(element.numeroFuncionarios));
     arrLucroLiquido.push(parseFloat(element.numeroFuncionarios));
   });
 
   for (var i = 0; i < arrTotal.length; i++) {
-    totalMO += parseFloat(arrTotal[i]);
+    totalPS += parseFloat(arrTotal[i]);
     lucroBruto += parseFloat(arrLucroBruto[i]);
     lucroLiquido += parseFloat(arrLucroLiquido[i]);
   }
@@ -63,9 +63,9 @@ const VendasProdutosServicos = (props) => {
         bottomDivider
       >
         <ListItem.Content>
-          <ListItem.Subtitle style={styles.subTitle}>{"Custo total estimado: R$" + campos.totalVendasProdutosServicos}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Custo total estimado: R$" + totalPS}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Lucro bruto estimado: R$" + campos.valor}</ListItem.Subtitle>
-          <ListItem.Subtitle style={styles.subTitle}>{"Lucro líqudio estimado: R$" + campos.valor}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Lucro líquido estimado: R$" + campos.valor}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
