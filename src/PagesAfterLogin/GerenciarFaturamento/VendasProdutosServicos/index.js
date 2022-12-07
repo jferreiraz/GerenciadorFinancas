@@ -9,6 +9,12 @@ import { firebase } from "../../../config";
 
 const VendasProdutosServicos = (props) => {
   const [campos, setCampos] = useState([]);
+  const arrTotal = []
+  const arrLucroLiquido = []
+  const arrLucroBruto = []
+  var totalPS = 0;
+  var lucroLiquido = 0;
+  var lucroBruto = 0;
 
   useEffect(() => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('produtos e serviços').onSnapshot((querySnapshot) => {
@@ -34,6 +40,17 @@ const VendasProdutosServicos = (props) => {
     });
   }, []);
 
+  campos.forEach((element) => {
+    arrTotal.push(parseFloat(element.gastosFuncao));
+    arrLucroBruto.push(parseFloat(element.numeroFuncionarios));
+    arrLucroLiquido.push(parseFloat(element.numeroFuncionarios));
+  });
+
+  for (var i = 0; i < arrTotal.length; i++) {
+    totalMO += parseFloat(arrTotal[i]);
+    lucroBruto += parseFloat(arrLucroBruto[i]);
+    lucroLiquido += parseFloat(arrLucroLiquido[i]);
+  }
 
   return (
     <ScrollView>
