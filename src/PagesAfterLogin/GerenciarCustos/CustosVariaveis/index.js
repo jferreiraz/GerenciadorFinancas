@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, StyleSheet } from "react-native";
+import { Button, StyleSheet, TouchableScale } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -7,6 +7,8 @@ import { firebase } from "../../../config";
 
 const CustosVariaveis = (props) => {
   const [campos, setCampos] = useState([]);
+  const arrTotalCV = []
+  var totalCV = 0;
 
   useEffect(() => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').onSnapshot((querySnapshot) => {
@@ -24,11 +26,31 @@ const CustosVariaveis = (props) => {
       });
       setCampos(campos);
     });
-  }, []); 
+  }, []);
 
+  campos.forEach((element) => {
+    arrTotalCV.push(parseFloat(element.valor));
+  });
+
+  for (var i = 0; i < arrTotalCV.length; i++) {
+    totalCV += parseFloat(arrTotalCV[i]);
+  }
 
   return (
     <ScrollView>
+      <ListItem
+        Component={TouchableScale}
+        friction={100}
+        tension={120}
+        activeScale={0.92}
+        key={campos.id}
+        bottomDivider
+      >
+        <ListItem.Content>
+          <ListItem.Subtitle style={styles.subTitle}>{"Total gasto com custos variáveis: R$" + totalCV}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
+        </ListItem.Content>
+      </ListItem>
       <Button
         onPress={() => props.navigation.navigate("Cadastrar custos variáveis")}
         title="Cadastrar dados"
@@ -47,10 +69,10 @@ const CustosVariaveis = (props) => {
           >
             <ListItem.Content>
               <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
-              <ListItem.Subtitle style={styles.subTitle}>{"Descrição: "+campos.descricao}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitle}>{"Valor: R$"+campos.valor}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: "+campos.dataAdicao}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: "+campos.dataUltimaAlteracao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Valor: R$" + campos.valor}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         );

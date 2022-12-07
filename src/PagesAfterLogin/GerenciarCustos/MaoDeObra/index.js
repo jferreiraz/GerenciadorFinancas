@@ -8,6 +8,10 @@ import { firebase } from "../../../config";
 
 const MaoDeObra = (props) => {
   const [campos, setCampos] = useState([]);
+  const arrTotalMO = []
+  const arrFuncionariosMO = []
+  var totalMO = 0;
+  var funcionariosMO = 0;
 
   useEffect(() => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('mão de obra').onSnapshot((querySnapshot) => {
@@ -29,6 +33,15 @@ const MaoDeObra = (props) => {
     });
   }, []);
 
+  campos.forEach((element) => {
+    arrTotalMO.push(parseFloat(element.gastosFuncao));
+    arrFuncionariosMO.push(parseFloat(element.numeroFuncionarios));
+  });
+
+  for (var i = 0; i < arrTotalMO.length; i++) {
+    totalMO += parseFloat(arrTotalMO[i]);
+    funcionariosMO += parseFloat(arrFuncionariosMO[i]);
+  }
 
   return (
     <ScrollView>
@@ -41,8 +54,8 @@ const MaoDeObra = (props) => {
         bottomDivider
       >
         <ListItem.Content>
-          <ListItem.Subtitle style={styles.subTitle}>{"Total gasto com mão de obra: R$" + campos.totalSalario}</ListItem.Subtitle>
-          <ListItem.Subtitle style={styles.subTitle}>{"Quantidade de funcionários: R$" + campos.totalNumeroFuncionarios}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Total gasto com mão de obra: R$" + totalMO}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Quantidade de funcionários: " + funcionariosMO}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>

@@ -11,10 +11,8 @@ import { firebase } from "../../../config";
 
 const CustoFixo = (props) => {
   const [campos, setCampos] = useState([]);
-  const totalCF = 0;
-  let sum = 0;
-  const sumFunction = async (a, b) => a + b;
-  const arrayCF = []
+  const arrTotalCF = []
+  var totalCF = 0;
 
   useEffect(() => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').onSnapshot((querySnapshot) => {
@@ -32,44 +30,15 @@ const CustoFixo = (props) => {
       });
       setCampos(campos);
     });
-    for(let g of campos) {
-      console.log(g.valor);
-      campos.forEach(async (campos) => {
-        sum = await sumFunction(sum, g.valor);
-      });
-      console.log(sum)
-    }
-    campos.forEach(async (campos) => {
-      sum = await sumFunction(sum, campos.valor);
-    });
-    //console.log(campos[0].valor)
-    //console.log(sum);
   }, []);
 
-  //console.log(campos.categoria)
- 
-  for(let g of campos) {
-    console.log(g.valor);
-
-  }
-
-  campos.forEach(async (campos) => {
-    sum = await sumFunction(sum, campos.valor);
-  });
-  
-
   campos.forEach((element) => {
-    console.log({ element });
-    sum++;
+    arrTotalCF.push(parseFloat(element.valor));
   });
 
-  //console.log(arrayCF)
-  
-
-
-
-
-
+  for (var i = 0; i < arrTotalCF.length; i++) {
+    totalCF += parseFloat(arrTotalCF[i]);
+  }
 
 
   return (
@@ -84,7 +53,7 @@ const CustoFixo = (props) => {
         bottomDivider
       >
         <ListItem.Content>
-          <ListItem.Subtitle style={styles.subTitle}>{"Total em custo fixo: R$" + campos.totalCustoFixo}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Total em custo fixo: R$" + totalCF}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
@@ -97,29 +66,29 @@ const CustoFixo = (props) => {
       </Button>
 
       {campos.map((campos) => {
-          return (
-            <ListItem
-              Component={TouchableScale}
-              friction={100}
-              tension={120}
-              activeScale={0.92}
-              key={campos.id}
-              bottomDivider
-              onPress={() => {
-                props.navigation.navigate("Alterar custo fixo", {
-                  camposId: campos.id,
-                });
-              }}
-            >
-              <ListItem.Content>
-                <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
-                <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
-                <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$ " + campos.valor}</ListItem.Subtitle>
-                <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
-                <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-          );  
+        return (
+          <ListItem
+            Component={TouchableScale}
+            friction={100}
+            tension={120}
+            activeScale={0.92}
+            key={campos.id}
+            bottomDivider
+            onPress={() => {
+              props.navigation.navigate("Alterar custo fixo", {
+                camposId: campos.id,
+              });
+            }}
+          >
+            <ListItem.Content>
+              <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
+              <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$ " + campos.valor}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
+            </ListItem.Content>
+          </ListItem>
+        );
       })}
     </ScrollView>
   );

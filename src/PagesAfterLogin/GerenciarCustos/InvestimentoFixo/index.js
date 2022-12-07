@@ -9,6 +9,10 @@ import categorias from "./Components/categorias";
 
 const InvestimentoFixo = (props) => {
   const [campos, setCampos] = useState([]);
+  const arrTotalIF = []
+  const arrManutencaoIF = []
+  var totalIF = 0;
+  var manutencaoIF = 0;
 
   useEffect(() => {
     firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').onSnapshot((querySnapshot) => {
@@ -31,6 +35,15 @@ const InvestimentoFixo = (props) => {
     });
   }, []);
 
+  campos.forEach((element) => {
+    arrTotalIF.push(parseFloat(element.valor));
+    arrManutencaoIF.push(parseFloat(element.custoDesgaste));
+  });
+
+  for (var i = 0; i < arrTotalIF.length; i++) {
+    totalIF += parseFloat(arrTotalIF[i]);
+    manutencaoIF += parseFloat(arrManutencaoIF[i]);
+  }
 
   return (
     <ScrollView>
@@ -43,8 +56,8 @@ const InvestimentoFixo = (props) => {
         bottomDivider
       >
         <ListItem.Content>
-          <ListItem.Subtitle style={styles.subTitle}>{"Total em investimento fixo: R$" + campos.totalInvestimentoFixo}</ListItem.Subtitle>
-          <ListItem.Subtitle style={styles.subTitle}>{"Custo de manutenção geral: R$" + campos.valor}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Total em investimento fixo: R$" + totalIF}</ListItem.Subtitle>
+          <ListItem.Subtitle style={styles.subTitle}>{"Custo de manutenção geral: R$" + manutencaoIF.toFixed(2)}</ListItem.Subtitle>
           <ListItem.Subtitle style={styles.subTitle}>{"Campos adicionados: " + campos.length}</ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
