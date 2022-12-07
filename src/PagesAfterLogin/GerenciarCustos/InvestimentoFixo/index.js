@@ -67,18 +67,6 @@ const InvestimentoFixo = (props) => {
         color="#5CC6DD"
       />
       {campos.map((campos) => {
-        //----------------------
-        var numeros = [] 
-        numeros.push(campos.valor)
-        console.log(numeros)
-
-        var soma = 0;
-        for (var i = 0; i < numeros.length; i++) {
-          soma += numeros[i];
-        }
-        console.log(soma)
-        //---------------------------------
-
         return (
           <ListItem
             Component={TouchableScale}
