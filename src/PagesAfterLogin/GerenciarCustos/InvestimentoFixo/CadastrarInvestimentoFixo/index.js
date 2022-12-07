@@ -4,8 +4,9 @@ import {
   View,
   StyleSheet,
   TextInput,
-  ScrollView, 
+  ScrollView,
   Text,
+  Alert,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -31,18 +32,18 @@ const CadastrarInvestimentoFixo = (props) => {
 
   const today = new Date().getDate();
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; 
+  const currentMonth = new Date().getMonth() + 1;
 
   const initalState = {
     categoria: "",
     descricao: "",
     descricaoDefault: "Item investimento fixo",
     valor: "",
-    dataAdicao:date + " às " + time,
-    dataUltimaAlteracao:date + " às " + time,
-    desgasteTaxaAnual:"",
-    desgasteVidaUtil:"",
-    custoDesgaste:"", 
+    dataAdicao: date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
+    desgasteTaxaAnual: "",
+    desgasteVidaUtil: "",
+    custoDesgaste: "",
   };
 
   const [state, setState] = useState(initalState);
@@ -51,22 +52,35 @@ const CadastrarInvestimentoFixo = (props) => {
     setState({ ...state, [categoria]: value });
   };
 
-  const salvarNovo = async () => {
-    const result = categorias.find( element => element.name === state.categoria );
-    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
-    const custoDesgaste = state.valor/(result.vidaUtil * 12);
+  const validation = () => {
+    if (state.descricao == "") {
+      return "Item investimento fixo"
+    } else {
+      return state.descricao
+    }
+  }
 
-    const q = query(collection(dbacess, "usuarios"));
-    const querySnapshot = await getDocs(q);
-    const queryData = querySnapshot.docs.map((detail) => ({
+  const salvarNovo = async () => {
+    if (state.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (state.valor == "") {
+      Alert.alert("Alerta", "Preencha o valor do seu investimento fixo para continuar")
+    } else {
+      const result = categorias.find(element => element.name === state.categoria);
+      const token = "Registro - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
+      const custoDesgaste = state.valor / (result.vidaUtil * 12);
+
+      const q = query(collection(dbacess, "usuarios"));
+      const querySnapshot = await getDocs(q);
+      const queryData = querySnapshot.docs.map((detail) => ({
         ...detail.data(),
         id: detail.id,
-    }));
-    console.log(queryData);
-    queryData.map(async (v) => {
-      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/investimento fixo`, token), {
-          categoria: state.categoria, 
-          descricao: isEditable ? state.descricao : state.descricaoDefault,
+      }));
+      console.log(queryData);
+      queryData.map(async (v) => {
+        await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/investimento fixo`, token), {
+          categoria: state.categoria,
+          descricao: isEditable ? validation() : state.descricaoDefault,
           valor: state.valor,
           dataAdicao: state.dataAdicao,
           dataUltimaAlteracao: state.dataUltimaAlteracao,
@@ -75,8 +89,9 @@ const CadastrarInvestimentoFixo = (props) => {
           custoDesgaste: custoDesgaste,
         });
         props.navigation.navigate("Investimento fixo");
-    })
-};
+      })
+    };
+  }
 
 
 
@@ -86,19 +101,31 @@ const CadastrarInvestimentoFixo = (props) => {
 
 
   return (
-    
+
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Text style={styles.text}>Categoria desse investimento:</Text>
-      <Select
-          options={categorias} 
-          onChangeSelect={(value)=> {handleChangeText(value, "categoria")}} 
+        <Text style={styles.text}>Categoria desse investimento:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(value) => { handleChangeText(value, "categoria") }}
           text="Selecione uma categoria"
           label="Categoria:"
-          value={state.categoria}          
-          />
+          value={state.categoria}
+        />
       </SafeAreaView>
+
+      {/* Input */}
+      <Text style={styles.text}>Gastos com esse investimento:</Text>
+      <View style={styles.inputGroup}>
+        <TextInput
+          style={styles.textInputStyle}
+          placeholder="Valor                                              "
+          keyboardType="decimal-pad"
+          onChangeText={(value) => handleChangeText(value, "valor")}
+          value={state.valor}
+        />
+      </View>
 
       <Text style={styles.text}>Descrição desse item:</Text>
       <Button
@@ -109,7 +136,7 @@ const CadastrarInvestimentoFixo = (props) => {
 
       {/* descricao Input */}
       <View style={styles.inputGroup}>
-        <TextInput 
+        <TextInput
           placeholder={isEditable ? 'Descrição                                              ' : 'Desabilitado'}
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -126,24 +153,12 @@ const CadastrarInvestimentoFixo = (props) => {
         />
       </View>
 
-      {/* Input */}
-      <Text style={styles.text}>Gastos com esse investimento:</Text>
-      <View style={styles.inputGroup}>
-        <TextInput
-          style={styles.textInputStyle} 
-          placeholder="Valor                                              "
-          keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "valor")}
-          value={state.valor}
-        />
-      </View>
-
       <View style={styles.button}>
         <Button title="Salvar Dados" color="#5CC6BA" onPress={() => salvarNovo()} />
       </View>
     </ScrollView>
 
-    
+
   );
 };
 
@@ -196,7 +211,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

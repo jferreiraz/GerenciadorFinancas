@@ -8,10 +8,7 @@ import { firebase } from "../../config"
 //import { BackHandler } from 'react-native';
 import { Alert } from "react-native";
 
-
 import { StatusBar, BackHandler, Bar } from 'react-native';
-
-import Routes from '../../routes';
 
 const Home = ({ navigation }) => {
     const [name, setName] = useState('')

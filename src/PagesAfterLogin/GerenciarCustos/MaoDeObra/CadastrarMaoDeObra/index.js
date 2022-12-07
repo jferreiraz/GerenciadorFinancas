@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Text,
+  Alert,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -23,7 +24,7 @@ const CadastrarMaoDeObra = (props) => {
 
   const today = new Date().getDate();
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; 
+  const currentMonth = new Date().getMonth() + 1;
 
   const initalState = {
     categoria: "",
@@ -31,8 +32,8 @@ const CadastrarMaoDeObra = (props) => {
     numeroFuncionarios: "",
     salario: "",
     gastosFuncao: "",
-    dataAdicao:date + " às " + time,
-    dataUltimaAlteracao:date + " às " + time,
+    dataAdicao: date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -42,19 +43,28 @@ const CadastrarMaoDeObra = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
-    const totalGastosFuncao = state.numeroFuncionarios * state.salario;
+    if (state.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (state.funcao == "") {
+      Alert.alert("Alerta", "Descreva qual o cargo dos funcionários para continuar")
+    } else if (state.numeroFuncionarios == "") {
+      Alert.alert("Alerta", "Preencha quantos funcionários possuem essa função para continuar")
+    } else if (state.salario == "") {
+      Alert.alert("Alerta", "Preencha o salário do(s) funcionário(s) para continuar")
+    } else {
+      const token = "Registro - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
+      const totalGastosFuncao = state.numeroFuncionarios * state.salario;
 
-    const q = query(collection(dbacess, "usuarios"));
-    const querySnapshot = await getDocs(q);
-    const queryData = querySnapshot.docs.map((detail) => ({
+      const q = query(collection(dbacess, "usuarios"));
+      const querySnapshot = await getDocs(q);
+      const queryData = querySnapshot.docs.map((detail) => ({
         ...detail.data(),
         id: detail.id,
-    }));
-    console.log(queryData);
-    queryData.map(async (v) => {
-      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/mão de obra`, token), {
-          categoria: state.categoria, 
+      }));
+      console.log(queryData);
+      queryData.map(async (v) => {
+        await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/mão de obra`, token), {
+          categoria: state.categoria,
           funcao: state.funcao,
           numeroFuncionarios: state.numeroFuncionarios,
           salario: state.salario,
@@ -63,28 +73,29 @@ const CadastrarMaoDeObra = (props) => {
           dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Custos com mão de obra");
-    })
-};
+      })
+    };
+  }
 
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Text style={styles.text}>Selecione a forma de contratação:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+        <Text style={styles.text}>Selecione a forma de contratação:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(value) => handleChangeText(value, "categoria")}
           text="Selecione uma categoria"
           label="Categoria:"
-          value={state.categoria}         
-          />
+          value={state.categoria}
+        />
       </SafeAreaView>
 
       {/* funcao Input */}
       <Text style={styles.text}>Descreva o cargo do funcionário:</Text>
       <View style={styles.input}>
-        <TextInput 
-          placeholder="Descrição (Opcional)                                              "
+        <TextInput
+          placeholder="Descrição/Função                                            "
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "funcao")}
           value={state.funcao}
@@ -101,12 +112,12 @@ const CadastrarMaoDeObra = (props) => {
           value={state.numeroFuncionarios}
         />
       </View>
-      
+
       {/* Input */}
       <Text style={styles.text}>Salário dessa função:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Salário                                              "
+          placeholder="Salário por funcionário                                             "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "salario")}
           value={state.salario}
@@ -146,7 +157,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

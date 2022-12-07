@@ -5,7 +5,7 @@ import {
   View,
   Alert,
   ActivityIndicator,
-  StyleSheet, 
+  StyleSheet,
   Text,
   TouchableOpacity,
 } from "react-native";
@@ -23,7 +23,7 @@ const AlterarCustoFixo = (props) => {
     categoria: "",
     descricao: "",
     valor: "",
-    dataUltimaAlteracao:date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -32,6 +32,14 @@ const AlterarCustoFixo = (props) => {
   const handleChangeText = (value, prop) => {
     setCampos({ ...campos, [prop]: value });
   };
+
+  const validation = () => {
+    if (campos.descricao == "") {
+      return "Item custo fixo"
+    } else {
+      return campos.descricao
+    }
+  }
 
   const pegarDadosID = async (id) => {
     const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').doc(id);
@@ -61,22 +69,28 @@ const AlterarCustoFixo = (props) => {
       ],
       {
         cancelable: true,
-      } 
+      }
     );
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').doc(campos.id);
-    await camposRef.set({
-      categoria: campos.categoria,
-      descricao: campos.descricao,
-      valor: campos.valor,
-      dataUltimaAlteracao: date + " às " + time,
-      dataAdicao: campos.dataAdicao,
-    });
-    setCampos(initialState);
-    props.navigation.navigate("Custo fixo");
-  };
+    if (campos.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (campos.valor == "") {
+      Alert.alert("Alerta", "Preencha o valor do seu custo fixo para continuar")
+    } else {
+      const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custo fixo').doc(campos.id);
+      await camposRef.set({
+        categoria: campos.categoria,
+        descricao: validation(),
+        valor: campos.valor,
+        dataUltimaAlteracao: date + " às " + time,
+        dataAdicao: campos.dataAdicao,
+      });
+      setCampos(initialState);
+      props.navigation.navigate("Custo fixo");
+    };
+  }
 
   useEffect(() => {
     pegarDadosID(props.route.params.camposId);
@@ -93,14 +107,14 @@ const AlterarCustoFixo = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-      <Text style={styles.text}>Tipo de custo fixo:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
+        <Text style={styles.text}>Tipo de custo fixo:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(id) => handleChangeText(id, "categoria")}
           text={campos.categoria}
           label="Categoria: (label)"
-          value={campos.categoria}         
-          />
+          value={campos.categoria}
+        />
       </View>
       <Text style={styles.text}>Descreva esse custo fixo:</Text>
       <View style={styles.input}>
@@ -124,7 +138,7 @@ const AlterarCustoFixo = (props) => {
         />
       </View>
       <View style={styles.btn}>
-        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" style={styles.btnStl}/>
+        <Button title="Atualizar" onPress={() => atualizarDados()} color="#5CC6BA" style={styles.btnStl} />
       </View>
       <View style={styles.btnDel}>
         <Button
@@ -161,7 +175,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     width: '100%',
   },
-  btnStl:{
+  btnStl: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -186,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

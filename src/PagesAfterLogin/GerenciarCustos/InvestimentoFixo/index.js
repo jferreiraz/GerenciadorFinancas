@@ -87,7 +87,7 @@ const InvestimentoFixo = (props) => {
               <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$" + campos.valor}</ListItem.Subtitle>
               <ListItem.Subtitle style={styles.subTitleDate}>{"Adicionado em: " + campos.dataAdicao}</ListItem.Subtitle>
               <ListItem.Subtitle style={styles.subTitleDate}>{"Última alteração: " + campos.dataUltimaAlteracao}</ListItem.Subtitle>
-              <ListItem.Subtitle style={styles.subTitleDesgaste}>{"Desgasta " + campos.desgasteTaxaAnual + "% durante " + campos.desgasteVidaUtil + " anos, custo de reparo anual: R$" + campos.custoDesgaste}</ListItem.Subtitle>
+              <ListItem.Subtitle style={styles.subTitleDesgaste}>{"Desgasta " + campos.desgasteTaxaAnual + "% durante " + campos.desgasteVidaUtil + " anos, custo de reparo anual: R$" + campos.custoDesgaste.toFixed(3)}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
         );

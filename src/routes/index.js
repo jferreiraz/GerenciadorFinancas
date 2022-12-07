@@ -279,6 +279,7 @@ return(
             name="Vendas de produtos e serviços" 
             component={VendasProdutosServicos}
             options={{
+                headerTitle: "Produtos e serviços",
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
                 headerTintColor:'#EDEDED',
                 headerTitleStyle: {color: '#FDF', fontWeight: '300'},
@@ -288,18 +289,20 @@ return(
             name="Cadastrar vendas de produtos e serviços" 
             component={CadastrarVendasProdutosServicos}
             options={{
+                headerTitle: "Cadastrar produtos e serviços",
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
                 headerTintColor:'#EDEDED',
-                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                headerTitleStyle: {color: '#FDF', fontSize: 17,fontWeight: '300'},
                 }}  
         />
         <Stack.Screen 
             name="Alterar vendas de produtos e serviços" 
             component={AlterarVendasProdutosServicos}
             options={{
+                headerTitle: "Alterar produtos e serviços",
                 headerStyle: {backgroundColor: '#5CC6BA'}, 
                 headerTintColor:'#EDEDED',
-                headerTitleStyle: {color: '#FDF', fontWeight: '300'},
+                headerTitleStyle: {color: '#FDF', fontSize: 19, fontWeight: '300'},
                 }}  
         />
         <Stack.Screen //--------------------------------------------------- OUTRAS PÁGINAS ------------------------------------------------------

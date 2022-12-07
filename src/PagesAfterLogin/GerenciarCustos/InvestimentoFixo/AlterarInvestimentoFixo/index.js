@@ -28,10 +28,10 @@ const AlterarInvestimentoFixo = (props) => {
   const [isEditable, setisEditable] = useState(false);
 
   const checkUpdateState = () => {
-    if(campos.descricao != ""){
-    setisEditable(!isEditable);
+    if (campos.descricao != "") {
+      setisEditable(!isEditable);
     } else {
-    setisEditable(isEditable);
+      setisEditable(isEditable);
     }
   }
 
@@ -45,10 +45,10 @@ const AlterarInvestimentoFixo = (props) => {
     descricao: "",
     descricaoDefault: "Item investimento fixo",
     valor: "",
-    dataUltimaAlteracao:date + " às " + time,
-    desgasteTaxaAnual:"",
-    desgasteVidaUtil:"",
-    custoDesgaste:"",
+    dataUltimaAlteracao: date + " às " + time,
+    desgasteTaxaAnual: "",
+    desgasteVidaUtil: "",
+    custoDesgaste: "",
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -57,6 +57,14 @@ const AlterarInvestimentoFixo = (props) => {
   const handleTextChange = (value, prop) => {
     setCampos({ ...campos, [prop]: value });
   };
+
+  const validation = () => {
+    if (campos.descricao == "") {
+      return "Item investimento fixo"
+    } else {
+      return campos.descricao
+    }
+  }
 
   const pegarDadosID = async (id) => {
     const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(id);
@@ -91,22 +99,28 @@ const AlterarInvestimentoFixo = (props) => {
   };
 
   const atualizarDados = async () => {
-    const result = categorias.find( element => element.name === campos.categoria );  //Para alterar categoria
-    const custoDesgaste = campos.valor/(result.vidaUtil * 12);                       //Para alterar categoria
-    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(campos.id);
-    await camposRef.set({
-      categoria: campos.categoria,
-      descricao: isEditable ? campos.descricao : campos.descricaoDefault,
-      valor: campos.valor,
-      dataUltimaAlteracao: date + " às " + time,
-      dataAdicao: campos.dataAdicao,
-      desgasteTaxaAnual: result.taxaAnual,
-      desgasteVidaUtil: result.vidaUtil,
-      custoDesgaste: custoDesgaste,
-    });
-    setCampos(initialState);
-    props.navigation.navigate("Investimento fixo");
-  };
+    if (campos.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (campos.valor == "") {
+      Alert.alert("Alerta", "Preencha o valor do seu investimento fixo para continuar")
+    } else {
+      const result = categorias.find(element => element.name === campos.categoria);  //Para alterar categoria
+      const custoDesgaste = campos.valor / (result.vidaUtil * 12);                       //Para alterar categoria
+      const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('investimento fixo').doc(campos.id);
+      await camposRef.set({
+        categoria: campos.categoria,
+        descricao: isEditable ? validation() : validation(),
+        valor: campos.valor,
+        dataUltimaAlteracao: date + " às " + time,
+        dataAdicao: campos.dataAdicao,
+        desgasteTaxaAnual: result.taxaAnual,
+        desgasteVidaUtil: result.vidaUtil,
+        custoDesgaste: custoDesgaste,
+      });
+      setCampos(initialState);
+      props.navigation.navigate("Investimento fixo");
+    };
+  }
 
   useEffect(() => {
     pegarDadosID(props.route.params.camposId);
@@ -130,15 +144,15 @@ const AlterarInvestimentoFixo = (props) => {
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView style={styles.inputGroup}>
-      <Text style={styles.text}>Gastos com esse investimento:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(value)=> handleTextChange(value, "categoria")} 
+        <Text style={styles.text}>Gastos com esse investimento:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(value) => handleTextChange(value, "categoria")}
           text={campos.categoria}
           label="Categoria:"
           value={campos.categoria}
-          placeholder={campos.categoria}         
-          />
+          placeholder={campos.categoria}
+        />
       </SafeAreaView>
       <Text style={styles.text}>Gastos com esse investimento:</Text>
       <View style={styles.input}>
@@ -224,7 +238,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 45,
     width: '100%',
   },
-  btnStl:{
+  btnStl: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -249,7 +263,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

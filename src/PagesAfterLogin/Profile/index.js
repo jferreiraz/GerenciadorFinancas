@@ -93,6 +93,7 @@ export default function Register() {
                         value={details.telefone}
                         onChangeText={(value) => handleChange(value, "telefone")}
                         name="telefone"
+                        keyboardType="decimal-pad"
                         placeholder="Digite seu telefone..."
                         style={styles.input} />
 
@@ -128,8 +129,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#5CC6BA'
     },
     containerHeader: {
-        marginTop: '20%',
-        marginBottom: '20%',
+        marginTop: '10%',
+        marginBottom: '10%',
         paddingStart: '5%'
     },
     message: {
@@ -172,12 +173,12 @@ const styles = StyleSheet.create({
         marginTop: 14,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 15
+        marginBottom: 15,
     },
     buttonText: {
         color: "#FFF",
         fontSize: 18,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     buttonRegister: {
         marginTop: 14,
@@ -200,8 +201,9 @@ const styles = StyleSheet.create({
     },
     buttonBack: {
         color: '#1212a1',
-        fontSize: 16,
+        fontSize: 18,
         textAlign: 'center',
-        marginBottom: 15,
+        marginBottom: 65,
+        marginTop: 15,
     },
 })

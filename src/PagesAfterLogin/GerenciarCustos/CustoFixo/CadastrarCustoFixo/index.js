@@ -3,9 +3,10 @@ import {
   Button,
   View,
   StyleSheet,
-  TextInput, 
+  TextInput,
   Text,
   ScrollView,
+  Alert,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -40,16 +41,15 @@ const CadastrarCustoFixo = (props) => {
   };
 
   const validation = () => {
-    if(state.descricao == ""){
+    if (state.descricao == "") {
       return "Item custo fixo"
-    }else{
+    } else {
       return state.descricao
     }
   }
 
   const salvarNovo = async () => {
-    const token = state.categoria + " - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
-
+    const token = "Registro - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
     const q = query(collection(dbacess, "usuarios"));
     const querySnapshot = await getDocs(q);
     const queryData = querySnapshot.docs.map((detail) => ({
@@ -57,17 +57,23 @@ const CadastrarCustoFixo = (props) => {
       id: detail.id,
     }));
     console.log(queryData);
-    queryData.map(async (v) => {
-      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/custo fixo`, token), {
-        categoria: state.categoria,
-        descricao: validation(),
-        valor: state.valor,
-        dataAdicao: state.dataAdicao,
-        dataUltimaAlteracao: state.dataUltimaAlteracao,
-      });
-      props.navigation.navigate("Custo fixo");
-    })
-  };
+    if (state.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (state.valor == "") {
+      Alert.alert("Alerta", "Preencha o valor do seu custo fixo para continuar")
+    } else {
+      queryData.map(async (v) => {
+        await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/custo fixo`, token), {
+          categoria: state.categoria,
+          descricao: validation(),
+          valor: state.valor,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
+        });
+        props.navigation.navigate("Custo fixo");
+      })
+    };
+  }
 
 
   return (
@@ -138,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

@@ -44,10 +44,10 @@ export const dbacess = getFirestore();
 // Linhas abaixo podem ser retiradas, sendo utilizadas apenas para evitar o aviso de :
 //"AsyncStorage has been extracted from react-native core and will be removed in a future release. It can now be installed and imported from '@react-native-async-storage/async-storage' instead of 'react-native'. See https://github.com/react-native-async-storage/async-storage"
 
-//const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-//const auth = initializeAuth(app, {
-//  persistence: getReactNativePersistence(AsyncStorage)
-//  });
+const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage)
+  });
   
-//  export { auth };
+  export { auth };

@@ -11,6 +11,7 @@ import * as Animatable from 'react-native-animatable'
 
 const Registration = () => {
     const [email, setEmail] = useState('');
+    const [telefone, setTelefone] = useState('')
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [firstName, setFirstName] = useState('')
@@ -19,54 +20,57 @@ const Registration = () => {
     const navigation = useNavigation();
     const [hidePass, setHidePass] = useState(true);
 
-    const registerUser = async (email, password, firstName, lastName) => {
+    const registerUser = async (email, telefone, password, firstName, lastName) => {
 
 
 
-        if (email == "" | password == "" | firstName == "" | lastName == "") {
+        if (email == "" | password == "" | firstName == "" | lastName == "" | telefone == "") {
             Alert.alert("Um/ou mais campos vazios", "Cetifique-se de preencher todos os campos")
         } else {
-            if (password.length < 6){
-                Alert.alert("Senha inválida","Sua senha deve ter no mínimo 6 dígitos")
-            }else{
-            if (password != confirmPassword) {
-                Alert.alert("Confirmação de senha", "A confirmação de senha foi digitada incorretamente, certifique-se de que ambas as senhas sejam iguais.")
+            if (telefone.length < 9) {
+                Alert.alert("Telefone inválido", "Seu telefone deve ter no mínimo 9 dígitos")
             } else {
-                await firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(() => {
-                        firebase.auth().currentUser.sendEmailVerification({
-                            handleCodeInApp: true,
-                            url: 'https://financemanager-ef65d.firebaseapp.com',
-                        })
+                if (password.length < 6) {
+                    Alert.alert("Senha inválida", "Sua senha deve ter no mínimo 6 dígitos")
+                } else {
+                    if (password != confirmPassword) {
+                        Alert.alert("Confirmação de senha", "A confirmação de senha foi digitada incorretamente, certifique-se de que ambas as senhas sejam iguais.")
+                    } else {
+                        await firebase.auth().createUserWithEmailAndPassword(email, password)
                             .then(() => {
-                                alert("Email enviado confirmando registro")
-                                navigation.navigate('SignIn')
-                            }).catch((error) => {
-                                alert(error.message) //0%
-                            })
-                            .then(() => {
-                                firebase.firestore().collection('usuarios')
-                                    .doc(firebase.auth().currentUser.uid)
-                                    .set({
-                                        firstName,
-                                        lastName,
-                                        email,
+                                firebase.auth().currentUser.sendEmailVerification({
+                                    handleCodeInApp: true,
+                                    url: 'https://financemanager-ef65d.firebaseapp.com',
+                                })
+                                    .then(() => {
+                                        alert("Email enviado confirmando registro")
+                                        navigation.navigate('SignIn')
+                                    }).catch((error) => {
+                                        alert(error.message) //0%
+                                    })
+                                    .then(() => {
+                                        firebase.firestore().collection('usuarios')
+                                            .doc(firebase.auth().currentUser.uid)
+                                            .set({
+                                                firstName,
+                                                lastName,
+                                                email,
+                                                telefone,
+                                            })
+                                    })
+                                    .catch((error) => {
+                                        //alert(error.message) //Problema no firebase
+                                        alert("Banco de dados se encontra offline no momento")
                                     })
                             })
                             .catch((error) => {
-                                //alert(error.message) //Problema no firebase
-                                alert("Banco de dados se encontra offline no momento")
+                                //alert(error.message) //Email inválido ou vazio
+                                alert("Email inválido")
                             })
-                    })
-                    .catch((error) => {
-                        //alert(error.message) //Email inválido ou vazio
-                        alert("Email inválido")
-                    })
-            }}
+                    }
+                }
+            }
         }
-
-
-
     }
     return (
         <KeyboardAvoidingView behavior="height" style={styles.container} keyboardVerticalOffset='50'>
@@ -96,6 +100,13 @@ const Registration = () => {
                         style={styles.input}
                         onChangeText={(email) => setEmail(email.trim())}
                         autoCorrect={false} />
+
+                    <Text style={styles.title}> Telefone: </Text>
+                    <TextInput
+                        onChangeText={(telefone) => setTelefone(telefone, "telefone")}
+                        keyboardType="decimal-pad"
+                        placeholder="Digite seu telefone..."
+                        style={styles.input} />
 
                     <Text style={styles.title}> Senha: </Text>
                     <View style={styles.inputArea}>
@@ -128,7 +139,7 @@ const Registration = () => {
 
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => registerUser(email, password, firstName, lastName)}>
+                        onPress={() => registerUser(email, telefone, password, firstName, lastName)}>
                         <Text style={styles.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
 

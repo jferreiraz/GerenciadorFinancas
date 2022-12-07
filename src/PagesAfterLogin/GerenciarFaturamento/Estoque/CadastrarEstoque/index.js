@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Text,
+  Alert
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -28,10 +29,13 @@ const CadastrarEstoque = (props) => {
   const initalState = {
     categoria: "",
     descricao: "",
-    quantidade: "",
-    custo: "",
-    valor: "",
-    lucro: "",
+    quantidadeUnitaria: "",
+    custoUnitario: "",
+    custoGeral: "",//calculo
+    vendaUnitaria: "",
+    vendaGeral: "",//calculo
+    lucroUnitario: "",//calculo
+    lucroGeral: "",//calculo
     dataAdicao: date + " às " + time,
     dataUltimaAlteracao: date + " às " + time,
   };
@@ -43,35 +47,50 @@ const CadastrarEstoque = (props) => {
   };
 
   const salvarNovo = async () => {
-    const token = state.categoria + " - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
+    if (state.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (state.descricao == "") {
+      Alert.alert("Alerta", "Descreva qual é o item para continuar")
+    } else if (state.quantidadeUnitaria == "") {
+      Alert.alert("Alerta", "Preencha a quantidade unitária para continuar")
+    } else if (state.custoUnitario == "") {
+      Alert.alert("Alerta", "Preencha o custo de compra para continuar")
+    } else if (state.vendaUnitaria == "") {
+      Alert.alert("Alerta", "Preencha o valor de venda para continuar")
+    } else {
+      const token = "Registro - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
 
-    const q = query(collection(dbacess, "usuarios"));
-    const querySnapshot = await getDocs(q);
-    const queryData = querySnapshot.docs.map((detail) => ({
-      ...detail.data(),
-      id: detail.id,
-    }));
-    console.log(queryData);
-    queryData.map(async (v) => {
-      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/estoque`, token), {
-        categoria: state.categoria,
-        descricao: state.descricao,
-        quantidade: state.quantidade,
-        custo: state.custo,
-        valor: state.valor,
-        lucro: state.valor*state.quantidade-state.custo,
-        dataAdicao: state.dataAdicao,
-        dataUltimaAlteracao: state.dataUltimaAlteracao,
-      });
-      props.navigation.navigate("Estoque");
-    })
-  };
+      const q = query(collection(dbacess, "usuarios"));
+      const querySnapshot = await getDocs(q);
+      const queryData = querySnapshot.docs.map((detail) => ({
+        ...detail.data(),
+        id: detail.id,
+      }));
+      console.log(queryData);
+      queryData.map(async (v) => {
+        await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/estoque`, token), {
+          categoria: state.categoria,
+          descricao: state.descricao,
+          quantidadeUnitaria: state.quantidadeUnitaria,
+          custoUnitario: state.custoUnitario,
+          custoGeral: (state.quantidadeUnitaria * state.custoUnitario),
+          vendaUnitaria: state.vendaUnitaria,
+          vendaGeral: (state.quantidadeUnitaria * state.vendaUnitaria),
+          lucroUnitario: (state.vendaUnitaria - state.custoUnitario),
+          lucroGeral: (state.vendaUnitaria - state.custoUnitario) * state.quantidadeUnitaria,
+          dataAdicao: state.dataAdicao,
+          dataUltimaAlteracao: state.dataUltimaAlteracao,
+        });
+        props.navigation.navigate("Estoque");
+      })
+    };
+  }
 
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Text style={styles.text}>Categoria de quantidade:</Text>
+        <Text style={styles.text}>Categoria de quantidade:</Text>
         <Select
           options={categorias}
           onChangeSelect={(value) => handleChangeText(value, "categoria")}
@@ -97,28 +116,28 @@ const CadastrarEstoque = (props) => {
         <TextInput
           placeholder="Quantidade unitária                                              "
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "quantidade")}
-          value={state.quantidade}
+          onChangeText={(value) => handleChangeText(value, "quantidadeUnitaria")}
+          value={state.quantidadeUnitaria}
         />
       </View>
       {/* Input */}
       <Text style={styles.text}>Gasto total da compra:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Custo de compra                                              "
+          placeholder="Custo de compra unitário                                              "
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "custo")}
-          value={state.custo}
+          onChangeText={(value) => handleChangeText(value, "custoUnitario")}
+          value={state.custoUnitario}
         />
       </View>
       {/* Input */}
       <Text style={styles.text}>Custo de venda unitário:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Valor de venda                                              "
+          placeholder="Venda unitária                                              "
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "valor")}
-          value={state.valor}
+          onChangeText={(value) => handleChangeText(value, "vendaUnitaria")}
+          value={state.vendaUnitaria}
         />
       </View>
 
@@ -156,7 +175,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

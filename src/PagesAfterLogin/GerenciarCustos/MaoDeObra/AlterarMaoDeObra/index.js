@@ -24,7 +24,7 @@ const AlterarMaoDeObra = (props) => {
     gastosFuncao: "",
     numeroFuncionarios: "",
     salario: "",
-    dataUltimaAlteracao:date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
   };
 
   const [campos, setCampos] = useState(initialState);
@@ -67,20 +67,30 @@ const AlterarMaoDeObra = (props) => {
   };
 
   const atualizarDados = async () => {
-    const totalGastosFuncao = campos.numeroFuncionarios * campos.salario;
-    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('mão de obra').doc(campos.id);
-    await camposRef.set({
-      categoria: campos.categoria,
-      funcao: campos.funcao,
-      numeroFuncionarios: campos.numeroFuncionarios,
-      gastosFuncao: totalGastosFuncao,
-      salario: campos.salario,
-      dataUltimaAlteracao: date + " às " + time,
-      dataAdicao: campos.dataAdicao,
-    });
-    setCampos(initialState);
-    props.navigation.navigate("Custos com mão de obra");
-  };
+    if (campos.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (campos.funcao == "") {
+      Alert.alert("Alerta", "Descreva qual o cargo dos funcionários para continuar")
+    } else if (campos.numeroFuncionarios == "") {
+      Alert.alert("Alerta", "Preencha quantos funcionários possuem essa função para continuar")
+    } else if (campos.salario == "") {
+      Alert.alert("Alerta", "Preencha o salário do(s) funcionário(s) para continuar")
+    } else {
+      const totalGastosFuncao = campos.numeroFuncionarios * campos.salario;
+      const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('mão de obra').doc(campos.id);
+      await camposRef.set({
+        categoria: campos.categoria,
+        funcao: campos.funcao,
+        numeroFuncionarios: campos.numeroFuncionarios,
+        gastosFuncao: totalGastosFuncao,
+        salario: campos.salario,
+        dataUltimaAlteracao: date + " às " + time,
+        dataAdicao: campos.dataAdicao,
+      });
+      setCampos(initialState);
+      props.navigation.navigate("Custos com mão de obra");
+    };
+  }
 
   useEffect(() => {
     pegarDadosID(props.route.params.camposId);
@@ -97,14 +107,14 @@ const AlterarMaoDeObra = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-      <Text style={styles.text}>Selecione a forma de contratação:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
-          text={campos.categoria} 
+        <Text style={styles.text}>Selecione a forma de contratação:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(id) => handleChangeText(id, "categoria")}
+          text={campos.categoria}
           label=""
-          value={campos.categoria}     
-          />
+          value={campos.categoria}
+        />
       </View>
       <Text style={styles.text}>Descreva o cargo do funcionário:</Text>
       <View style={styles.input}>
@@ -175,7 +185,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     width: '100%',
   },
-  btnStl:{
+  btnStl: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -200,7 +210,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

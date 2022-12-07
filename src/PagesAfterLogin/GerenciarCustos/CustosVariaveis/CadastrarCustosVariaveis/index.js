@@ -6,6 +6,7 @@ import {
   TextInput,
   ScrollView,
   Text,
+  Alert,
 } from "react-native";
 
 import { firebase } from "../../../../config";
@@ -23,14 +24,14 @@ const CadastrarCustosVariaveis = (props) => {
 
   const today = new Date().getDate();
   const currentYear = new Date().getFullYear();
-  const currentMonth = new Date().getMonth() + 1; 
+  const currentMonth = new Date().getMonth() + 1;
 
   const initalState = {
     categoria: "",
     descricao: "",
     valor: "",
-    dataAdicao:date + " às " + time,
-    dataUltimaAlteracao:date + " às " + time,
+    dataAdicao: date + " às " + time,
+    dataUltimaAlteracao: date + " às " + time,
   };
 
   const [state, setState] = useState(initalState);
@@ -39,45 +40,59 @@ const CadastrarCustosVariaveis = (props) => {
     setState({ ...state, [categoria]: value });
   };
 
-  const salvarNovo = async () => {
-    const token = state.categoria+" - "+today+"."+currentMonth+"."+currentYear+"("+ time+")";
+  const validation = () => {
+    if (state.descricao == "") {
+      return "Item custo variável"
+    } else {
+      return state.descricao
+    }
+  }
 
-    const q = query(collection(dbacess, "usuarios"));
-    const querySnapshot = await getDocs(q);
-    const queryData = querySnapshot.docs.map((detail) => ({
+  const salvarNovo = async () => {
+    if (state.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (state.valor == "") {
+      Alert.alert("Alerta", "Preencha o valor do seu custo variável para continuar")
+    } else {
+      const token = "Registro - " + today + "." + currentMonth + "." + currentYear + "(" + time + ")";
+
+      const q = query(collection(dbacess, "usuarios"));
+      const querySnapshot = await getDocs(q);
+      const queryData = querySnapshot.docs.map((detail) => ({
         ...detail.data(),
         id: detail.id,
-    }));
-    console.log(queryData);
-    queryData.map(async (v) => {
-      await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/custos variáveis`, token), {
-          categoria: state.categoria, 
-          descricao: state.descricao,
+      }));
+      console.log(queryData);
+      queryData.map(async (v) => {
+        await setDoc(doc(dbacess, `usuarios/${firebase.auth().currentUser.uid}/custos variáveis`, token), {
+          categoria: state.categoria,
+          descricao: validation(),
           valor: state.valor,
           dataAdicao: state.dataAdicao,
           dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Custos variáveis");
-    })
-};
+      })
+    };
+  }
 
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
       <SafeAreaView style={styles.inputGroup}>
-      <Text style={styles.text}>Selecione qual o tipo de custo:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(value)=> handleChangeText(value, "categoria")} 
+        <Text style={styles.text}>Selecione qual o tipo de custo:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(value) => handleChangeText(value, "categoria")}
           text="Selecione uma categoria"
-          value={state.categoria}         
-          />
+          value={state.categoria}
+        />
       </SafeAreaView>
 
       {/* descricao Input */}
       <Text style={styles.text}>Descreva esse custo:</Text>
       <View style={styles.input}>
-        <TextInput 
+        <TextInput
           placeholder="Descrição (Opcional)                                              "
           numberOfLines={1}
           onChangeText={(value) => handleChangeText(value, "descricao")}
@@ -129,7 +144,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

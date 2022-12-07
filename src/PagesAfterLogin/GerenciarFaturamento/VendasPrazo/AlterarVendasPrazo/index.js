@@ -16,7 +16,7 @@ import { categorias } from "../Components/categorias";
 const AlterarVendasPrazo = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
-  
+
   const initialState = {
     id: "",
     categoria: "",
@@ -72,23 +72,35 @@ const AlterarVendasPrazo = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('vendas prazo').doc(campos.id);
-    await camposRef.set({
-      categoria: campos.categoria,
-      descricao: campos.descricao,
-      quantidadeUnitaria: campos.quantidadeUnitaria,
-      custoUnitario: campos.custoUnitario,
-      custoGeral: campos.custoGeral,
-      vendaUnitaria: campos.vendaUnitaria,
-      vendaGeral: campos.vendaGeral,
-      lucroUnitario: campos.lucroUnitario,
-      lucroGeral: campos.lucroGeral,
-      dataAdicao: campos.dataAdicao,
-      dataUltimaAlteracao: date + " às " + time,
-    });
-    setCampos(initialState);
-    props.navigation.navigate("Vendas a prazo");
-  };
+    if (campos.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (campos.descricao == "") {
+      Alert.alert("Alerta", "Descreva qual é o item para continuar")
+    } else if (campos.quantidadeUnitaria == "") {
+      Alert.alert("Alerta", "Preencha a quantidade unitária para continuar")
+    } else if (campos.custoUnitario == "") {
+      Alert.alert("Alerta", "Preencha o custo de produção para continuar")
+    } else if (campos.vendaUnitaria == "") {
+      Alert.alert("Alerta", "Preencha o valor de venda para continuar")
+    } else {
+      const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('vendas prazo').doc(campos.id);
+      await camposRef.set({
+        categoria: campos.categoria,
+        descricao: campos.descricao,
+        quantidadeUnitaria: campos.quantidadeUnitaria,
+        custoUnitario: campos.custoUnitario,
+        custoGeral: (campos.quantidadeUnitaria * campos.custoUnitario),
+        vendaUnitaria: campos.vendaUnitaria,
+        vendaGeral: (campos.quantidadeUnitaria * campos.vendaUnitaria),
+        lucroUnitario: (campos.vendaUnitaria - campos.custoUnitario),
+        lucroGeral: (campos.vendaUnitaria - campos.custoUnitario) * campos.quantidadeUnitaria,
+        dataAdicao: campos.dataAdicao,
+        dataUltimaAlteracao: date + " às " + time,
+      });
+      setCampos(initialState);
+      props.navigation.navigate("Vendas a prazo");
+    };
+  }
 
   useEffect(() => {
     pegarDadosID(props.route.params.camposId);
@@ -105,14 +117,14 @@ const AlterarVendasPrazo = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-      <Text style={styles.text}>Categoria do item:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
+        <Text style={styles.text}>Categoria do item:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(id) => handleChangeText(id, "categoria")}
           text={campos.categoria}
           label=""
-          value={campos.categoria}         
-          />
+          value={campos.categoria}
+        />
       </View>
       <Text style={styles.text}>Descrição do item:</Text>
       <View style={styles.input}>
@@ -138,7 +150,7 @@ const AlterarVendasPrazo = (props) => {
       <View style={styles.input}>
         <TextInput
           style={styles.inputGroup}
-          placeholder="Custo de produção unitário                                              "
+          placeholder="Custo de produção unitária                                              "
           keyboardType="decimal-pad"
           onChangeText={(value) => handleChangeText(value, "custoUnitario")}
           value={campos.custoUnitario}
@@ -192,7 +204,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     width: '100%',
   },
-  btnStl:{
+  btnStl: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -217,7 +229,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

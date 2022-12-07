@@ -33,6 +33,14 @@ const AlterarCustosVariaveis = (props) => {
     setCampos({ ...campos, [prop]: value });
   };
 
+  const validation = () => {
+    if (campos.descricao == "") {
+      return "Item custo variável"
+    } else {
+      return campos.descricao
+    }
+  }
+
   const pegarDadosID = async (id) => {
     const dbRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').doc(id);
     const doc = await dbRef.get();
@@ -66,17 +74,23 @@ const AlterarCustosVariaveis = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').doc(campos.id);
-    await camposRef.set({
-      categoria: campos.categoria,
-      descricao: campos.descricao,
-      valor: campos.valor,
-      dataAdicao: campos.dataAdicao,
-      dataUltimaAlteracao: date + " às " + time,
-    });
-    setCampos(initialState);
-    props.navigation.navigate("Custos variáveis");
-  };
+    if (campos.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (campos.valor == "") {
+      Alert.alert("Alerta", "Preencha o valor do seu custo variável para continuar")
+    } else {
+      const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('custos variáveis').doc(campos.id);
+      await camposRef.set({
+        categoria: campos.categoria,
+        descricao: validation(),
+        valor: campos.valor,
+        dataAdicao: campos.dataAdicao,
+        dataUltimaAlteracao: date + " às " + time,
+      });
+      setCampos(initialState);
+      props.navigation.navigate("Custos variáveis");
+    };
+  }
 
   useEffect(() => {
     pegarDadosID(props.route.params.camposId);
@@ -93,14 +107,14 @@ const AlterarCustosVariaveis = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-      <Text style={styles.text}>Selecione qual o tipo de custo:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
+        <Text style={styles.text}>Selecione qual o tipo de custo:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(id) => handleChangeText(id, "categoria")}
           text={campos.categoria}
           label=""
-          value={campos.categoria}         
-          />
+          value={campos.categoria}
+        />
       </View>
       <Text style={styles.text}>Descreva esse custo:</Text>
       <View style={styles.input}>
@@ -161,7 +175,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     width: '100%',
   },
-  btnStl:{
+  btnStl: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -186,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,

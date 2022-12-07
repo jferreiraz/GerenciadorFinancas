@@ -16,14 +16,18 @@ import { categorias } from "../Components/categorias";
 const AlterarEstoque = (props) => {
   const date = new Date().toLocaleDateString();
   const time = new Date().toLocaleTimeString();
-  
+
   const initialState = {
     id: "",
     categoria: "",
     descricao: "",
-    quantidade: "",
-    valor: "",
-    lucro: "",
+    quantidadeUnitaria: "",
+    custoUnitario: "",
+    custoGeral: "",
+    vendaUnitaria: "",
+    vendaGeral: "",
+    lucroUnitario: "",
+    lucroGeral: "",
     dataAdicao: "",
     dataUltimaAlteracao: "",
   };
@@ -68,20 +72,35 @@ const AlterarEstoque = (props) => {
   };
 
   const atualizarDados = async () => {
-    const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque').doc(campos.id);
-    await camposRef.set({
-      categoria: campos.categoria,
-      descricao: campos.descricao,
-      quantidade: campos.quantidade,
-      custo: campos.custo,
-      valor: campos.valor,
-      lucro: campos.valor*campos.quantidade-campos.custo,
-      dataAdicao: campos.dataAdicao,
-      dataUltimaAlteracao:date + " às " + time,
-    });
-    setCampos(initialState);
-    props.navigation.navigate("Estoque");
-  };
+    if (campos.categoria == "") {
+      Alert.alert("Alerta", "Selecione uma categoria para continuar")
+    } else if (campos.descricao == "") {
+      Alert.alert("Alerta", "Descreva qual é o item para continuar")
+    } else if (campos.quantidadeUnitaria == "") {
+      Alert.alert("Alerta", "Preencha a quantidade unitária para continuar")
+    } else if (campos.custoUnitario == "") {
+      Alert.alert("Alerta", "Preencha o custo de compra para continuar")
+    } else if (campos.vendaUnitaria == "") {
+      Alert.alert("Alerta", "Preencha o valor de venda para continuar")
+    } else {
+      const camposRef = firebase.firestore().collection("usuarios").doc(firebase.auth().currentUser.uid).collection('estoque').doc(campos.id);
+      await camposRef.set({
+        categoria: campos.categoria,
+        descricao: campos.descricao,
+        quantidadeUnitaria: campos.quantidadeUnitaria,
+        custoUnitario: campos.custoUnitario,
+        custoGeral: (campos.quantidadeUnitaria * campos.custoUnitario),
+        vendaUnitaria: campos.vendaUnitaria,
+        vendaGeral: (campos.quantidadeUnitaria * campos.vendaUnitaria),
+        lucroUnitario: (campos.vendaUnitaria - campos.custoUnitario),
+        lucroGeral: (campos.vendaUnitaria - campos.custoUnitario) * campos.quantidadeUnitaria,
+        dataAdicao: campos.dataAdicao,
+        dataUltimaAlteracao: date + " às " + time,
+      });
+      setCampos(initialState);
+      props.navigation.navigate("Estoque");
+    };
+  }
 
   useEffect(() => {
     pegarDadosID(props.route.params.camposId);
@@ -98,14 +117,14 @@ const AlterarEstoque = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
-      <Text style={styles.text}>Categoria de quantidade:</Text>
-      <Select 
-          options={categorias} 
-          onChangeSelect={(id)=> handleChangeText(id, "categoria")} 
+        <Text style={styles.text}>Categoria de quantidade:</Text>
+        <Select
+          options={categorias}
+          onChangeSelect={(id) => handleChangeText(id, "categoria")}
           text={campos.categoria}
           label=""
-          value={campos.categoria}         
-          />
+          value={campos.categoria}
+        />
       </View>
       <Text style={styles.text}>Produto adquirido:</Text>
       <View style={styles.input}>
@@ -117,37 +136,37 @@ const AlterarEstoque = (props) => {
           onChangeText={(value) => handleChangeText(value, "descricao")}
         />
       </View>
-      <Text style={styles.text}>Quantidade unitária adquirida:</Text>
+      <Text style={styles.text}>Quantidade de unidades adquiridas:</Text>
       <View style={styles.input}>
         <TextInput
           placeholder="Quantidade unitária                                              "
           autoCompleteType="quantidade"
           style={styles.inputGroup}
-          value={campos.quantidade}
+          value={campos.quantidadeUnitaria}
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "quantidade")}
+          onChangeText={(value) => handleChangeText(value, "quantidadeUnitaria")}
         />
       </View>
-      <Text style={styles.text}>Gasto total da compra:</Text>
+      <Text style={styles.text}>Gasto unitário da compra:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Custo de compra                                              "
+          placeholder="Custo de compra unitário                                              "
           autoCompleteType="custo"
           style={styles.inputGroup}
-          value={campos.custo}
+          value={campos.custoUnitario}
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "custo")}
+          onChangeText={(value) => handleChangeText(value, "custoUnitario")}
         />
       </View>
       <Text style={styles.text}>Custo de venda unitário:</Text>
       <View style={styles.input}>
         <TextInput
-          placeholder="Valor de venda                                              "
+          placeholder="Venda unitária                                              "
           autoCompleteType="valor"
           style={styles.inputGroup}
-          value={campos.valor}
+          value={campos.vendaUnitaria}
           keyboardType="decimal-pad"
-          onChangeText={(value) => handleChangeText(value, "valor")}
+          onChangeText={(value) => handleChangeText(value, "vendaUnitaria")}
         />
       </View>
       <View>
@@ -160,7 +179,7 @@ const AlterarEstoque = (props) => {
           color="#E37399"
         />
       </View>
-    
+
     </ScrollView>
   );
 };
@@ -189,7 +208,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     width: '100%',
   },
-  btnStl:{
+  btnStl: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
@@ -214,7 +233,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  text:{
+  text: {
     fontWeight: '300',
     fontSize: 16,
     paddingBottom: 5,
