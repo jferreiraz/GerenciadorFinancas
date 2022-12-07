@@ -4,7 +4,6 @@ import { ListItem, Avatar } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import TouchableScale from 'react-native-touchable-scale';
 
-
 import { firebase } from "../../../config";
 
 const VendasProdutosServicos = (props) => {
@@ -27,11 +26,11 @@ const VendasProdutosServicos = (props) => {
           descricao,
           quantidadeUnitaria,
           custoUnitario,
-          custoGeral,
+          custoGeral,//calculo
           vendaUnitaria,
-          vendaGeral,
-          lucroUnitario,
-          lucroGeral,
+          vendaGeral,//calculo
+          lucroUnitario,//calculo
+          lucroGeral,//calculo
           dataAdicao,
           dataUltimaAlteracao,
         });
@@ -41,7 +40,8 @@ const VendasProdutosServicos = (props) => {
   }, []);
 
   campos.forEach((element) => {
-    arrTotal.push(parseFloat(element.vendaGeral));
+    //console.log(element.custoUnitario)
+    arrTotal.push(parseFloat(element.vendaUnitaria));
     arrLucroBruto.push(parseFloat(element.numeroFuncionarios));
     arrLucroLiquido.push(parseFloat(element.numeroFuncionarios));
   });
@@ -51,6 +51,9 @@ const VendasProdutosServicos = (props) => {
     lucroBruto += parseFloat(arrLucroBruto[i]);
     lucroLiquido += parseFloat(arrLucroLiquido[i]);
   }
+
+  //console.log(campos[0].vendaUnitaria)
+  //console.log(arrTotal)
 
   return (
     <ScrollView>

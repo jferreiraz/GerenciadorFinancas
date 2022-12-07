@@ -30,11 +30,11 @@ const CadastrarVendasProdutosServicos = (props) => {
     descricao: "",
     quantidadeUnitaria: "",
     custoUnitario: "",
-    custoGeral: "",
+    custoGeral: "",//calculo
     vendaUnitaria: "",
-    vendaGeral: "",
-    lucroUnitario: "",
-    lucroGeral: "",
+    vendaGeral: "",//calculo
+    lucroUnitario: "",//calculo
+    lucroGeral: "",//calculo
     dataAdicao:date + " às " + time,
     dataUltimaAlteracao:date + " às " + time,
   };
@@ -61,18 +61,17 @@ const CadastrarVendasProdutosServicos = (props) => {
           descricao: state.descricao,
           quantidadeUnitaria: state.quantidadeUnitaria,
           custoUnitario: state.custoUnitario,
-          custoGeral: state.custoGeral,
+          custoGeral: (state.quantidadeUnitaria*state.custoUnitario),
           vendaUnitaria: state.vendaUnitaria,
-          vendaGeral: state.vendaGeral,
-          lucroUnitario: state.lucroUnitario,
-          lucroGeral: state.lucroGeral,
+          vendaGeral: (state.quantidadeUnitaria*state.vendaUnitaria),
+          lucroUnitario: (state.vendaUnitaria-state.custoUnitario),
+          lucroGeral: state.descricao,
           dataAdicao: state.dataAdicao,
           dataUltimaAlteracao: state.dataUltimaAlteracao,
         });
         props.navigation.navigate("Vendas de produtos e serviços");
     })
 };
-
   return (
     <ScrollView style={styles.container}>
       {/* categoria Input */}
