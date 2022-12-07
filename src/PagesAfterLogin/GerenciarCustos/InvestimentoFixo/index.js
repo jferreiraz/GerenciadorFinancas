@@ -81,7 +81,7 @@ const InvestimentoFixo = (props) => {
               });
             }}
           >
-            <ListItem.Content>
+            <ListItem.Content> 
               <ListItem.Title style={styles.title}>{campos.categoria}</ListItem.Title>
               <ListItem.Subtitle style={styles.subTitle}>{"Descrição: " + campos.descricao}</ListItem.Subtitle>
               <ListItem.Subtitle style={styles.subTitle}>{"Custo: R$" + campos.valor}</ListItem.Subtitle>
