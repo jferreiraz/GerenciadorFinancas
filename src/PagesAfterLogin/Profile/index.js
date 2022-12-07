@@ -97,14 +97,6 @@ export default function Register() {
                         placeholder="Digite seu telefone..."
                         style={styles.input} />
 
-                    <Text style={styles.title}> Alterar senha: </Text>
-                    <View style={styles.inputArea}>
-                        <TextInput placeholder="Digite uma senha...(não funcional no momento)" style={styles.inputPassword} secureTextEntry={hidePass} />
-                        <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
-                            <Ionicons name="eye" color="a1a1a1" size={25} />
-                        </TouchableOpacity>
-                    </View>
-
                     <TouchableOpacity onPress={() => handleSubmit()} style={styles.button}>
                         <Text style={styles.buttonText}>Alterar</Text>
                     </TouchableOpacity>
@@ -203,7 +195,7 @@ const styles = StyleSheet.create({
         color: '#1212a1',
         fontSize: 18,
         textAlign: 'center',
-        marginBottom: 65,
+        marginBottom: 165,
         marginTop: 15,
     },
 })

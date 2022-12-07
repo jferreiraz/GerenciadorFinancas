@@ -21,7 +21,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package":"com.gerenciador.financeiro",
+      "package": "com.gerenciador.financeiro",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -30,6 +30,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "943cb3e8-4d6f-41d9-b227-90efc5887f9e"
+      }
     }
   }
 }
