@@ -39,12 +39,27 @@ Open terminal
   > (remember to install dependencies before npm run start or after if you didnt get the allert yet)<br>
    exx: npx expo install react-native-svg@12.3.0
    
+<br><br>  
+
 Prototype: _(Click at the image below)_ <br><br> 
-<!-- ![image](https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png) -->
 
 [<img align="left" alt="jferreiraz | Figma" width="130px" src="https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png" />][figma]
 
+<br><br>
 
-[figma]: https://www.figma.com/file/wykbMX8h6bLKc4b8am5yn0/Desgine-APP?node-id=0%3A1
+Playstore: _(Click at the image below)_ <br><br> 
+
+[<img align="left" alt="GFin | Playstore" width="130px" src="https://user-images.githubusercontent.com/106937501/207481939-4b65e3bd-1f78-43c3-9422-def6e04979ea.png" />][playstore]
+
+
+Youtube: _(Click at the image below)_ <br><br> 
+
+[<img align="left" alt="GFin | Youtube" width="130px" src="https://user-images.githubusercontent.com/106937501/207482489-eaa87752-d060-4e21-b480-b4ed8884a52e.png" />][youtube]
 
  </h4>
+ 
+[figma]: https://www.figma.com/file/wykbMX8h6bLKc4b8am5yn0/Desgine-APP?node-id=0%3A1
+
+[playstore]: https://play.google.com/store/apps/details?id=com.gerenciador.financeiro
+
+[youtube]: https://www.youtube.com/watch?v=6pMfZyNZaOs&t=1s
