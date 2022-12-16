@@ -90,7 +90,7 @@ const InvestimentoFixo = (props) => {
               <ListItem.Subtitle style={styles.subTitleDesgaste}>{"Desgasta " + campos.desgasteTaxaAnual + "% durante " + campos.desgasteVidaUtil + " anos, custo de reparo anual: R$" + campos.custoDesgaste.toFixed(2)}</ListItem.Subtitle>
             </ListItem.Content>
           </ListItem>
-        );
+        ); 
       })}
     </ScrollView>
   );
