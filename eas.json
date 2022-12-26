@@ -13,6 +13,10 @@
     "production": {}
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "serviceAccountKeyPath": "../../../ChaveAPI(Atualização para o GFIN)/pc-api-9150047033132310244-89-7cefc56174e7.json"
+      }
+    }
   }
 }
