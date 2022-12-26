@@ -20,22 +20,35 @@ The project was developed using react native and nodejs with the javascript lang
 
 <br><br>  
 
-Prototype: _(Click at the image below)_ <br><br> 
-
+Prototype: _(Click at the image below)_ 
+<br><br> 
 [<img align="left" alt="jferreiraz | Figma" width="130px" src="https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png" />][figma]
 
 <br><br>
 
-Playstore: _(Click at the image below)_ <br><br> 
 
+
+
+Playstore: _(Click at the image below)_ 
+<br><br> 
 [<img align="left" alt="GFin | Playstore" width="130px" src="https://user-images.githubusercontent.com/106937501/207481939-4b65e3bd-1f78-43c3-9422-def6e04979ea.png" />][playstore]
 
 
-Youtube: _(Click at the image below)_ <br><br> 
 
+
+
+
+Youtube: _(Click at the image below)_ 
+<br><br> 
 [<img align="left" alt="GFin | Youtube" width="130px" src="https://user-images.githubusercontent.com/106937501/207482489-eaa87752-d060-4e21-b480-b4ed8884a52e.png" />][youtube]
 
  </h4>
+ 
+ 
+ 
+ 
+ 
+ 
  
 [figma]: https://www.figma.com/file/wykbMX8h6bLKc4b8am5yn0/Desgine-APP?node-id=0%3A1
 
