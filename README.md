@@ -1,5 +1,10 @@
 # GerenciadorFinancas
 
+This application can be downloaded directly from the playstore, click on the icon below:<br><br><br>
+_(click here)_
+
+[<img align="left" alt="jferreiraz | Playstore" width="60px" src="https://cdn-icons-png.flaticon.com/512/3128/3128279.png" />][playstore] <br><br><br>
+
 <h2>Project information:</h2>
 <h4>
 
