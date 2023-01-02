@@ -4,6 +4,7 @@ Em app.json alterar:
 
 
 Terminal:
+
     Código para gerar atualização do expo: 
     eas build --platform android
 
