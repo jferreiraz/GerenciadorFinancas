@@ -7,7 +7,7 @@ _(click here)_
 
 <h2>Project information:</h2>
 <h4>
-
+ 
 >Language: JavaScript <br>
 >Project focus: Finance manager mobile<br>
 >Resources: were been used react native and nodejs. The main language was javascript and expo was also used, a tool that helped us into the development.
