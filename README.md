@@ -24,7 +24,7 @@ Prototype: _(Click at the image below)_
 <br><br> 
 [<img align="left" alt="jferreiraz | Figma" width="130px" src="https://user-images.githubusercontent.com/106937501/197885159-5c03ae66-b51c-4146-b84f-fc7578c4d770.png" />][figma]
 
-<br><br>
+<br><br> 
 
 
 
