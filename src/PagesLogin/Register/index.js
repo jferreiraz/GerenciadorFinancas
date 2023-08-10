@@ -132,7 +132,7 @@ const Registration = () => {
                             onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
                             autoCorrect={false}
                             autoCapitalize="none" />
-                        <TouchableOpacity onPress={() => setHidePass(!hidePass)}>
+                        <TouchableOpacity onPress={() => setHidePass(!hidePass)}> 
                             <Ionicons name="eye" color="a1a1a1" size={25} />
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
